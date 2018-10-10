@@ -1,0 +1,58 @@
+body {
+    font-family: "Lato", sans-serif;
+}
+
+.sidenav {
+    height: 100%;
+    width: 300px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #2C3E50;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.sidenav a {
+    padding: 20px 0px;
+    text-decoration: none;
+    font-size: 25px;
+    color: white;
+    display: block;
+}
+
+.sidenav h3 {
+  background-color: grey;
+  padding-left: 20px;
+
+}
+
+.sidenav a:hover {
+    filter: brightness(50%);
+}
+
+.main {
+    margin-left: 160px; /* Same as the width of the sidenav */
+    font-size: 28px; /* Increased text to enable scrolling */
+    padding: 0px 10px;
+}
+
+.searchForm {
+  padding-top: 20px;
+  margin-left: 100px;
+}
+
+#search {
+  margin-right: 10px;
+  width: 500px;
+}
+
+#searchBtn {
+  width: 100px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}

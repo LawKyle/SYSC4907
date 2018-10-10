@@ -5,71 +5,68 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <style>
-body {
-    font-family: "Lato", sans-serif;
-}
-
-.sidenav {
-    height: 100%;
-    width: 300px;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: blue;
-    overflow-x: hidden;
-    padding-top: 20px;
-}
-
-.sidenav a {
-    padding: 6px 8px 6px 16px;
-    text-decoration: none;
-    font-size: 25px;
-    color: white;
-    display: block;
-}
-
-.sidenav h3 {
-  background-color: grey;
-  padding-left: 20px; 
-}
-
-.sidenav a:hover {
-    color: #f1f1f1;
-}
-
-.main {
-    margin-left: 160px; /* Same as the width of the sidenav */
-    font-size: 28px; /* Increased text to enable scrolling */
-    padding: 0px 10px;
-}
-
-@media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
-}
-</style>
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <!-- Bootstrap core CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Material Design Bootstrap -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.11/css/mdb.min.css" rel="stylesheet">
 
-    <title>Hello, world!</title>
+    <link href="{{asset('bootstrap-4.1.3-dist/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+
+    <title>Grocery Web App</title>
   </head>
   <body>
     <div class="container-fluid">
-      <div class="sidenav">
-        <h3>Grocery Web App</h3>
-        <a href="#">Profile</a>
-        <a href="#">My Grocery List</a>
-        <a href="#">Tagged Products</a>
+      <div class="row">
+        <div class="col-2">
+          <div class="sidenav">
+            <h3>Grocery Web App</h3>
+            <a href="#">
+              <div class="row">
+                <div class="col text-center">
+                  <i class="fas fa-user-circle fa-2x"></i>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col text-center">
+                  Profile
+                </div>
+              </div>
+            </a>
+            <a href="#">
+              <div class="row">
+                <div class="col text-center">
+                  <i class="fas fa-clipboard-list fa-2x"></i>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col text-center">
+                  My Grocery List
+                </div>
+              </div>
+            </a>
+            <a href="#">
+              <div class="row">
+                <div class="col text-center">
+                  <i class="fas fa-shopping-cart fa-2x"></i>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col text-center">
+                  Tagged Products
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="searchForm col-md">
+          <form class="form-inline" method="GET">
+              <input id="search" name="search" type="text" class="form-control" placeholder="Search for products ...">
+              <button id="searchBtn" type="submit" class="btn btn-outline-primary">Search</button>
+          </form>
+        </div>
       </div>
+
     </div>
 
     <!-- Optional JavaScript -->

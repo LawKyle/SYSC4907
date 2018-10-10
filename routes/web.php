@@ -16,3 +16,5 @@ Route::get('/', function () {
 });
 
 Route::view('/main', 'main');
+
+Route::get('search', 'SearchController@test');
