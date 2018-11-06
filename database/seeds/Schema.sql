@@ -6,7 +6,7 @@ product_id INT NOT NULL AUTO_INCREMENT,
 nfc_id VARCHAR(255),
 description VARCHAR(255),
 tag SET('meat', 'produce', 'organic', 'deli', 'seafood', 'grocery'),
-FOREIGN KEY (store_id) REFERENCES Location(store_id) ON DELETE RESTRICT ON UPDATE CASCADE,
+
 PRIMARY KEY (product_id));
 
 CREATE TABLE IF NOT EXISTS Ingredent (
@@ -31,8 +31,8 @@ CREATE TABLE IF NOT EXISTS Product_Location (
 product_id INT NOT NULL,
 ingredent_id INT NOT NULL,
 FOREIGN KEY (product_id) REFERENCES Product(product_id) ON DELETE RESTRICT ON UPDATE CASCADE,
-FOREIGN KEY (ingredent_id) REFERENCES Ingredent(ingredent_id) ON DELETE RESTRICT ON UPDATE CASCADE,
-PRIMARY KEY (product_id, ingredent_id));
+FOREIGN KEY (store_id) REFERENCES Location(store_id) ON DELETE RESTRICT ON UPDATE CASCADE,
+PRIMARY KEY (product_id, store_id));
 
 CREATE TABLE IF NOT EXISTS Maps (
 map_id INT NOT NULL AUTO_INCREMENT,
