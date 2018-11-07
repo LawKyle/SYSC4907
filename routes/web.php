@@ -15,9 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::view('/main', 'main');
-
-Route::get('search', 'SearchController@test');
+Route::get('main', 'SearchController@test');
 
 Auth::routes();
 

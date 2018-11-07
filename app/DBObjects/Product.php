@@ -1,5 +1,6 @@
 <?php
-namespace App/DBObjects;
+namespace App\DBObjects;
+use App\DBManager;
 
 class Product {
     private $id;
@@ -8,7 +9,7 @@ class Product {
     private $tag;
     private $ingredients; 
 
-    function __construct($id, $nfcID, $description, $tag, $ingredients) {
+    public function __construct($id, $nfcID, $description, $tag, $ingredients) {
         $this->id = $id;
         $this->nfcID = $nfcID;
         $this->description = $description;
@@ -16,23 +17,32 @@ class Product {
         $this->ingredients = $ingredients; 
     }
 
-    function getID() {
+    public static function createFromDB($product) {
+        $ingredients = DBManager::selectProductIngredients("1");
+        return new Product($product->product_id, $product->nfc_id, $product->description, $product->tag, $ingredients); 
+    }
+
+    public function getID() {
         return $this->id; 
     }
 
-    function getNFCID() {
+    public function getNFCID() {
         return $this->nfcID; 
     }
 
-    function getDescription() {
+    public function getDescription() {
         return $this->description; 
     }
 
-    function getIngredients() {
+    public function getTag() {
+        return $this->tag; 
+    }
+
+    public function getIngredients() {
         return $this->ingredients; 
     }
 
-    function isRestricted($ingredient) {
+    public function isRestricted($ingredient) {
         return true; 
     }
 }

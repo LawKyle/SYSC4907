@@ -29,7 +29,7 @@
               </div>
               <div class="row">
                 <div class="col text-center">
-                  Profile
+                  My Profile
                 </div>
               </div>
             </a>
@@ -60,10 +60,26 @@
           </div>
         </div>
         <div class="searchForm col-md">
-          <form class="form-inline" method="GET">
-              <input id="search" name="search" type="text" class="form-control" placeholder="Search for products ...">
-              <button id="searchBtn" type="submit" class="btn btn-outline-primary">Search</button>
-          </form>
+          <div class="row">
+              <div class="col">
+                  <form class="form-inline" method="GET">
+                      <input id="search" name="search" type="text" class="form-control" placeholder="Search for products ...">
+                      <button id="searchBtn" type="submit" class="btn btn-outline-primary">Search</button>
+                  </form>
+              </div>
+          </div>
+          <div class="row">
+            <div class="col">
+                @foreach ($products as $product)
+                    <p>{{ $product->getID() }}</p>
+                    <p>{{ $product->getNFCID() }}</p>
+                    <p>{{ $product->getDescription() }}</p>
+                    <p>{{ $product->getTag() }}</p>
+
+                    <hr>
+                @endforeach
+            </div>
+          </div>
         </div>
       </div>
 
