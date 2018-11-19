@@ -63,13 +63,14 @@ class DBManager extends Model
     }
 
     public static function selectProductIngredients($id) {
-      /*$dbRows = []; 
+      $dbRows = []; 
       $ingredientIDs = self::selectColumnWhere("Product_Ingredent", "ingredent_id", "product_id", $id);
       foreach($ingredientIDs as $ingID) {
-        $productRow =  DB::table("Product")->where("product_id", $ingID)->get();
-        array_push($dbRows, $productRow); 
+        $ingredRow =  DB::table("Ingredent")->where("ingredent_id", $ingID)->get();
+        array_push($dbRows, $ingredRow[0]->name); 
       }
-      return self::dbRowToObject("App\DBObjects\Product", $dbRows); */
+      return $dbRows; 
+
     }
 
 

@@ -18,7 +18,7 @@ class Product {
     }
 
     public static function createFromDB($product) {
-        $ingredients = DBManager::selectProductIngredients("1");
+        $ingredients = DBManager::selectProductIngredients($product->product_id);
         return new Product($product->product_id, $product->nfc_id, $product->description, $product->tag, $ingredients); 
     }
 

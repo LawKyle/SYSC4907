@@ -75,7 +75,10 @@
                     <p>{{ $product->getNFCID() }}</p>
                     <p>{{ $product->getDescription() }}</p>
                     <p>{{ $product->getTag() }}</p>
-
+                    <h4>Ingredients</h4>
+                    @foreach ($product->getIngredients() as $ing)
+                        <p>{{ $ing }}</p>
+                    @endforeach
                     <hr>
                 @endforeach
             </div>

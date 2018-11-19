@@ -3,7 +3,8 @@
     "",
     "\\app",
     "\\app\\DBObjects",
-    "\\resources",
+    "\\app\\Http",
+    "\\app\\Http\\Controllers",
     "\\resources\\views"
   ],
   "SelectedNode": "\\app\\DBObjects\\Product.php",
