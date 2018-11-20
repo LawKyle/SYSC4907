@@ -20,3 +20,5 @@ Route::get('main', 'SearchController@test');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('department/{dept}', 'SearchController@searchDepartment'); 

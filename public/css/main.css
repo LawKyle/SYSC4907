@@ -38,6 +38,18 @@ body {
     padding: 0px 10px;
 }
 
+.sidenav-dept {
+  height: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px;
+  margin-left: 200px; 
+}
+
 .searchForm {
   padding-top: 20px;
   margin-left: 100px;
@@ -50,6 +62,10 @@ body {
 
 #searchBtn {
   width: 100px;
+}
+
+.content {
+    margin-top: 50px; 
 }
 
 @media screen and (max-height: 450px) {

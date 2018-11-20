@@ -1,3 +1,7 @@
+<?php
+    use App\Enums\Department; 
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -68,7 +72,14 @@
                   </form>
               </div>
           </div>
-          <div class="row">
+          <div class="row content">
+            <div class="col-md-3">
+                <div class="sidenav-dept">
+                  @foreach(Department::getDepartments() as $dept)
+                    <a href="/department/{{$dept}}"> {{ $dept }} </a><br>
+                  @endforeach
+                </div>
+            </div>
             <div class="col">
                 @foreach ($products as $product)
                     <p>{{ $product->getID() }}</p>
