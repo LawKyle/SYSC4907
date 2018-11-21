@@ -66,8 +66,9 @@
         <div class="searchForm col-md">
           <div class="row">
               <div class="col">
-                  <form class="form-inline" method="GET">
-                      <input id="search" name="search" type="text" class="form-control" placeholder="Search for products ...">
+                  <form class="form-inline" action="{{action('SearchController@searchBar')}}" method="GET">
+                      @csrf
+                      <input id="query" name="query" type="text" class="form-control" placeholder="Search for products ...">
                       <button id="searchBtn" type="submit" class="btn btn-outline-primary">Search</button>
                   </form>
               </div>

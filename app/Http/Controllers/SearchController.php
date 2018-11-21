@@ -25,4 +25,31 @@ class SearchController extends Controller
     }
     return view('main', ['products' => $deptProducts]);
   }
+
+  public function searchBar(Request $request) {
+    $query = $request->input('query'); 
+    $products = DBManager::select("Product", "App\DBObjects\Product");
+
+    $searchProducts = [];
+    foreach($products as $product) {
+        if((stripos($product->getDescription(), $query)) !== false && !$this->containsProduct($searchProducts, $product)) {
+            array_push($searchProducts, $product);
+        }
+        foreach((array)$product->getIngredients() as $ing) {
+            if((stripos($ing, $query)) !== false && !$this->containsProduct($searchProducts, $product)) {
+                array_push($searchProducts, $product);
+            }
+        }
+    }
+
+    if(empty($searchProducts)) return view('main', ['products' => $products]);
+    else return view('main', ['products' => $searchProducts]);
+  }
+
+  private function containsProduct($listProducts, $product) {
+    foreach($listProducts as $prod) {
+        if($prod->getDescription() == $product->getDescription()) return true;  
+    }
+    return false; 
+  }
 }

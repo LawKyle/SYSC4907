@@ -3,11 +3,14 @@
     "",
     "\\app",
     "\\app\\DBObjects",
+    "\\app\\Enums",
     "\\app\\Http",
     "\\app\\Http\\Controllers",
+    "\\public",
+    "\\public\\css",
     "\\resources",
-    "\\resources\\views"
+    "\\routes"
   ],
-  "SelectedNode": "\\app\\DBObjects\\Product.php",
+  "SelectedNode": "\\app\\Http\\Controllers\\SearchController.php",
   "PreviewInSolutionExplorer": false
 }
