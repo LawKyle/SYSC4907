@@ -9,8 +9,8 @@
     "\\public",
     "\\public\\css",
     "\\resources",
-    "\\routes"
+    "\\resources\\views"
   ],
-  "SelectedNode": "\\app\\Http\\Controllers\\SearchController.php",
+  "SelectedNode": "\\app\\DBManager.php",
   "PreviewInSolutionExplorer": false
 }

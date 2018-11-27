@@ -4,20 +4,20 @@ body {
 
 .sidenav {
     height: 100%;
-    width: 300px;
+    width: auto;
     position: fixed;
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #2C3E50;
+    background-color: #081018;
     overflow-x: hidden;
-    padding-top: 20px;
+    padding: 20px 20px 0px;
 }
 
 .sidenav a {
     padding: 20px 0px;
     text-decoration: none;
-    font-size: 25px;
+    font-size: 22px;
     color: white;
     display: block;
 }
@@ -38,21 +38,17 @@ body {
     padding: 0px 10px;
 }
 
-.sidenav-dept {
-  height: 100%;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: #111;
-  overflow-x: hidden;
-  padding-top: 20px;
-  margin-left: 200px; 
+.departments {
+    background-color: #122335;
+    font-size: 22px; 
+}
+
+.departments a {
+    color: white; 
 }
 
 .searchForm {
   padding-top: 20px;
-  margin-left: 100px;
 }
 
 #query {
@@ -65,10 +61,11 @@ body {
 }
 
 .content {
-    margin-top: 50px; 
+    margin-top: 10px; 
 }
 
-@media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
+#sidebar-dept {
+  width: 90px !important;
+  background-color: #000 !important;
+  min-height: calc(100vh - 56px);
 }
