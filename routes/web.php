@@ -22,4 +22,5 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/search', 'SearchController@searchBar'); 
-Route::get('department/{dept}', 'SearchController@searchDepartment'); 
+Route::get('department/{dept}', 'SearchController@searchDepartment');
+Route::get('department/1/tappedProducts', 'SearchController@getTappedProducts'); 

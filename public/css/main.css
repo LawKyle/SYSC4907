@@ -65,7 +65,7 @@ body {
 }
 
 #sidebar-dept {
-  width: 90px !important;
+  width: 160px !important;
   background-color: #000 !important;
   min-height: calc(100vh - 56px);
 }

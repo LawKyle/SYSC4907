@@ -32,7 +32,7 @@ class SearchController extends Controller
 
     $searchProducts = [];
     foreach($products as $product) {
-        if((stripos($product->getDescription(), $query)) !== false && !$this->containsProduct($searchProducts, $product)) {
+        if(((stripos($product->getDescription(), $query)) !== false || (stripos($product->getName(), $query)) !== false) && !$this->containsProduct($searchProducts, $product)) {
             array_push($searchProducts, $product);
         }
         foreach((array)$product->getIngredients() as $ing) {
@@ -42,7 +42,10 @@ class SearchController extends Controller
         }
     }
 
-    if(empty($searchProducts)) return view('main', ['products' => $products]);
+    if(empty($searchProducts)) {
+        $request->session()->flash('status', 'No products with ' . $query . ' found!');
+        return view('main', ['products' => $products]);
+    }
     else return view('main', ['products' => $searchProducts]);
   }
 
@@ -52,4 +55,17 @@ class SearchController extends Controller
     }
     return false; 
   }
+
+  public function getTappedProducts(Request $request) {
+      $products = DBManager::select("Product", "App\DBObjects\Product");
+
+      //$userID = $request->input('userID');
+      $userID = 1; 
+      $tappedProducts = DBManager::selectTappedProducts($userID);
+      if(empty($tappedProducts)) {
+        $request->session()->flash('status', 'No tapped products found!');
+        return view('main', ['products' => $products]);
+      }
+        else return view('main', ['products' => $tappedProducts]);
+      }
 }

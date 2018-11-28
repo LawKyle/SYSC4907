@@ -3,14 +3,14 @@
     "",
     "\\app",
     "\\app\\DBObjects",
-    "\\app\\Enums",
-    "\\app\\Http",
-    "\\app\\Http\\Controllers",
+    "\\config",
+    "\\database",
     "\\public",
-    "\\public\\css",
+    "\\public\\js",
     "\\resources",
-    "\\resources\\views"
+    "\\resources\\js",
+    "\\routes"
   ],
-  "SelectedNode": "\\app\\DBManager.php",
+  "SelectedNode": "\\.env",
   "PreviewInSolutionExplorer": false
 }

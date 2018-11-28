@@ -31,19 +31,19 @@ class DBManager extends Model
   /**
    *
    * Select row from $table with $id
-   * @param $view the view requesting the object (LED, Driver or Board)
+   * @param $view the view requesting the object 
    *        $id id of requested object
    * @return   $object with $id
    *
    */
     public static function selectRowsId($table, $view, $id_col, $id) {
-      $dbRows = DB::table($table)->where($id_col, $id)->get()->first(); 
+      $dbRows = DB::table($table)->where($id_col, $id)->get();
       return self::dbRowToObject($view, $dbRows);
     }
 
    /**
    * Select unique values from $col with where condition
-   * @param $view the view requesting the object (LED, Driver or Board)
+   * @param $view the view requesting the object 
    *        $col values to select frmo
    *        $whereName column to select $whereVal from
    *        $whereVal value from column
@@ -56,7 +56,7 @@ class DBManager extends Model
       $values = [];
       $rows = DB::select($queryString);
       foreach($rows as $item) {
-          array_push($values, $item->ingredent_id); 
+          array_push($values, $item->$col); 
       }
         
       return $values;  
@@ -71,6 +71,16 @@ class DBManager extends Model
       }
       return $dbRows; 
 
+    }
+
+    public static function selectTappedProducts($id) {
+      $products = []; 
+      $productIDs = self::selectColumnWhere("Person_Product", "product_id", "user_id", 1);
+      foreach($productIDs as $product_id) {
+        $product = self::selectRowsId("Product", "App\DBObjects\Product", "product_id", $product_id);
+       array_push($products, $product[0]);
+      }
+      return $products; 
     }
 
 

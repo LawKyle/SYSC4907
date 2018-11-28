@@ -14,7 +14,15 @@
     <!-- Bootstrap core CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
 
-    <link href="{{asset('bootstrap-4.1.3-dist/css/bootstrap.min.css')}}" rel="stylesheet">
+        <!-- Bootstrap core CSS-->
+    <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="{{ asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
+
+    <!-- Page level plugin CSS-->
+    <link href="{{ asset('vendor/datatables/dataTables.bootstrap4.css')}}" rel="stylesheet">
+
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
     <link href="{{asset('css/sb-admin.css')}}" rel="stylesheet">
 
@@ -88,15 +96,15 @@
       <!-- Sidebar -->
       <ul class="sidebar navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="{{ action('SearchController@test') }}">
-            <i class="fas fa-shopping-cart"></i>
-            <span>Products</span></a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link" href="index.html">
             <i class="fas fa-user-circle"></i>
             <span>My Profile</span>
           </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ action('SearchController@test') }}">
+            <i class="fas fa-shopping-cart"></i>
+            <span>Products</span></a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="index.html">
@@ -113,11 +121,19 @@
               <a class="nav-link" href="/department/{{$dept}}">{{ $dept }}</a>
             </li>
             @endforeach
+            <li class="nav-item">
+              <a class="nav-link" href="{{action('SearchController@getTappedProducts')}}">Tapped Products</a>
+            </li>
       </ul>
 
       <div id="content-wrapper">
 
         <div class="container-fluid">
+            @if (session('status'))
+                <div class="alert alert-danger">
+                    {{ session('status') }}
+                </div>
+            @endif
 
           <!-- Breadcrumbs-->
 
@@ -125,6 +141,7 @@
           <div class="row content">
             <div class="col">
                 @foreach ($products as $product)
+                    <p>{{ $product->getName() }}</p>
                     <p>{{ $product->getID() }}</p>
                     <p>{{ $product->getNFCID() }}</p>
                     <p>{{ $product->getDescription() }}</p>
@@ -191,7 +208,7 @@
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
     <!-- Custom scripts for all pages-->
     <script type="text/javascript" src="{{ asset('js/sb-admin.js')}}"></script>
     <script type="text/javascript" src="{{ asset('js/sb-admin.min.js')}}"></script>

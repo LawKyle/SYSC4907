@@ -6,20 +6,22 @@ class Product {
     private $id;
     private $nfcID;
     private $description;
+    private $name; 
     private $tag;
     private $ingredients; 
 
-    public function __construct($id, $nfcID, $description, $tag, $ingredients) {
+    public function __construct($id, $nfcID, $description, $name, $tag, $ingredients) {
         $this->id = $id;
         $this->nfcID = $nfcID;
         $this->description = $description;
+        $this->name = $name; 
         $this->tag = $tag; 
         $this->ingredients = $ingredients; 
     }
 
     public static function createFromDB($product) {
         $ingredients = DBManager::selectProductIngredients($product->product_id);
-        return new Product($product->product_id, $product->nfc_id, $product->description, $product->tag, $ingredients); 
+        return new Product($product->product_id, $product->nfc_id, $product->description, $product->name, $product->tag, $ingredients); 
     }
 
     public function getID() {
@@ -32,6 +34,10 @@ class Product {
 
     public function getDescription() {
         return $this->description; 
+    }
+
+    public function getName() {
+        return $this->name; 
     }
 
     public function getTag() {
