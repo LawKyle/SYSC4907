@@ -3,14 +3,15 @@
     "",
     "\\app",
     "\\app\\DBObjects",
-    "\\config",
+    "\\app\\Http",
+    "\\app\\Http\\Controllers",
     "\\database",
     "\\public",
+    "\\public\\css",
     "\\public\\js",
     "\\resources",
-    "\\resources\\js",
-    "\\routes"
+    "\\resources\\views"
   ],
-  "SelectedNode": "\\.env",
+  "SelectedNode": "\\app\\DBObjects\\Product.php",
   "PreviewInSolutionExplorer": false
 }
