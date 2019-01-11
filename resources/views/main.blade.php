@@ -137,7 +137,7 @@
 
           <!-- Breadcrumbs-->
 
-          <!-- Page Content 
+          <!-- Page Content -->
           <div class="row content">
             <div class="col">
                 @foreach ($products as $product)
@@ -152,7 +152,7 @@
                     @endforeach
                     <hr>
                 @endforeach
-            </div> -->
+            </div>
 
         </div>
         <!-- /.container-fluid -->
