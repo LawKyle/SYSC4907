@@ -43,7 +43,7 @@ return [
             'driver' => 'mysql',
             'host' => env('DB_HOST', 'lawrynuik.ca'),
             'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'FourthYearProject'),
+            'database' => env('DB_DATABASE', 'FinalProjectDB'),
             'username' => env('DB_USERNAME', 'Kshamina'),
             'password' => env('DB_PASSWORD', 'KshPass'),
             'unix_socket' => env('DB_SOCKET', ''),
