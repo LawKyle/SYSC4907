@@ -9,6 +9,44 @@ use App\Enums\Department;
 
 class SearchController extends Controller
 {
+
+    public function loginTest(Request $request) {
+       /* $client = new \GuzzleHttp\Client();
+        $URI = 'http://74.12.191.252:8000/login/'; 
+       // $params['headers'] = ['Content-Type' => 'application/json', 'Authorization' => 'tokendeb358ae6cbc43f3ec2373d67c9f590f7bac0ae0', 'X-CSRF-TOKEN' => csrf_token() ];
+        $params['form_params'] = array('username' => 'admin', 'password' => 'projectPass');
+        $response = $client->post($URI, $params);
+        var_dump($response->getBody());
+        */
+
+        $url = 'http://74.12.191.252:8000/login/';
+        $data = array('username' => $request->username, 'password' => $request->password);
+
+        // use key 'http' even if you send the request to https://...
+        $options = array(
+            'http' => array(
+                'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+                'method'  => 'POST',
+                'content' => http_build_query($data)
+            )
+        );
+        
+            $context  = stream_context_create($options);
+        try {
+            $authorizationToken = @file_get_contents($url, false, $context);
+            if ($authorizationToken === FALSE) {
+               return view("welcome");  
+            }
+        }
+        catch(Exception $e) {
+            return view("welcome");  
+        }
+
+        var_dump($authorizationToken);
+
+
+    }
+
   public function test()
   {
     $products = DBManager::select("Product", "App\DBObjects\Product");
@@ -67,5 +105,5 @@ class SearchController extends Controller
         return view('main', ['products' => $products]);
       }
         else return view('main', ['products' => $tappedProducts]);
-      }
+   }
 }
