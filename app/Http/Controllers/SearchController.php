@@ -25,7 +25,8 @@ class SearchController extends Controller
             return response("FAIL");
         }
 
-        return response(DBManager::postRequestToAPI($this->token, [], 'shoppingList/'))->cookie('token', $authorizationToken['token'], 60);
+        Cookie::queue('token', $authorizationToken['token'], 60); 
+        return response(DBManager::postRequestToAPI($this->token, [], 'shoppingList/'));
 
     }
 
@@ -77,7 +78,8 @@ class SearchController extends Controller
   }
 
   public function getTappedProducts(Request $request) {
-       $tappedProductsArr = DBManager::postRequestToAPI($this->token, [], 'product/'); 
+       if(!Cookie::get('token')) return redirect("/"); 
+       $tappedProductsArr = DBManager::postRequestToAPI(Cookie::get('token'), [], 'product/'); 
         $products = []; 
         foreach($tappedProductsArr as $product) {
             array_push($products, Product::createFromJSON($product)); 

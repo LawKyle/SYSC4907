@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->middleware('APIToken');
 
 Route::get('main', 'SearchController@test')->middleware('APIAuth');
 

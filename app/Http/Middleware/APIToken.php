@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Middleware;
+use Illuminate\Support\Facades\Cookie; 
 
 use Closure;
 
@@ -15,10 +16,10 @@ class APIToken
      */
     public function handle($request, Closure $next)
     {
-        if ($request->api_token != env('API_KEY')) {
-            return response()->json('Unauthorized', 401);
-        } 
-
-        return $next($request);
+         if(Cookie::has('token') && !empty(Cookie::get('token'))) {
+            var_dump("pass"); 
+            return redirect("/department/1/tappedProducts"); 
+        }
+        return $next($request); 
     }
 }
