@@ -5,45 +5,27 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\DBManager;
 use App\DBObjects\Product;
-use App\Enums\Department; 
+use App\Enums\Department;
+use Illuminate\Support\Facades\Cookie; 
 
 class SearchController extends Controller
 {
+    private $token = "deb358ae6cbc43f3ec2373d67c9f590f7bac0ae0"; //TODO remove this and get from user!!
 
     public function loginTest(Request $request) {
-       /* $client = new \GuzzleHttp\Client();
-        $URI = 'http://74.12.191.252:8000/login/'; 
-       // $params['headers'] = ['Content-Type' => 'application/json', 'Authorization' => 'tokendeb358ae6cbc43f3ec2373d67c9f590f7bac0ae0', 'X-CSRF-TOKEN' => csrf_token() ];
-        $params['form_params'] = array('username' => 'admin', 'password' => 'projectPass');
-        $response = $client->post($URI, $params);
-        var_dump($response->getBody());
-        */
-
-        $url = 'http://74.12.191.252:8000/login/';
+        $url = env('APP_API') . 'login/';
         $data = array('username' => $request->username, 'password' => $request->password);
+        $authorizationToken = DBManager::postRequestToAPI(null, $data, 'login/');
+        $cookie = null; 
 
-        // use key 'http' even if you send the request to https://...
-        $options = array(
-            'http' => array(
-                'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-                'method'  => 'POST',
-                'content' => http_build_query($data)
-            )
-        );
-        
-            $context  = stream_context_create($options);
-        try {
-            $authorizationToken = @file_get_contents($url, false, $context);
-            if ($authorizationToken === FALSE) {
-               return view("welcome");  
-            }
-        }
-        catch(Exception $e) {
-            return view("welcome");  
+        //$authorizationToken = json_decode($authorizationToken, true)['token'];
+        if($authorizationToken == 'FAIL') {
+            var_dump('here');
+            setcookie('token', '', time() - 60);
+            return response("FAIL");
         }
 
-        var_dump($authorizationToken);
-
+        return response(DBManager::postRequestToAPI($this->token, [], 'shoppingList/'))->cookie('token', $authorizationToken['token'], 60);
 
     }
 
@@ -95,15 +77,12 @@ class SearchController extends Controller
   }
 
   public function getTappedProducts(Request $request) {
-      $products = DBManager::select("Product", "App\DBObjects\Product");
+       $tappedProductsArr = DBManager::postRequestToAPI($this->token, [], 'product/'); 
+        $products = []; 
+        foreach($tappedProductsArr as $product) {
+            array_push($products, Product::createFromJSON($product)); 
+        }
 
-      //$userID = $request->input('userID');
-      $userID = 1; 
-      $tappedProducts = DBManager::selectTappedProducts($userID);
-      if(empty($tappedProducts)) {
-        $request->session()->flash('status', 'No tapped products found!');
         return view('main', ['products' => $products]);
-      }
-        else return view('main', ['products' => $tappedProducts]);
    }
 }

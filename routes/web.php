@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('main', 'SearchController@test');
+Route::get('main', 'SearchController@test')->middleware('APIAuth');
 
 Auth::routes();
 
@@ -25,4 +25,4 @@ Route::get('/search', 'SearchController@searchBar');
 Route::get('department/{dept}', 'SearchController@searchDepartment');
 Route::get('department/1/tappedProducts', 'SearchController@getTappedProducts'); 
 
-Route::post('loginTest', 'SearchController@loginTest');
+Route::post('loginTest', 'SearchController@loginTest')->middleware('APIAuth');

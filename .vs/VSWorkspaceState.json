@@ -2,16 +2,19 @@
   "ExpandedNodes": [
     "",
     "\\app",
-    "\\app\\DBObjects",
     "\\app\\Http",
     "\\app\\Http\\Controllers",
+    "\\app\\Http\\Controllers\\Auth",
+    "\\app\\Http\\Middleware",
+    "\\app\\Providers",
+    "\\config",
     "\\database",
-    "\\public",
-    "\\public\\css",
-    "\\public\\js",
+    "\\database\\migrations",
+    "\\database\\seeds",
     "\\resources",
-    "\\resources\\views"
+    "\\resources\\views",
+    "\\routes"
   ],
-  "SelectedNode": "\\app\\DBObjects\\Product.php",
+  "SelectedNode": "\\app\\Http\\Kernel.php",
   "PreviewInSolutionExplorer": false
 }

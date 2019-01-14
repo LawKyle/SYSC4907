@@ -1,6 +1,7 @@
 <?php
 namespace App\DBObjects;
 use App\DBManager;
+use Ingredient; 
 
 class Product {
     private $id;
@@ -22,6 +23,26 @@ class Product {
     public static function createFromDB($product) {
         $ingredients = DBManager::selectProductIngredients($product->product_id);
         return new Product($product->product_id, $product->nfc_id, $product->description, $product->name, $product->tag, $ingredients); 
+    }
+
+    public static function createFromJSON($product) {
+        $name = $product['name'];
+        $nfcID = $product['nfc_id'];
+        $productID = $product['product_id'];
+
+        $desc = null;
+        if(isset($product['description'])) $desc = $product['description'];
+
+        $tag = null;
+        if(isset($product['tag'])) $desc = $product['tag'];
+
+        $ingredients = [];
+        foreach($product['ingredient'] as $ing) {
+            //$ingredient = new Ingredient($ing['ingredient_id'], $ing['name'], null);
+            array_push($ingredients, $ing['name']); 
+        }
+
+        return new Product($productID, $nfcID, $desc, $name, $tag, $ingredients); 
     }
 
     public function getID() {
