@@ -34,7 +34,7 @@ class Product {
         if(isset($product['description'])) $desc = $product['description'];
 
         $tag = null;
-        if(isset($product['tag'])) $desc = $product['tag'];
+        if(isset($product['tags'])) $tag = $product['tags'];
 
         $ingredients = [];
         foreach($product['ingredient'] as $ing) {

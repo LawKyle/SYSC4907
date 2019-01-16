@@ -40,7 +40,6 @@ class SearchController extends Controller
     foreach($productsJSON as $product) {
         array_push($products, Product::createFromJSON($product)); 
     }
-
     return view('main', ['products' => $products]);
   }
 
@@ -55,12 +54,13 @@ class SearchController extends Controller
         array_push($products, Product::createFromJSON($product)); 
     }
 
-    if($dept == Department::ALL) return view('main', ['products' => $products]); return view('main', ['products' => $products]);
+    if($dept == Department::ALL) return view('main', ['products' => $products]); 
 
     $deptProducts = []; 
     foreach($products as $prod) {
-        if($prod->getTag() == strToLower($dept)) array_push($deptProducts, $prod); 
+        if($prod->getTag() == strToUpper($dept)) array_push($deptProducts, $prod);
     }
+
     return view('main', ['products' => $deptProducts]);
   }
 
