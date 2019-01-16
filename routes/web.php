@@ -27,3 +27,4 @@ Route::get('department/1/tappedProducts', 'SearchController@getTappedProducts');
 Route::get('myGroceryList', 'SearchController@shoppingList');
 
 Route::post('loginTest', 'SearchController@loginTest')->middleware('APIAuth');
+Route::get('product/{id}', 'SearchController@getProduct');

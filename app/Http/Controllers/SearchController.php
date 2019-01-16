@@ -35,11 +35,7 @@ class SearchController extends Controller
     //$products = DBManager::select("Product", "App\DBObjects\Product");
     //return view('main', ['products' => $products]);
     if(!Cookie::get('token')) return redirect("/"); 
-    $productsJSON = DBManager::postRequestToAPI(Cookie::get('token'), [], 'productList/'); 
-    $products = []; 
-    foreach($productsJSON as $product) {
-        array_push($products, Product::createFromJSON($product)); 
-    }
+     $products = self::getAllProducts();
     return view('main', ['products' => $products]);
   }
 
@@ -48,11 +44,7 @@ class SearchController extends Controller
     //if($dept == Department::ALL) return view('main', ['products' => $products]);
 
     if(!Cookie::get('token')) return redirect("/"); 
-    $productsJSON = DBManager::postRequestToAPI(Cookie::get('token'), [], 'productList/'); 
-    $products = []; 
-    foreach($productsJSON as $product) {
-        array_push($products, Product::createFromJSON($product)); 
-    }
+    $products = self::getAllProducts(); 
 
     if($dept == Department::ALL) return view('main', ['products' => $products]); 
 
@@ -99,7 +91,8 @@ class SearchController extends Controller
        $tappedProductsArr = DBManager::postRequestToAPI(Cookie::get('token'), [], 'product/'); 
         $products = []; 
         foreach($tappedProductsArr as $product) {
-            array_push($products, Product::createFromJSON($product)); 
+            $ingredients = $ingredients = self::getAllIngredients($product); 
+            array_push($products, Product::createFromJSON($product, $ingredients)); 
         }
 
         return view('main', ['products' => $products]);
@@ -113,11 +106,44 @@ class SearchController extends Controller
         foreach($shoppingLists as $list) {
             $products = []; 
             foreach($list['product'] as $product) {
-                array_push($products, Product::createFromJSON($product)); 
+                $ingredients = self::getAllIngredients($product); 
+                array_push($products, Product::createFromJSON($product, $ingredients)); 
             }
             array_push($lists, $products); 
         }
 
         return view('groceryLists', ['lists' => $lists]); 
+   }
+
+   public function getProduct($id) {
+       if(!Cookie::get('token')) return redirect("/"); 
+        $productsJSON = DBManager::postRequestToAPI(Cookie::get('token'), [], 'productList/'); 
+        foreach($productsJSON as $product) {
+            $ingredients = self::getAllIngredients($product); 
+            $product = Product::createFromJSON($product, $ingredients);
+            if($product->getID() == $id) return view('product-single', ['product' => $product]);
+        }
+   }
+
+   private static function getAllProducts() {
+        $productsJSON = DBManager::postRequestToAPI(Cookie::get('token'), [], 'productList/'); 
+        $products = []; 
+        foreach($productsJSON as $product) {
+            $ingredients = self::getAllIngredients($product);              
+            array_push($products, Product::createFromJSON($product, $ingredients)); 
+        }
+        return $products; 
+   }
+
+   private static function getAllIngredients($product) {
+        $ingredients = [];
+        foreach($product['ingredient'] as $id) {
+            $data = array('ingredient_id' => $id);
+            $ingredient = DBManager::postRequestToAPI(Cookie::get('token'), $data, 'ingredientList/');
+            foreach($ingredient as $ing) {
+                array_push($ingredients, $ing['name']);
+            }
+        }
+        return array_unique($ingredients); 
    }
 }

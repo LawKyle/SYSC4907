@@ -25,7 +25,7 @@ class Product {
         return new Product($product->product_id, $product->nfc_id, $product->description, $product->name, $product->tag, $ingredients); 
     }
 
-    public static function createFromJSON($product) {
+    public static function createFromJSON($product, $ingredients) {
         $name = $product['name'];
         $nfcID = $product['nfc_id'];
         $productID = $product['product_id'];
@@ -36,11 +36,11 @@ class Product {
         $tag = null;
         if(isset($product['tags'])) $tag = $product['tags'];
 
-        $ingredients = [];
+        /*$ingredients = [];
         foreach($product['ingredient'] as $ing) {
             //$ingredient = new Ingredient($ing['ingredient_id'], $ing['name'], null);
             array_push($ingredients, $ing['name']); 
-        }
+        }*/
 
         return new Product($productID, $nfcID, $desc, $name, $tag, $ingredients); 
     }
