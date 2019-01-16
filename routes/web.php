@@ -23,6 +23,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/search', 'SearchController@searchBar'); 
 Route::get('department/{dept}', 'SearchController@searchDepartment');
-Route::get('department/1/tappedProducts', 'SearchController@getTappedProducts'); 
+Route::get('department/1/tappedProducts', 'SearchController@getTappedProducts');
+Route::get('myGroceryList', 'SearchController@shoppingList');
 
 Route::post('loginTest', 'SearchController@loginTest')->middleware('APIAuth');

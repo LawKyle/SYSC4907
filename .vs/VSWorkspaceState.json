@@ -2,19 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\app",
+    "\\app\\DBObjects",
     "\\app\\Http",
     "\\app\\Http\\Controllers",
     "\\app\\Http\\Controllers\\Auth",
     "\\app\\Http\\Middleware",
-    "\\app\\Providers",
-    "\\config",
-    "\\database",
-    "\\database\\migrations",
-    "\\database\\seeds",
     "\\resources",
     "\\resources\\views",
     "\\routes"
   ],
-  "SelectedNode": "\\app\\Http\\Kernel.php",
+  "SelectedNode": "\\app\\Http\\Middleware\\APIToken.php",
   "PreviewInSolutionExplorer": false
 }

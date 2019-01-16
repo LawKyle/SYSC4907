@@ -87,4 +87,20 @@ class SearchController extends Controller
 
         return view('main', ['products' => $products]);
    }
+
+   public function shoppingList(Request $request) {
+       if(!Cookie::get('token')) return redirect("/");
+        $shoppingLists = DBManager::postRequestToAPI(Cookie::get('token'), [], 'shoppingList/');
+        
+        $lists = []; 
+        foreach($shoppingLists as $list) {
+            $products = []; 
+            foreach($list['product'] as $product) {
+                array_push($products, Product::createFromJSON($product)); 
+            }
+            array_push($lists, $products); 
+        }
+
+        return view('groceryLists', ['lists' => $lists]); 
+   }
 }
