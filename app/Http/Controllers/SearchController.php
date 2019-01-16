@@ -32,13 +32,30 @@ class SearchController extends Controller
 
   public function test()
   {
-    $products = DBManager::select("Product", "App\DBObjects\Product");
+    //$products = DBManager::select("Product", "App\DBObjects\Product");
+    //return view('main', ['products' => $products]);
+    if(!Cookie::get('token')) return redirect("/"); 
+    $productsJSON = DBManager::postRequestToAPI(Cookie::get('token'), [], 'productList/'); 
+    $products = []; 
+    foreach($productsJSON as $product) {
+        array_push($products, Product::createFromJSON($product)); 
+    }
+
     return view('main', ['products' => $products]);
   }
 
   public function searchDepartment($dept){
-    $products = DBManager::select("Product", "App\DBObjects\Product");
-    if($dept == Department::ALL) return view('main', ['products' => $products]);
+    //$products = DBManager::select("Product", "App\DBObjects\Product");
+    //if($dept == Department::ALL) return view('main', ['products' => $products]);
+
+    if(!Cookie::get('token')) return redirect("/"); 
+    $productsJSON = DBManager::postRequestToAPI(Cookie::get('token'), [], 'productList/'); 
+    $products = []; 
+    foreach($productsJSON as $product) {
+        array_push($products, Product::createFromJSON($product)); 
+    }
+
+    if($dept == Department::ALL) return view('main', ['products' => $products]); return view('main', ['products' => $products]);
 
     $deptProducts = []; 
     foreach($products as $prod) {
