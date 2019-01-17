@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     return view('welcome');
-})->middleware('APIToken');
+});
 
 Route::get('main', 'SearchController@test');
 
@@ -26,7 +26,7 @@ Route::get('department/{dept}', 'SearchController@searchDepartment');
 Route::get('tappedProducts', 'SearchController@getTappedProducts');
 Route::get('myGroceryList', 'SearchController@shoppingList');
 
-Route::post('loginTest', 'SearchController@loginTest')->middleware('APIAuth');
+Route::post('loginTest', 'SearchController@loginTest')
 Route::get('product/{id}', 'SearchController@getProduct');
 Route::get('/logout', 'SearchController@logout');
 
