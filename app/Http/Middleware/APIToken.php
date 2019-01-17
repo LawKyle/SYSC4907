@@ -18,7 +18,7 @@ class APIToken
     {
          if(Cookie::has('token') && !empty(Cookie::get('token'))) {
             var_dump("pass"); 
-            return redirect("/department/1/tappedProducts"); 
+            return redirect("/tappedProducts"); 
         }
         return $next($request); 
     }

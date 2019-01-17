@@ -23,11 +23,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/search', 'SearchController@searchBar'); 
 Route::get('department/{dept}', 'SearchController@searchDepartment');
-Route::get('department/1/tappedProducts', 'SearchController@getTappedProducts');
+Route::get('tappedProducts', 'SearchController@getTappedProducts');
 Route::get('myGroceryList', 'SearchController@shoppingList');
 
 Route::post('loginTest', 'SearchController@loginTest')->middleware('APIAuth');
 Route::get('product/{id}', 'SearchController@getProduct');
 Route::get('/logout', 'SearchController@logout');
 
-Route::post('editProduct', 'SearchController@editProduct'); 
+Route::post('editProduct', 'SearchController@editProduct');
+Route::get('/myProfile', 'SearchController@profile'); 

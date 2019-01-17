@@ -68,8 +68,4 @@ class Product {
     public function getIngredients() {
         return $this->ingredients; 
     }
-
-    public function isRestricted($ingredient) {
-        return true; 
-    }
 }

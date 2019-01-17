@@ -95,7 +95,7 @@
       <!-- Sidebar -->
       <ul class="sidebar navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="department/All">
+          <a class="nav-link" href="{{ action('SearchController@profile') }}">
             <i class="fas fa-user-circle"></i>
             <span>My Profile</span>
           </a>

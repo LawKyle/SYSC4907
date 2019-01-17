@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\DBManager;
 use App\DBObjects\Product;
 use App\DBObjects\Ingredient;
+use App\DBObjects\Restriction;
 use App\Enums\Department;
 use Illuminate\Support\Facades\Cookie; 
 
@@ -92,10 +93,9 @@ class SearchController extends Controller
        $tappedProductsArr = DBManager::postRequestToAPI(Cookie::get('token'), [], 'product/'); 
         $products = []; 
         foreach($tappedProductsArr as $product) {
-            $ingredients = $ingredients = self::getAllIngredients($product); 
+            $ingredients = self::getAllIngredients3($product); 
             array_push($products, Product::createFromJSON($product, $ingredients)); 
         }
-
         return view('main', ['products' => $products]);
    }
 
@@ -149,6 +149,26 @@ class SearchController extends Controller
         return array_unique($ingredients); 
    }
 
+   private static function getAllIngredients2($product) {
+        $ingredients = [];
+        foreach($product['ingredients'] as $id) {
+            $data = array('ingredient_id' => $id);
+            $ingredient = DBManager::postRequestToAPI(Cookie::get('token'), $data, 'ingredient/');
+            array_push($ingredients, $ingredient[0]['name']);
+        }
+        return array_unique($ingredients); 
+   }
+
+      private static function getAllIngredients3($product) {
+        $ingredients = [];
+        foreach($product['ingredient'] as $ing) {
+            $data = array('ingredient_id' => $ing['ingredient_id']);
+            $ingredient = DBManager::postRequestToAPI(Cookie::get('token'), $data, 'ingredient/');
+            array_push($ingredients, $ingredient[0]['name']);
+        }
+        return array_unique($ingredients); 
+   }
+
    public static function getAllIng() {
         $ingredientsJSON = DBManager::postRequestToAPI(Cookie::get('token'), [], 'ingredientList/');
         $ingredients = [];
@@ -178,5 +198,17 @@ class SearchController extends Controller
         var_dump($data);
         var_dump(implode(",", $request->input('new_ingredientId'))); 
         return redirect(url('/') . "/product/" . $request->input('new_nfc_id')); 
+   }
+
+   public function profile() {
+        if(!Cookie::get('token')) return redirect("/");
+        $restrictionsJSON = DBManager::postRequestToAPI(Cookie::get('token'), [], 'restrictions/');
+
+        $restrictions = []; 
+        foreach($restrictionsJSON as $restrict) {
+            $ingredients = self::getAllIngredients2($restrict);
+            array_push($restrictions, Restriction::createFromJSON($restrict, $ingredients)); 
+        }
+        return view('profile', ['restrictions' => $restrictions]);
    }
 }
