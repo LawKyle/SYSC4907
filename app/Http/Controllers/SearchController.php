@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Cookie;
 
 class SearchController extends Controller
 {
-    private $token = "deb358ae6cbc43f3ec2373d67c9f590f7bac0ae0"; //TODO remove this and get from user!!
+    const TOKEN = "deb358ae6cbc43f3ec2373d67c9f590f7bac0ae0"; //TODO remove this and get from user!!
 
     public function loginTest(Request $request) {
         $url = env('APP_API') . 'login/';
@@ -28,7 +28,7 @@ class SearchController extends Controller
         }
 
         Cookie::queue('token', $authorizationToken['token'], 60); 
-        return response(DBManager::postRequestToAPI($this->token, [], 'shoppingList/'));
+        return response(DBManager::postRequestToAPI(self::TOKEN, [], 'shoppingList/'));
 
     }
 
@@ -45,7 +45,7 @@ class SearchController extends Controller
     //$products = DBManager::select("Product", "App\DBObjects\Product");
     //if($dept == Department::ALL) return view('main', ['products' => $products]);
 
-    if(!Cookie::get('token')) return redirect("/"); 
+    //if(!Cookie::get('token')) return redirect("/"); 
     $products = self::getAllProducts(); 
 
     if($dept == Department::ALL) return view('main', ['products' => $products]); 
@@ -90,7 +90,7 @@ class SearchController extends Controller
 
   public function getTappedProducts(Request $request) {
        //if(!Cookie::get('token')) return redirect("/"); 
-       $tappedProductsArr = DBManager::postRequestToAPI($this->token, [], 'product/'); 
+       $tappedProductsArr = DBManager::postRequestToAPI(self::TOKEN, [], 'product/'); 
         $products = []; 
         foreach($tappedProductsArr as $product) {
             $ingredients = self::getAllIngredients3($product); 
@@ -101,7 +101,7 @@ class SearchController extends Controller
 
    public function shoppingList(Request $request) {
        //if(!Cookie::get('token')) return redirect("/");
-        $shoppingLists = DBManager::postRequestToAPI($this->token, [], 'shoppingList/');
+        $shoppingLists = DBManager::postRequestToAPI(self::TOKEN, [], 'shoppingList/');
         
         $lists = []; 
         foreach($shoppingLists as $list) {
@@ -119,7 +119,7 @@ class SearchController extends Controller
    public function getProduct($id) {
        //if(!Cookie::get('token')) return redirect("/");
        $data = array('nfc_id' => $id); 
-       $productJSON = DBManager::postRequestToAPI($this->token, $data, 'product/');
+       $productJSON = DBManager::postRequestToAPI(self::TOKEN, $data, 'product/');
        $ingredients = [];
        foreach($productJSON[0]['ingredient'] as $ing) {
             array_push($ingredients, $ing["name"]); 
@@ -130,7 +130,7 @@ class SearchController extends Controller
    }
 
    private static function getAllProducts() {
-        $productsJSON = DBManager::postRequestToAPI($this->token, [], 'productList/'); 
+        $productsJSON = DBManager::postRequestToAPI(self::TOKEN, [], 'productList/'); 
         $products = []; 
         foreach($productsJSON as $product) {
             $ingredients = self::getAllIngredients($product);              
@@ -143,7 +143,7 @@ class SearchController extends Controller
         $ingredients = [];
         foreach($product['ingredient'] as $id) {
             $data = array('ingredient_id' => $id);
-            $ingredient = DBManager::postRequestToAPI($this->token, $data, 'ingredient/');
+            $ingredient = DBManager::postRequestToAPI(self::TOKEN, $data, 'ingredient/');
             array_push($ingredients, $ingredient[0]['name']);
         }
         return array_unique($ingredients); 
@@ -153,7 +153,7 @@ class SearchController extends Controller
         $ingredients = [];
         foreach($product['ingredients'] as $id) {
             $data = array('ingredient_id' => $id);
-            $ingredient = DBManager::postRequestToAPI($this->token, $data, 'ingredient/');
+            $ingredient = DBManager::postRequestToAPI(self::TOKEN, $data, 'ingredient/');
             array_push($ingredients, $ingredient[0]['name']);
         }
         return array_unique($ingredients); 
@@ -163,14 +163,14 @@ class SearchController extends Controller
         $ingredients = [];
         foreach($product['ingredient'] as $ing) {
             $data = array('ingredient_id' => $ing['ingredient_id']);
-            $ingredient = DBManager::postRequestToAPI($this->token, $data, 'ingredient/');
+            $ingredient = DBManager::postRequestToAPI(self::TOKEN, $data, 'ingredient/');
             array_push($ingredients, $ingredient[0]['name']);
         }
         return array_unique($ingredients); 
    }
 
    public static function getAllIng() {
-        $ingredientsJSON = DBManager::postRequestToAPI($this->token, [], 'ingredientList/');
+        $ingredientsJSON = DBManager::postRequestToAPI(self::TOKEN, [], 'ingredientList/');
         $ingredients = [];
         foreach($ingredientsJSON as $ing) {
             array_push($ingredients, Ingredient::createFromJSON($ing));
