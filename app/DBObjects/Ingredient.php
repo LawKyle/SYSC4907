@@ -2,15 +2,19 @@
 namespace App\DBObjects;
 use App\DBManager;
 
-class Product {
+class Ingredient {
     private $id;
     private $name;
-    private $productID
+    private $productID;
 
     public function __construct($id, $name, $productID) {
         $this->id = $id;
         $this->productID = $productID;
         $this->name = $name; 
+    }
+
+    public static function createFromJSON($ingredient) {
+        return new Ingredient($ingredient['ingredient_id'], $ingredient['name'], 0); 
     }
 
     public function getID() {

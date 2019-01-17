@@ -62,11 +62,28 @@ body {
 
 .content {
     margin-top: 10px;
-    margin-left: 20px; 
+    margin-left: 20px;
 }
 
 #sidebar-dept {
-  width: 160px !important;
-  background-color: #000 !important;
-  min-height: calc(100vh - 56px);
+    width: 160px !important;
+    background-color: #d1c4e9 !important;
+    min-height: calc(100vh - 56px);
+}
+
+.btn-primary-purple {
+    background-color: #6200ee;
+    color: white; 
+}
+
+.btn-primary-purple:hover {
+    background-color: #13002f;
+}
+
+.modal-body {
+    background-color: #d1c4e9;
+}
+
+.modal-header {
+    color: #6200ee;
 }

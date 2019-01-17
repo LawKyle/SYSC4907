@@ -6,11 +6,13 @@
     "\\app\\Http",
     "\\app\\Http\\Controllers",
     "\\app\\Http\\Controllers\\Auth",
-    "\\app\\Http\\Middleware",
+    "\\public",
+    "\\public\\css",
+    "\\public\\img",
     "\\resources",
     "\\resources\\views",
-    "\\routes"
+    "\\resources\\views\\layouts"
   ],
-  "SelectedNode": "\\app\\Http\\Middleware\\APIToken.php",
+  "SelectedNode": "\\resources\\views",
   "PreviewInSolutionExplorer": false
 }

@@ -16,4 +16,8 @@ class Department {
     public static function getDepartments() {
         return [self::ALL, self::PRODUCE, self::MEAT, self::DAIRY, self::BAKERY, self::ORGANIC, self::DELI, self::SEAFOOD, self::GROCERY]; 
     }
+
+    public static function getTags() {
+        return [self::PRODUCE, self::MEAT, self::DAIRY, self::BAKERY, self::ORGANIC, self::DELI, self::SEAFOOD, self::GROCERY]; 
+    }
 }

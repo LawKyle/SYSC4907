@@ -28,3 +28,6 @@ Route::get('myGroceryList', 'SearchController@shoppingList');
 
 Route::post('loginTest', 'SearchController@loginTest')->middleware('APIAuth');
 Route::get('product/{id}', 'SearchController@getProduct');
+Route::get('/logout', 'SearchController@logout');
+
+Route::post('editProduct', 'SearchController@editProduct'); 

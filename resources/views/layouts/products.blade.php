@@ -40,9 +40,9 @@
       <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" action="{{action('SearchController@searchBar')}}" method="GET">
         @csrf
         <div class="input-group">
-          <input name="query" type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+          <input name="query" type="text" class="form-control" placeholder="Search all products..." aria-label="Search" aria-describedby="basic-addon2">
           <div class="input-group-append">
-            <button class="btn btn-primary" type="button">
+            <button class="btn btn-primary-purple" type="button">
               <i class="fas fa-search"></i>
             </button>
           </div>
@@ -177,7 +177,7 @@
           <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="login.html">Logout</a>
+            <a class="btn btn-primary" href="{{action('SearchController@logout')}}">Logout</a>
           </div>
         </div>
       </div>

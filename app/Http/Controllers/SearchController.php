@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\DBManager;
 use App\DBObjects\Product;
+use App\DBObjects\Ingredient;
 use App\Enums\Department;
 use Illuminate\Support\Facades\Cookie; 
 
 class SearchController extends Controller
 {
-    private $token = "deb358ae6cbc43f3ec2373d67c9f590f7bac0ae0"; //TODO remove this and get from user!!
+    //private $token = "deb358ae6cbc43f3ec2373d67c9f590f7bac0ae0"; //TODO remove this and get from user!!
 
     public function loginTest(Request $request) {
         $url = env('APP_API') . 'login/';
@@ -58,14 +59,14 @@ class SearchController extends Controller
 
   public function searchBar(Request $request) {
     $query = $request->input('query'); 
-    $products = DBManager::select("Product", "App\DBObjects\Product");
+    $products = self::getAllProducts();
 
     $searchProducts = [];
     foreach($products as $product) {
-        if(((stripos($product->getDescription(), $query)) !== false || (stripos($product->getName(), $query)) !== false) && !$this->containsProduct($searchProducts, $product)) {
+        if(((stripos($product->getDescription(), $query)) !== false || (stripos($product->getName(), $query)) !== false) ) {
             array_push($searchProducts, $product);
         }
-        foreach((array)$product->getIngredients() as $ing) {
+        foreach((array)$product->getIngredients() as $ing) { 
             if((stripos($ing, $query)) !== false && !$this->containsProduct($searchProducts, $product)) {
                 array_push($searchProducts, $product);
             }
@@ -76,7 +77,7 @@ class SearchController extends Controller
         $request->session()->flash('status', 'No products with ' . $query . ' found!');
         return view('main', ['products' => $products]);
     }
-    else return view('main', ['products' => $searchProducts]);
+    return view('main', ['products' => $searchProducts]);
   }
 
   private function containsProduct($listProducts, $product) {
@@ -116,13 +117,16 @@ class SearchController extends Controller
    }
 
    public function getProduct($id) {
-       if(!Cookie::get('token')) return redirect("/"); 
-        $productsJSON = DBManager::postRequestToAPI(Cookie::get('token'), [], 'productList/'); 
-        foreach($productsJSON as $product) {
-            $ingredients = self::getAllIngredients($product); 
-            $product = Product::createFromJSON($product, $ingredients);
-            if($product->getID() == $id) return view('product-single', ['product' => $product]);
+       if(!Cookie::get('token')) return redirect("/");
+       $data = array('nfc_id' => $id); 
+       $productJSON = DBManager::postRequestToAPI(Cookie::get('token'), $data, 'product/');
+       $ingredients = [];
+       foreach($productJSON[0]['ingredient'] as $ing) {
+            array_push($ingredients, $ing["name"]); 
         }
+       $product = Product::createFromJSON($productJSON[0], $ingredients);
+       //return $productJSON[0]; 
+       return view('product-single', ['product' => $product]);
    }
 
    private static function getAllProducts() {
@@ -139,11 +143,40 @@ class SearchController extends Controller
         $ingredients = [];
         foreach($product['ingredient'] as $id) {
             $data = array('ingredient_id' => $id);
-            $ingredient = DBManager::postRequestToAPI(Cookie::get('token'), $data, 'ingredientList/');
-            foreach($ingredient as $ing) {
-                array_push($ingredients, $ing['name']);
-            }
+            $ingredient = DBManager::postRequestToAPI(Cookie::get('token'), $data, 'ingredient/');
+            array_push($ingredients, $ingredient[0]['name']);
         }
         return array_unique($ingredients); 
+   }
+
+   public static function getAllIng() {
+        $ingredientsJSON = DBManager::postRequestToAPI(Cookie::get('token'), [], 'ingredientList/');
+        $ingredients = [];
+        foreach($ingredientsJSON as $ing) {
+            array_push($ingredients, Ingredient::createFromJSON($ing));
+        }
+        return $ingredients; 
+   }
+
+   public function logout() {
+       setcookie('token', '', time() - 60);
+       return redirect("/"); 
+   }
+
+   public function editProduct(Request $request) {
+        //if(!Cookie::get('token')) return redirect("/"); 
+        $data = [];
+        $data['new_name'] = $request->input('new_name');
+        $data['nfc_id'] = $request->input('nfc_id');
+        $data['new_nfc_id'] = $request->input('new_nfc_id');
+        $data['new_product_id'] = $request->input('new_product_id');
+        $data['new_tags'] = strToLower($request->input('new_tags'));
+
+        $data['new_ingredientId'] = implode(",", $request->input('new_ingredientId')); 
+        DBManager::postRequestToAPI(Cookie::get('token'), $data, 'newProduct/');
+
+        var_dump($data);
+        var_dump(implode(",", $request->input('new_ingredientId'))); 
+        return redirect(url('/') . "/product/" . $request->input('new_nfc_id')); 
    }
 }

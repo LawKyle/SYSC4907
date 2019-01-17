@@ -13,7 +13,7 @@
                 @endif
                     <div class="col-md-4">
                         <img src="{{ asset('img/carrot.png') }}" width=100 style="padding-bottom: 10px;;">
-                        <p><a href="/product/{{ $product->getID() }}"> {{ $product->getName() }}</a></p>
+                        <p><a href="/product/{{ $product->getNFCID() }}"> {{ $product->getName() }}</a></p>
                         <!--<p>{{ $product->getID() }}</p>
                         <p>{{ $product->getNFCID() }}</p>
                         <p>{{ $product->getDescription() }}</p>
