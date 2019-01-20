@@ -15,20 +15,18 @@ Route::get('/', function () {
     return view('welcome');
 })->middleware('APIToken');
 
-Route::get('main', 'SearchController@test');
+Route::post('loginTest', 'APILoginController@login')->middleware('APIAuth');
+Route::get('/logout', 'APILoginController@logout');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/search', 'SearchController@searchBar'); 
-Route::get('department/{dept}', 'SearchController@searchDepartment');
-Route::get('tappedProducts', 'SearchController@getTappedProducts');
-Route::get('myGroceryList', 'SearchController@shoppingList');
+Route::get('/search', 'ProductController@searchBar'); 
+Route::get('department/{dept}', 'ProductController@searchDepartment');
+Route::get('tappedProducts', 'ProductController@getTappedProducts');
+Route::get('product/{id}', 'ProductController@getProduct');
+Route::post('editProduct', 'ProductController@editProduct');
 
-Route::post('loginTest', 'SearchController@loginTest')->middleware('APIAuth');
-Route::get('product/{id}', 'SearchController@getProduct');
-Route::get('/logout', 'SearchController@logout');
-
-Route::post('editProduct', 'SearchController@editProduct');
-Route::get('/myProfile', 'SearchController@profile'); 
+Route::get('myGroceryList', 'GroceryListController@shoppingList');
+Route::get('/myProfile', 'ProfileController@profile');

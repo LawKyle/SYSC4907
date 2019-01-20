@@ -1,6 +1,6 @@
 <?php
 namespace App\DBObjects;
-use App\DBManager;
+use App\APIConnect;
 use Ingredient; 
 
 class Product {
@@ -21,7 +21,7 @@ class Product {
     }
 
     public static function createFromDB($product) {
-        $ingredients = DBManager::selectProductIngredients($product->product_id);
+        $ingredients = APIConnect::selectProductIngredients($product->product_id);
         return new Product($product->product_id, $product->nfc_id, $product->description, $product->name, $product->tag, $ingredients); 
     }
 

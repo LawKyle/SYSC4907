@@ -37,7 +37,7 @@
       </button>-->
 
       <!-- Navbar Search -->
-      <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" action="{{action('SearchController@searchBar')}}" method="GET">
+      <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" action="{{action('ProductController@searchBar')}}" method="GET">
         @csrf
         <div class="input-group">
           <input name="query" type="text" class="form-control" placeholder="Search all products..." aria-label="Search" aria-describedby="basic-addon2">
@@ -84,7 +84,7 @@
             <!--<a class="dropdown-item" href="#">Activity Log</a>-->
             <!--<div class="dropdown-divider"></div>-->
             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
-          <!--</div>-->
+          </div>
         </li>
       </ul>
 
@@ -95,18 +95,18 @@
       <!-- Sidebar -->
       <ul class="sidebar navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="{{ action('SearchController@profile') }}">
+          <a class="nav-link" href="{{ action('ProfileController@profile') }}">
             <i class="fas fa-user-circle"></i>
             <span>My Profile</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ action('SearchController@test') }}">
+          <a class="nav-link" href="{{url("/") . '/department/All'}}">
             <i class="fas fa-shopping-cart"></i>
             <span>Products</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ action('SearchController@shoppingList') }}">
+          <a class="nav-link" href="{{ action('GroceryListController@shoppingList') }}">
             <i class="fas fa-clipboard-list"></i>
             <span>My Grocery List</span>
           </a>
@@ -121,7 +121,7 @@
             </li>
             @endforeach
             <li class="nav-item">
-              <a class="nav-link" href="{{action('SearchController@getTappedProducts')}}">Tapped Products</a>
+              <a class="nav-link" href="{{action('ProductController@getTappedProducts')}}">Tapped Products</a>
             </li>
       </ul>
 
@@ -177,7 +177,7 @@
           <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="{{action('SearchController@logout')}}">Logout</a>
+            <a class="btn btn-primary" href="{{action('APILoginController@logout')}}">Logout</a>
           </div>
         </div>
       </div>
