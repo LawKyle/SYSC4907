@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\DBManager;
+use App\APIConnect;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 
@@ -10,7 +10,7 @@ class APILoginController extends Controller
 {
     public function login(Request $request) {
         $data = array('username' => $request->username, 'password' => $request->password);
-        $authorizationToken = DBManager::postRequestToAPI(null, $data, 'login/');
+        $authorizationToken = APIConnect::postRequestToAPI(null, $data, 'login/');
         $cookie = null;
 
         if($authorizationToken == 'FAIL') {

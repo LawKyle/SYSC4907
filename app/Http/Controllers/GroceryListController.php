@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\DBManager;
+use App\APIConnect;
 use App\DBObjects\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
@@ -11,7 +11,7 @@ class GroceryListController extends Controller
 {
     public function shoppingList(Request $request) {
         if(!Cookie::get('token')) return redirect("/");
-        $shoppingLists = DBManager::postRequestToAPI(Cookie::get('token'), [], 'shoppingList/');
+        $shoppingLists = APIConnect::postRequestToAPI(Cookie::get('token'), [], 'shoppingList/');
 
         $lists = [];
         foreach($shoppingLists as $list) {

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\DBManager;
+use App\APIConnect;
 use App\DBObjects\Product;
 use App\DBObjects\Ingredient;
 use App\DBObjects\Restriction;
@@ -58,7 +58,7 @@ class ProductController extends Controller
 
   public function getTappedProducts(Request $request) {
        if(!Cookie::get('token')) return redirect("/"); 
-       $tappedProductsArr = DBManager::postRequestToAPI(Cookie::get('token'), [], 'product/');
+       $tappedProductsArr = APIConnect::postRequestToAPI(Cookie::get('token'), [], 'product/');
         $products = [];
         foreach($tappedProductsArr as $product) {
             $ingredients = [];
@@ -74,7 +74,7 @@ class ProductController extends Controller
    public function getProduct($id) {
        if(!Cookie::get('token')) return redirect("/");
        $data = array('nfc_id' => $id); 
-       $productJSON = DBManager::postRequestToAPI(Cookie::get('token'), $data, 'product/');
+       $productJSON = APIConnect::postRequestToAPI(Cookie::get('token'), $data, 'product/');
        $ingredients = [];
        foreach($productJSON[0]['ingredient'] as $ing) {
             array_push($ingredients, $ing["name"]); 
@@ -85,7 +85,7 @@ class ProductController extends Controller
    }
 
    public static function getAllIng() {
-        $ingredientsJSON = DBManager::postRequestToAPI(Cookie::get('token'), [], 'ingredientList/');
+        $ingredientsJSON = APIConnect::postRequestToAPI(Cookie::get('token'), [], 'ingredientList/');
         $ingredients = [];
         foreach($ingredientsJSON as $ing) {
             array_push($ingredients, Ingredient::createFromJSON($ing));
@@ -103,7 +103,7 @@ class ProductController extends Controller
         $data['new_tags'] = strToLower($request->input('new_tags'));
 
         $data['new_ingredientId'] = implode(",", $request->input('new_ingredientId')); 
-        DBManager::postRequestToAPI(Cookie::get('token'), $data, 'newProduct/');
+        APIConnect::postRequestToAPI(Cookie::get('token'), $data, 'newProduct/');
 
         var_dump($data);
         var_dump(implode(",", $request->input('new_ingredientId'))); 

@@ -37,7 +37,7 @@
       </button>-->
 
       <!-- Navbar Search -->
-      <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" action="{{action('SearchController@searchBar')}}" method="GET">
+      <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" action="{{action('ProductController@searchBar')}}" method="GET">
         @csrf
         <div class="input-group">
           <input name="query" type="text" class="form-control" placeholder="Search all products..." aria-label="Search" aria-describedby="basic-addon2">
@@ -106,7 +106,7 @@
             <span>Products</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ action('ProductController') }}">
+          <a class="nav-link" href="{{ action('GroceryListController@shoppingList') }}">
             <i class="fas fa-clipboard-list"></i>
             <span>My Grocery List</span>
           </a>
@@ -177,7 +177,7 @@
           <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="{{action('ProductController@logout')}}">Logout</a>
+            <a class="btn btn-primary" href="{{action('APILoginController@logout')}}">Logout</a>
           </div>
         </div>
       </div>

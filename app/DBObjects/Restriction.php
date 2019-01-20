@@ -1,6 +1,6 @@
 <?php
 namespace App\DBObjects;
-use App\DBManager;
+use App\APIConnect;
 
 class Restriction {
     private $name;
