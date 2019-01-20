@@ -3,16 +3,15 @@
     "",
     "\\app",
     "\\app\\DBObjects",
+    "\\app\\Enums",
     "\\app\\Http",
     "\\app\\Http\\Controllers",
     "\\app\\Http\\Controllers\\Auth",
-    "\\public",
-    "\\public\\css",
-    "\\public\\img",
     "\\resources",
     "\\resources\\views",
-    "\\resources\\views\\layouts"
+    "\\resources\\views\\layouts",
+    "\\routes"
   ],
-  "SelectedNode": "\\resources\\views",
+  "SelectedNode": "\\resources\\views\\layouts\\products.blade.php",
   "PreviewInSolutionExplorer": false
 }

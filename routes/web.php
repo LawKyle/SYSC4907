@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     return view('welcome');
-})->middleware('APIToken');
+});
 
 Route::post('loginTest', 'APILoginController@login')->middleware('APIAuth');
 Route::get('/logout', 'APILoginController@logout');
