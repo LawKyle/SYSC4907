@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\SearchController;
+use App\Http\Controllers\ProductController;
 
 class DBManager extends Model
 {

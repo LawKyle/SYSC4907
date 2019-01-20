@@ -15,7 +15,7 @@
                 </div>
 
                 <div class="card-body">
-                    <form method="post" action="{{ action('SearchController@loginTest') }}">
+                    <form method="post" action="{{ action('APILoginController@login') }}">
                         @csrf
 
                         <div class="form-group row">

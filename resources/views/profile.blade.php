@@ -95,18 +95,18 @@
       <!-- Sidebar -->
       <ul class="sidebar navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="{{ action('SearchController@profile') }}">
+          <a class="nav-link" href="{{ action('ProfileController@profile') }}">
             <i class="fas fa-user-circle"></i>
             <span>My Profile</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ action('SearchController@test') }}">
+          <a class="nav-link" href="{{url("/") . '/department/All'}}">
             <i class="fas fa-shopping-cart"></i>
             <span>Products</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ action('SearchController@shoppingList') }}">
+          <a class="nav-link" href="{{ action('ProductController') }}">
             <i class="fas fa-clipboard-list"></i>
             <span>My Grocery List</span>
           </a>
@@ -177,7 +177,7 @@
           <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="{{action('SearchController@logout')}}">Logout</a>
+            <a class="btn btn-primary" href="{{action('ProductController@logout')}}">Logout</a>
           </div>
         </div>
       </div>

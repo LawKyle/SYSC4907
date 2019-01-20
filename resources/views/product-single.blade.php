@@ -1,9 +1,9 @@
 @extends('layouts.products')
 <?php
     use App\Enums\Department;
-    use App\Http\Controllers\SearchController;
+    use App\Http\Controllers\ProductController;
     use App\DBObjects\Ingredient;
-    $ingredients = SearchController::getAllIng();
+    $ingredients = ProductController::getAllIng();
 ?>
 @section('content')
     <!-- Page Content -->
@@ -32,7 +32,7 @@
                 </button>
               </div>
               <div class="modal-body">
-                <form method="post" action="{{ action('SearchController@editProduct') }}">
+                <form method="post" action="{{ action('ProductController@editProduct') }}">
                   @csrf
                   <input type="hidden" class="form-control" name="nfc_id" value="{{ $product->getNFCID() }}">
                   <div class="form-group row">
