@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('.login', 'APILoginController@login')->middleware('APIAuth');
+Route::post('/login', 'APILoginController@login')->middleware('APIAuth');
 Route::get('/logout', 'APILoginController@logout');
 
 Auth::routes();
