@@ -153,7 +153,7 @@ return [
     |
     */
 
-    'domain' => env('SESSION_DOMAIN', '.grocer-tap.com'),
+    'domain' => '.grocer-tap.com',
 
     /*
     |--------------------------------------------------------------------------
