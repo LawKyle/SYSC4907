@@ -19,7 +19,7 @@ class APILoginController extends Controller
             return response("FAIL");
         }
 
-        Cookie::queue('token', $authorizationToken['token'], 60);
+        Cookie::queue('token', $authorizationToken['token'], 60, null, '.grocer-tap.com');
         return "PASS";
     }
 
