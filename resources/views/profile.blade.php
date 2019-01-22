@@ -30,7 +30,7 @@
   <body id="page-top">
     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-      <a class="navbar-brand mr-1" href="/department/All">Grocery</a>
+      <a class="navbar-brand mr-1" href="/department/All"><img src="{{ asset('img/logo_groceR_dark_crop.jpg') }}" width=120 style="padding-bottom: 10px;;"></a>
 
       <!--<button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
         <i class="fas fa-bars"></i>
@@ -125,19 +125,35 @@
           <!-- Breadcrumbs-->
 
           <!-- Page Content -->
-          <main class="py-4">
-                <div class="container">
-                <h2>My Restrictions</h2>
-                <div class="row content">
-                    <div class="col-md">
-                    @foreach ($restrictions as $restrict) 
-                        <p>{{ $restrict->getName() }}</p>
-                        @foreach ($restrict->getIngredients() as $ing)
-                            <p style="margin-left:2em">{{ $ing }}</p>
-                        @endforeach 
-                    @endforeach
+          <main class="py-4" >
+              <h2>My Profile</h2><br>
+                <div class="container" style="margin-left: 2em;">
+                    <h4>My Restrictions</h4>
+                    <div class="row content">
+                        <div class="col-md">
+                            <div class="card" style="width: 21rem;">
+                                <ul class="list-group list-group-flush">
+                                    @foreach ($restrictions as $restrict)
+                                        <li class="list-group-item" style="background-color: #d1c4e9;"><i class="fas fa-exclamation-circle"></i> {{ $restrict->getName() }}
+                                            @if(!empty($restrict->getIngredients()))
+                                                <div class="card" style="width: 18rem;">
+                                                    <ul class="list-group list-group-flush">
+                                                    @foreach ($restrict->getIngredients() as $ing)
+                                                            <li class="list-group-item" >{{ $ing }}
+                                                                <span class="pull-right">
+                                                                    <button class="btn btn-primary-purple"><i class="far fa-trash-alt"></i></button>
+                                                                </span>
+                                                            </li>
+                                                    @endforeach
+                                                        <button class="btn btn-block">Add Ingredient</button>
+                                                    </ul>
+                                                </div></li>
+                                        @endif
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                </div>
             </div>
           </main> 
 

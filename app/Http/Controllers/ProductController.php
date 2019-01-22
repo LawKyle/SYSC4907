@@ -76,21 +76,11 @@ class ProductController extends Controller
        $data = array('nfc_id' => $id); 
        $productJSON = APIConnect::postRequestToAPI(Cookie::get('auth_token'), $data, 'product/');
        $ingredients = [];
-       foreach($productJSON[0]['ingredient'] as $ing) {
-            array_push($ingredients, $ing["name"]); 
+       foreach($productJSON['ingredient'] as $ing) {
+            array_push($ingredients, $ing["name"]);
         }
-       $product = Product::createFromJSON($productJSON[0], $ingredients);
-       //return $productJSON[0]; 
+       $product = Product::createFromJSON($productJSON, $ingredients);
        return view('product-single', ['product' => $product]);
-   }
-
-   public static function getAllIng() {
-        $ingredientsJSON = APIConnect::postRequestToAPI(Cookie::get('auth_token'), [], 'ingredientList/');
-        $ingredients = [];
-        foreach($ingredientsJSON as $ing) {
-            array_push($ingredients, Ingredient::createFromJSON($ing));
-        }
-        return $ingredients; 
    }
 
    public function editProduct(Request $request) {
