@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Cookie;
 class GroceryListController extends Controller
 {
     public function shoppingList(Request $request) {
-        if(!Cookie::get('token')) return redirect("/");
-        $shoppingLists = APIConnect::postRequestToAPI(Cookie::get('token'), [], 'shoppingList/');
+        if(!Cookie::get('auth_token')) return redirect("/");
+        $shoppingLists = APIConnect::postRequestToAPI(Cookie::get('auth_token'), [], 'shoppingList/');
 
         $lists = [];
         foreach($shoppingLists as $list) {

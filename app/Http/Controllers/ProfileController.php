@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Cookie;
 class ProfileController extends Controller
 {
     public function profile() {
-        if(!Cookie::get('token')) return redirect("/");
-        $restrictionsJSON = APIConnect::postRequestToAPI(Cookie::get('token'), [], 'restrictions/');
+        if(!Cookie::get('auth_token')) return redirect("/");
+        $restrictionsJSON = APIConnect::postRequestToAPI(Cookie::get('auth_token'), [], 'restrictions/');
 
         $restrictions = [];
         foreach($restrictionsJSON as $restrict) {

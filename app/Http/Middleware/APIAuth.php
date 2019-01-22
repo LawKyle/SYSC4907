@@ -16,10 +16,10 @@ class APIAuth
      */
     public function handle($request, Closure $next)
     {
-        $response = $next($request); 
-        if(Cookie::has('token') && !empty(Cookie::get('token'))) {
+        $response = $next($request);
+        if(Cookie::has('auth_token') && !empty(Cookie::get('auth_token'))) {
             var_dump("pass"); 
-            return redirect("/tappedProducts")->cookie('token', Cookie::get('token'), 60); 
+            return $response;
         }
         //unset($_COOKIE['token']);
         var_dump('fail'); 

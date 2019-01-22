@@ -16,7 +16,7 @@ class APIToken
      */
     public function handle($request, Closure $next)
     {
-         if(Cookie::has('token') && !empty(Cookie::get('token'))) {
+         if(Cookie::has('auth_token') && !empty(Cookie::get('auth_token'))) {
             var_dump("pass"); 
             return redirect("/tappedProducts"); 
         }

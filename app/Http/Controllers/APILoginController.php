@@ -15,16 +15,16 @@ class APILoginController extends Controller
 
         if($authorizationToken == 'FAIL') {
             var_dump('here');
-            setcookie('token', '', time() - 60);
+            setcookie('auth_token', '', time() - 60);
             return response("FAIL");
         }
 
-        Cookie::queue('token', $authorizationToken['token'], 60);
-        return "PASS";
+        Cookie::queue('auth_token', $authorizationToken['token'], 60);
+        return redirect("/tappedProducts");
     }
 
     public function logout() {
-        setcookie('token', '', time() - 60);
+        setcookie('auth_token', '', time() - 60);
         return redirect("/");
     }
 }
