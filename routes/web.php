@@ -29,4 +29,6 @@ Route::get('product/{id}', 'ProductController@getProduct');
 Route::post('editProduct', 'ProductController@editProduct');
 
 Route::get('myGroceryList', 'GroceryListController@shoppingList');
+Route::get('list/{id}', 'GroceryListController@getList');
+
 Route::get('/myProfile', 'ProfileController@profile');

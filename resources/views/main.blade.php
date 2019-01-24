@@ -1,4 +1,21 @@
+<?php
+    use App\Enums\Department;
+?>
 @extends('layouts.products')
+
+@section('sidebar')
+    <!-- Sidebar Departments -->
+    <ul id="sidebar-dept" class="sidebar navbar-nav">
+        @foreach(Department::getDepartments() as $dept)
+            <li class="nav-item">
+                <a class="nav-link" href="/department/{{$dept}}">{{ $dept }}</a>
+            </li>
+        @endforeach
+        <li class="nav-item">
+            <a class="nav-link" href="{{action('ProductController@getTappedProducts')}}">Tapped Products</a>
+        </li>
+    </ul>
+@endsection
 
 @section('content')
     <!-- Page Content -->

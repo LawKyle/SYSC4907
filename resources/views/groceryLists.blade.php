@@ -1,35 +1,34 @@
 @extends('layouts.products')
 
+@section('sidebar')
+    <!-- Sidebar Departments -->
+    <ul id="sidebar-dept" class="sidebar navbar-nav">
+        @foreach($lists as $list)
+            <li class="nav-item">
+                <a class="nav-link" href="/list/{{ $list->getID() }}">{{ $list->getName() }}</a>
+            </li>
+        @endforeach
+    </ul>
+@endsection
+
 @section('content')
     <!-- Page Content -->
     <div class="container">
         <h2>My Grocery Lists</h2>
-        <?php $count = 0; ?>
-        <?php $n = 1; ?>
         <div class="row content">
-            @foreach($lists as $list)
-                @if($count != 0 && $count % 3 == 0)
+            <div class="col-md">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-header">
+                        {{ $chosenList->getName() }}
                     </div>
-                    <div class="row content">
-                @endif
-                <div class="col-md-4">
-                    <h4>List {{ $n }}</h4>
-                    @foreach ($list as $product)
-                        <p>{{ $product->getName() }}</p>
-                        <!--<p>{{ $product->getID() }}</p>
-                        <p>{{ $product->getNFCID() }}</p>
-                        <p>{{ $product->getDescription() }}</p>
-                        <p>{{ $product->getTag() }}</p>
-                        <h4>Ingredients</h4>
-                        @foreach ($product->getIngredients() as $ing)
-                            <p>{{ $ing }}</p>
+                    <ul class="list-group list-group-flush">
+                        @foreach ($chosenList->getProducts() as $product)
+                            <li class="list-group-item">{{ $product->getName() }}</li>
                         @endforeach
-                        <hr> -->
-                    @endforeach
-                    <?php $n++; ?>
-                    <?php $count++; ?>
+                        <button class="btn btn-primary btn-block">Add Product</button>
+                    </ul>
                 </div>
-            @endforeach
+            </div>
         </div>
     </div>
  @endsection

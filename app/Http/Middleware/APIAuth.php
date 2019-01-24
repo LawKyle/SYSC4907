@@ -18,7 +18,7 @@ class APIAuth
     {
         $response = $next($request);
         if(Cookie::has('auth_token') && !empty(Cookie::get('auth_token'))) {
-            var_dump("pass"); 
+            Cookie::queue('auth_token', Cookie::get('auth_token'));
             return $response;
         }
         //unset($_COOKIE['token']);
