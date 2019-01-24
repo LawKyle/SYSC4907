@@ -58,8 +58,8 @@ class ProductController extends Controller
 
   public function getTappedProducts(Request $request) {
        if(!Cookie::get('auth_token')) return redirect("/");
-       $tappedProductsArr = APIConnect::postRequestToAPI(Cookie::get('auth_token'), [], 'product/');
-        $products = [];
+       $tappedProductsArr = APIConnect::postRequestToAPI(Cookie::get('auth_token'), [], 'product/')['TappedProducts'];
+       $products = [];
         foreach($tappedProductsArr as $product) {
             $ingredients = [];
             foreach($product['ingredient'] as $ing) {

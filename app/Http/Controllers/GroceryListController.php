@@ -10,13 +10,13 @@ use Illuminate\Support\Facades\Cookie;
 
 class GroceryListController extends Controller
 {
-    public function shoppingList(Request $request) {
+    public function shoppingList() {
+        if(!Cookie::get('auth_token')) return redirect("/");
         $lists = self::getAllLists();
         return view('groceryLists', ['lists' => $lists, 'chosenList' => $lists[0]]);
     }
 
     public static function getAllLists() {
-        if(!Cookie::get('auth_token')) return redirect("/");
         $groceryLists = APIConnect::postRequestToAPI(Cookie::get('auth_token'), [], 'shoppingList/');
 
         $lists = [];
