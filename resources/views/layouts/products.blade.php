@@ -96,7 +96,7 @@
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a class="dropdown-item" href="{{action('APILoginController@logout')}}" data-toggle="modal" data-target="#logoutModal">Logout</a></li>
+                        <li><a href="{{action('APILoginController@logout')}}">Logout</a></li>
                   </ul>
               </div>
           </div>
