@@ -75,9 +75,6 @@
                         <i class="ti-view-list-alt"></i>
                         <p>My Grocery Lists</p>
                     </a>
-                    @foreach($lists as $list)
-                       <a style="padding-left: 35px" href="/list/{{ $list->getID() }}"><i class="ti-arrow-circle-right"></i> {{ $list->getName() }}</a>
-                    @endforeach
                 </li>
             </ul>
         </div>
@@ -126,15 +123,6 @@
 
 <!--  Notifications Plugin    -->
 <script src="{{ asset('js/bootstrap-notify.js')}}"></script>
-
-<!--  Google Maps Plugin    -->
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
-
-<!-- Paper Dashboard Core javascript and methods for Demo purpose -->
-<script src="{{ asset('js/paper-dashboard.js')}}"></script>
-
-<!-- Paper Dashboard DEMO methods, don't include it in your project! -->
-<script src="{{ asset('js/demo.js')}}"></script>
 
 </html>
 

@@ -11,7 +11,7 @@
                             <div class="card" style="width: 21rem;">
                                 @foreach ($restrictions as $restrict)
                                     <div class="card-header">
-                                        <i class="fas fa-exclamation-circle"></i> {{ $restrict->getName() }}
+                                        <i class="ti-na"></i> {{ $restrict->getName() }}
                                     </div>
                                     @if(!empty($restrict->getIngredients()))
                                         <ul class="list-group list-group-flush">
@@ -19,7 +19,7 @@
                                                     <li class="list-group-item" >
                                                         {{ $ing }}
                                                         <span class="pull-right">
-                                                            <button class="btn btn-primary-purple"><i class="far fa-trash-alt"></i></button>
+                                                            <button class="btn btn-primary-purple"><i class="ti-trash"></i></button>
                                                         </span>
                                                     </li>
                                             @endforeach

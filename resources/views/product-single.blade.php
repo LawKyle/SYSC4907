@@ -14,7 +14,7 @@
         <p>Tag(s): {{ $product->getTag() }}</p>
         <h4>Ingredients</h4>
         @foreach ($product->getIngredients() as $ing)
-            <p>{{ $ing }}</p>
+            <p>{{ $ing->getName() }}</p>
         @endforeach
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary-purple" data-toggle="modal" data-target="#exampleModalCenter">
