@@ -108,6 +108,7 @@
     </div>
 </div>
 
+@yield('modal')
 
 </body>
 
