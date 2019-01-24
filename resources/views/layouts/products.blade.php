@@ -1,3 +1,9 @@
+<?php
+    use App\Enums\Department;
+    use App\Http\Controllers\GroceryListController;
+
+    $lists = GroceryListController::getAllLists();
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -49,16 +55,29 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{url("/") . '/department/All'}}">
+                    {{--<a href="{{url("/") . '/department/All'}}">--}}
+                        {{--<i class="ti-shopping-cart-full"></i>--}}
+                        {{--<p>Products</p>--}}
+                    {{--</a>--}}
+
+                    <a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                         <i class="ti-shopping-cart-full"></i>
                         <p>Products</p>
                     </a>
+                    <div class="collapse" id="collapseExample">
+                        @foreach(Department::getDepartments() as $dept)
+                            <a class="departments" href="/department/{{$dept}}"><p><i class="ti-arrow-circle-right"></i> {{ $dept }}</p></a>
+                        @endforeach
+                    </div>
                 </li>
                 <li>
                     <a href="{{ action('GroceryListController@shoppingList') }}">
                         <i class="ti-view-list-alt"></i>
                         <p>My Grocery Lists</p>
                     </a>
+                    @foreach($lists as $list)
+                       <a style="padding-left: 35px" href="/list/{{ $list->getID() }}"><i class="ti-arrow-circle-right"></i> {{ $list->getName() }}</a>
+                    @endforeach
                 </li>
             </ul>
         </div>
@@ -80,61 +99,15 @@
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a></li>
+                        <li><a class="dropdown-item" href="{{action('APILoginController@logout')}}" data-toggle="modal" data-target="#logoutModal">Logout</a></li>
                   </ul>
               </div>
           </div>
       </nav>
+
         <main class="py-4">
-        @yield('content')
+            @yield('content')
         </main>
-
-
-
-                              {{--<footer class="footer">--}}
-            {{--<div class="container-fluid">--}}
-                {{--<nav class="pull-left">--}}
-                    {{--<ul>--}}
-
-                        {{--<li>--}}
-                            {{--<a href="http://www.creative-tim.com">--}}
-                                {{--Creative Tim--}}
-                            {{--</a>--}}
-                        {{--</li>--}}
-                        {{--<li>--}}
-                            {{--<a href="http://blog.creative-tim.com">--}}
-                                {{--Blog--}}
-                            {{--</a>--}}
-                        {{--</li>--}}
-                        {{--<li>--}}
-                            {{--<a href="http://www.creative-tim.com/license">--}}
-                                {{--Licenses--}}
-                            {{--</a>--}}
-                        {{--</li>--}}
-                    {{--</ul>--}}
-                {{--</nav>--}}
-                {{--<div class="copyright pull-right">--}}
-                    {{--&copy; <script>document.write(new Date().getFullYear())</script>, made with <i class="fa fa-heart heart"></i> by <a href="http://www.creative-tim.com">Creative Tim</a>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</footer>--}}
-        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="{{action('APILoginController@logout')}}">Logout</a>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 

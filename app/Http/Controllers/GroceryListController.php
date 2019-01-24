@@ -15,7 +15,7 @@ class GroceryListController extends Controller
         return view('groceryLists', ['lists' => $lists, 'chosenList' => $lists[0]]);
     }
 
-    private static function getAllLists() {
+    public static function getAllLists() {
         if(!Cookie::get('auth_token')) return redirect("/");
         $groceryLists = APIConnect::postRequestToAPI(Cookie::get('auth_token'), [], 'shoppingList/');
 

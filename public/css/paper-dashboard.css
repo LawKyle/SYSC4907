@@ -262,6 +262,13 @@ hr {
     height: 100vh;
 }
 
+.sidebar .departments p {
+    color: #66615B;
+    padding-left: 35px;
+    padding-right: 25px;
+    opacity: 0.7;
+}
+
 .sidebar {
     position: fixed;
     top: 0;
