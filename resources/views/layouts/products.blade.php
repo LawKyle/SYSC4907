@@ -14,6 +14,9 @@
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
 
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <!-- Bootstrap core CSS     -->
     <link href="{{ asset('css/bootstrap.min.css')}}" rel="stylesheet" />
 
@@ -22,6 +25,8 @@
 
     <!--  Paper Dashboard core CSS    -->
     <link href="{{ asset('css/paper-dashboard.css')}}" rel="stylesheet"/>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 
 
     <!--  Fonts and icons     -->
@@ -124,6 +129,11 @@
 
 <!--  Notifications Plugin    -->
 <script src="{{ asset('js/bootstrap-notify.js')}}"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
+{{--Handle Grocery List Edits--}}
+<script src="{{ asset('js/grocery-list.js') }}"></script>
 
 </html>
 

@@ -28,13 +28,18 @@
             @endif
                 <div class="col-md-4">
                     <div class="card">
-                        <div style="background-color: #d1c4e9;padding-bottom:20px;" class="header">
-                            <h4 class="title">{{ $list->getName() }}</h4>
+                        <div style="background-color: #d1c4e9;padding-bottom:20px;" id="divList{{ $list->getID() }}" class="header">
+                            <h4 id="title{{ $list->getID() }}" class="title">
+                                {{ $list->getName() }}
+                            </h4>
+                            <button class="btn pull-right" onclick="deleteList({{$list->getID()}});"><i class="ti-trash"></i></button>
+                            <button class="btn pull-right" onclick="editName({{$list->getID()}});"><i class="ti-pencil-alt"></i></button>
                         </div>
                         <div class="content table-responsive table-full-width">
-                            <table class="table table-striped">
+                            <table id="table{{$list->getID()}}" class="table table-striped">
                                 <thead>
-                                    <th>Products</th>
+                                    <th>Products<button class="btn pull-right" onclick="addProduct({{$list->getID()}});"><i class="ti-plus"></i></button></th>
+
                                 </thead>
                                 <tbody>
                                 @foreach ($list->getProducts() as $product)

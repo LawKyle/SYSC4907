@@ -13,7 +13,7 @@ class GroceryListController extends Controller
     public function shoppingList() {
         if(!Cookie::get('auth_token')) return redirect("/");
         $lists = self::getAllLists();
-        return view('groceryLists', ['lists' => $lists, 'chosenList' => $lists[0]]);
+        return view('groceryLists', ['lists' => $lists]);
     }
 
     public static function getAllLists() {
@@ -42,9 +42,28 @@ class GroceryListController extends Controller
             $ingredients = self::getAllIngredients($product);
             array_push($products, Product::createFromJSON($product, $ingredients));
         }
-        $chosenList = GroceryList::createFromJSON($groceryList, $products);
         $lists = self::getAllLists();
-        return view('groceryLists', ['lists' => $lists, 'chosenList' => $chosenList]);
+        return view('groceryLists', ['lists' => $lists]);
+    }
+
+    public function addProduct() {
+
+    }
+
+    public function rmProduct() {
+
+    }
+
+    public function editName(Request $request) {
+        $dataArray = json_decode($request->input('data'), true);
+
+        $id = $dataArray["list_id"];
+        $newName = $dataArray['new_name'];
+
+        if(!Cookie::get('auth_token')) return redirect("/");
+        $data = array('list_id' => $id, 'newName' => $newName);
+        APIConnect::postRequestToAPI(Cookie::get('auth_token'), $data, 'shoppingList/');
+        return json_encode("pass");
     }
 
 }
