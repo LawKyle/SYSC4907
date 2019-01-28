@@ -53,13 +53,13 @@
             </div>
 
             <ul class="nav">
-                <li class="active">
+                <li class="{{ (\Request::route()->getName() == 'profile') ? 'active' : '' }}">
                     <a href="{{ action('ProfileController@profile') }}">
                         <i class="ti-user"></i>
                         <p>My Profile</p>
                     </a>
                 </li>
-                <li>
+                <li class="{{ (\Request::route()->getName() == 'department' || \Request::route()->getName() == 'tappedProducts') ? 'active' : '' }}">
                     {{--<a href="{{url("/") . '/department/All'}}">--}}
                         {{--<i class="ti-shopping-cart-full"></i>--}}
                         {{--<p>Products</p>--}}
@@ -75,7 +75,7 @@
                         @endforeach
                     </div>
                 </li>
-                <li>
+                <li class="{{ (\Request::route()->getName() == 'myGroceryList') ? 'active' : '' }}">
                     <a href="{{ action('GroceryListController@shoppingList') }}">
                         <i class="ti-view-list-alt"></i>
                         <p>My Grocery Lists</p>

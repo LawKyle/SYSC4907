@@ -4291,6 +4291,14 @@ textarea.form-control {
     position: fixed;
 }
 
+.product-link:hover {
+    opacity: 0.5;
+}
+
+.product-content {
+    text-align: center;
+}
+
 
 
 

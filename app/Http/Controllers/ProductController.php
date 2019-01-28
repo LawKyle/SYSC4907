@@ -16,7 +16,7 @@ class ProductController extends Controller
     if(!Cookie::get('auth_token')) return redirect("/");
     $products = self::getAllProducts(); 
 
-    if($dept == Department::ALL) return view('main', ['products' => $products]);
+    if($dept == Department::ALL) return view('main', ['products' => $products, 'title' => $dept . " Products"]);
     if($dept == Department::TAPPED) return redirect("/tappedProducts");
 
     $deptProducts = []; 
@@ -24,7 +24,7 @@ class ProductController extends Controller
         if($prod->getTag() == strToUpper($dept)) array_push($deptProducts, $prod);
     }
 
-    return view('main', ['products' => $deptProducts]);
+    return view('main', ['products' => $deptProducts, 'title' => $dept . " Products"]);
   }
 
   public function searchBar(Request $request) {
@@ -47,7 +47,7 @@ class ProductController extends Controller
         $request->session()->flash('status', 'No products with ' . $query . ' found!');
         return view('main', ['products' => $products]);
     }
-    return view('main', ['products' => $searchProducts]);
+    return view('main', ['products' => $searchProducts, 'title' => "Products"]);
   }
 
   private function containsProduct($listProducts, $product) {
@@ -60,7 +60,7 @@ class ProductController extends Controller
   public static function getTappedProducts() {
        if(!Cookie::get('auth_token')) return redirect("/");
        $tappedProductsArr = APIConnect::postRequestToAPI(Cookie::get('auth_token'), [], 'product/');
-       if(!isset($tappedProductsArr['TappedProducts']))  return view('main', ['products' => []]);
+       if(!isset($tappedProductsArr['TappedProducts']))  return view('main', ['products' => [], 'title' => 'Tapped Products']);
        else $tappedProductsArr = $tappedProductsArr["TappedProducts"];
        $products = [];
         foreach($tappedProductsArr as $product) {
@@ -71,7 +71,7 @@ class ProductController extends Controller
             }
             array_push($products, Product::createFromJSON($product, $ingredients));
         }
-        return view('main', ['products' => $products]);
+        return view('main', ['products' => $products, 'title' => 'Tapped Products']);
    }
 
    public function getProduct($id) {
@@ -83,7 +83,7 @@ class ProductController extends Controller
            $ingredient = Ingredient::createFromJSON($ing);
            array_push($ingredients, $ingredient);
         }
-       $product = Product::createFromJSON($productJSON, $ingredients);
+       $product = Product::createFromJSON($productJSON['product'], $ingredients);
        return view('product-single', ['product' => $product]);
    }
 
