@@ -16,7 +16,8 @@ class ProductController extends Controller
     if(!Cookie::get('auth_token')) return redirect("/");
     $products = self::getAllProducts(); 
 
-    if($dept == Department::ALL) return view('main', ['products' => $products]); 
+    if($dept == Department::ALL) return view('main', ['products' => $products]);
+    if($dept == Department::TAPPED) return redirect("/tappedProducts");
 
     $deptProducts = []; 
     foreach($products as $prod) {
@@ -56,7 +57,7 @@ class ProductController extends Controller
     return false; 
   }
 
-  public function getTappedProducts(Request $request) {
+  public static function getTappedProducts() {
        if(!Cookie::get('auth_token')) return redirect("/");
        $tappedProductsArr = APIConnect::postRequestToAPI(Cookie::get('auth_token'), [], 'product/');
        if(!isset($tappedProductsArr['TappedProducts']))  return view('main', ['products' => []]);

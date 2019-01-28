@@ -19,20 +19,14 @@
     {{--</div>--}}
     <?php
         use App\Http\Controllers\Controller;
-        $productsArr = Controller::getAllProducts();
-        $products = [];
-        foreach($productsArr as $prod) {
-            array_push($products, json_encode($prod));
-        }
-        $products = json_encode($products);
-
-        $products2 = Controller::getAllProducts();
-        var_dump($products2[0]);
-        var_dump($products);
+        $products = json_encode(Controller::getJSONProducts());
     ?>
 
     <div class="container-fluid">
-        <h2>My Grocery Lists</h2>
+        <h2>
+            My Grocery Lists
+            <a href="{{ action('GroceryListController@addNewList') }}" class="btn btn-primary-purple">Create New List </a>
+        </h2>
         <?php $count = 0; ?>
         <div class="row">
         @foreach($lists as $list)
@@ -58,7 +52,7 @@
                                 <tbody>
                                 @foreach ($list->getProducts() as $product)
                                     <tr>
-                                        <td><a href="/product/{{ $product->getNFCID() }}">{{ $product->getName() }}</a></td>
+                                        <td><a href="/product/{{ $product->getID() }}">{{ $product->getName() }}</a></td>
                                     </tr>
                                 @endforeach
                                 </tbody>

@@ -27,8 +27,7 @@ class Product {
         return new Product($product->product_id, $product->nfc_id, $product->description, $product->name, $product->tag, $ingredients, null);
     }
 
-    public static function createFromJSON($productJSON, $ingredients) {
-        $product = $productJSON['product'];
+    public static function createFromJSON($product, $ingredients) {
         $name = $product['name'];
         $nfcID = null;
         if(isset($product['nfc_id'])) $nfcID = $product['nfc_id'];

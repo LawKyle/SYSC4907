@@ -29,7 +29,7 @@ Route::get('product/{id}', 'ProductController@getProduct');
 Route::post('editProduct', 'ProductController@editProduct');
 
 Route::get('myGroceryList', 'GroceryListController@shoppingList');
-//Route::get('list/{id}', 'GroceryListController@getList');
+Route::get('/myGroceryList/newList', 'GroceryListController@addNewList');
 Route::post('/myGroceryList/editName', 'GroceryListController@editName');
 
 Route::get('/myProfile', 'ProfileController@profile');

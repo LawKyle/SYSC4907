@@ -33,17 +33,26 @@ class GroceryListController extends Controller
     }
 
 
-    public function getList($id) {
+//    public function getList($id) {
+//        if(!Cookie::get('auth_token')) return redirect("/");
+//        $data = array('list_id' => $id);
+//        $groceryList = APIConnect::postRequestToAPI(Cookie::get('auth_token'), $data, 'shoppingList/');
+//        $products = [];
+//        foreach($groceryList['product'] as $product) {
+//            $ingredients = self::getAllIngredients($product);
+//            array_push($products, Product::createFromJSON($product, $ingredients));
+//        }
+//        $lists = self::getAllLists();
+//        return view('groceryLists', ['lists' => $lists]);
+//    }
+
+    public function addNewList() {
         if(!Cookie::get('auth_token')) return redirect("/");
-        $data = array('list_id' => $id);
-        $groceryList = APIConnect::postRequestToAPI(Cookie::get('auth_token'), $data, 'shoppingList/');
-        $products = [];
-        foreach($groceryList['product'] as $product) {
-            $ingredients = self::getAllIngredients($product);
-            array_push($products, Product::createFromJSON($product, $ingredients));
-        }
-        $lists = self::getAllLists();
-        return view('groceryLists', ['lists' => $lists]);
+        $newListID = self::generateNewListID();
+        $data = array('list_id' => $newListID, 'new_name' => "Grocery List");
+        var_dump(APIConnect::postRequestToAPI(Cookie::get('auth_token'), $data, 'shoppingList/'));
+
+        return back();
     }
 
     public function addProduct() {
@@ -61,9 +70,22 @@ class GroceryListController extends Controller
         $newName = $dataArray['new_name'];
 
         if(!Cookie::get('auth_token')) return redirect("/");
-        $data = array('list_id' => $id, 'newName' => $newName);
+        $data = array('list_id' => $id, 'new_name' => $newName);
         APIConnect::postRequestToAPI(Cookie::get('auth_token'), $data, 'shoppingList/');
         return json_encode("pass");
+    }
+
+    private static function generateNewListID() {
+        $lists = self::getAllLists();
+        $listIDs = [];
+        foreach($lists as $list) {
+            array_push($listIDs, $list['list_id']);
+        }
+        $newListID = rand();
+        while(in_array($newListID, $listIDs)) {
+            $newListID = rand();
+        }
+        return $newListID;
     }
 
 }

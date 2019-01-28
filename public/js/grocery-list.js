@@ -10,7 +10,9 @@ function editName(listID) {
 
 function editNameAjax(listID) {
     let newName = $('#inputName' + listID).val();
-    let returnToTitle = "<h4 id=\"title" + listID + " class=\"title\">" + newName + "</h4>";
+    let returnToTitle = "<h4 id=\"title" + listID + "\" class=\"title\">" + newName + "</h4>";
+    returnToTitle += "<button class=\"btn pull-right\" onclick=\"deleteList(" + listID + ");\"><i class=\"ti-trash\"></i></button>" +
+        "<button class=\"btn pull-right\" onclick=\"editName(" + listID+ ");\"><i class=\"ti-pencil-alt\"></i></button>";
     $("#divList" + listID).html(returnToTitle);
 
     let dataArray = {};

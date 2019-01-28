@@ -22,10 +22,15 @@ class Controller extends BaseController
             $ingredients = self::getAllIngredients($product);
             $data = array("product_id" => $product['product_id']);
             $prod = APIConnect::postRequestToAPI(Cookie::get('auth_token'), $data, 'product/');
-            array_push($products, Product::createFromJSON($prod, $ingredients));
+            array_push($products, Product::createFromJSON($prod['product'], $ingredients));
         }
         return $products;
     }
+
+    public static function getJSONProducts() {
+        return APIConnect::postRequestToAPI(Cookie::get('auth_token'), [], 'productList/');
+    }
+
 
     protected static function getAllIngredients($product) {
         $ingredients = [];
@@ -42,7 +47,9 @@ class Controller extends BaseController
         foreach($product['ingredients'] as $id) {
             $data = array('ingredient_id' => $id);
             $ingredient = APIConnect::postRequestToAPI(Cookie::get('auth_token'), $data, 'ingredient/');
-            array_push($ingredients, $ingredient[0]['name']);
+            var_dump($ingredient);
+            var_dump($id);
+            //array_push($ingredients, Ingredient::createFromJSON($ingredient));
         }
         return array_unique($ingredients);
     }
