@@ -118,17 +118,17 @@
 </body>
 
 <!--   Core JS Files   -->
-<script src="{{ asset('js/jquery.min.js')}}" type="text/javascript"></script>
-<script src="{{ asset('js/bootstrap.min.js')}}" type="text/javascript"></script>
+<script src="{{ asset('js/jquery.min.js')}}" type="text/javascript" async></script>
+<script src="{{ asset('js/bootstrap.min.js')}}" type="text/javascript" async></script>
 
 <!--  Checkbox, Radio & Switch Plugins -->
-<script src="{{ asset('js/bootstrap-checkbox-radio.js')}}"></script>
+<script src="{{ asset('js/bootstrap-checkbox-radio.js')}}" async></script>
 
 <!--  Charts Plugin -->
-<script src="{{ asset('js/chartist.min.js')}}"></script>
+<script src="{{ asset('js/chartist.min.js')}}" async></script>
 
 <!--  Notifications Plugin    -->
-<script src="{{ asset('js/bootstrap-notify.js')}}"></script>
+<script src="{{ asset('js/bootstrap-notify.js')}}" async></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
