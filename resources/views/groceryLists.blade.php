@@ -17,6 +17,20 @@
             {{--</div>--}}
         {{--</div>--}}
     {{--</div>--}}
+    <?php
+        use App\Http\Controllers\Controller;
+        $productsArr = Controller::getAllProducts();
+        $products = [];
+        foreach($productsArr as $prod) {
+            array_push($products, json_encode($prod));
+        }
+        $products = json_encode($products);
+
+        $products2 = Controller::getAllProducts();
+        var_dump($products2[0]);
+        var_dump($products);
+    ?>
+
     <div class="container-fluid">
         <h2>My Grocery Lists</h2>
         <?php $count = 0; ?>
@@ -38,7 +52,7 @@
                         <div class="content table-responsive table-full-width">
                             <table id="table{{$list->getID()}}" class="table table-striped">
                                 <thead>
-                                    <th>Products<button class="btn pull-right" onclick="addProduct({{$list->getID()}});"><i class="ti-plus"></i></button></th>
+                                    <th>Products<button class="btn pull-right" onclick="addProduct({{ $list->getID() }}, {{ $products }});"><i class="ti-plus"></i></button></th>
 
                                 </thead>
                                 <tbody>

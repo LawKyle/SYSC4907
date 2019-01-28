@@ -7,8 +7,12 @@
 ?>
 @section('content')
     <!-- Page Content -->
-    <div class="container">
-        <img src="{{ asset('img/carrot.png') }}" width=100 style="padding-bottom: 10px;">
+    <div class="container-fluid">
+        @if($product->getImage() == null)
+            <img src="{{ asset('img/logo_groceR_small.jpg') }}" width=auto height="150" style="padding-bottom: 10px;">
+        @else
+            <img src="{{ $product->getImage() }}" width=auto height="150" style="padding-bottom: 10px;">
+        @endif
         <h3>{{ $product->getName() }} </h3>
         <p>{{ $product->getDescription() }}</p>
         <p>Tag(s): {{ $product->getTag() }}</p>
@@ -18,7 +22,7 @@
         @endforeach
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary-purple" data-toggle="modal" data-target="#exampleModalCenter">
-          Edit Product <i class="far fa-edit"></i>
+          Edit Product <i class="ti-pencil-alt"></i>
         </button>
     </div>
 @endsection

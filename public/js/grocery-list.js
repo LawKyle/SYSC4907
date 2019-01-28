@@ -35,7 +35,8 @@ function editNameAjax(listID) {
     });
 }
 
-function addProduct(listID) {
+function addProduct(listID, products) {
+    alert(products);
     let inputText = " <input type=\"text\" class=\"form-control\" name=\"inputName\" + listID + \" id=\"inputName" + listID + "\">" +
         "  <button type=\"button\" onclick='editNameAjax(" + listID + ")' class=\"btn btn-primary mb-2\">OK</button>\n";
     $("#table" + listID + "> tbody:last-child").append('<tr><td>' + inputText + '</td></tr>');

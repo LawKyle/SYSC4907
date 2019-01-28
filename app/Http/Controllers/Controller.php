@@ -15,12 +15,14 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    protected static function getAllProducts() {
+    public static function getAllProducts() {
         $productsJSON = APIConnect::postRequestToAPI(Cookie::get('auth_token'), [], 'productList/');
         $products = [];
         foreach($productsJSON as $product) {
             $ingredients = self::getAllIngredients($product);
-            array_push($products, Product::createFromJSON($product, $ingredients));
+            $data = array("product_id" => $product['product_id']);
+            $prod = APIConnect::postRequestToAPI(Cookie::get('auth_token'), $data, 'product/');
+            array_push($products, Product::createFromJSON($prod, $ingredients));
         }
         return $products;
     }
@@ -30,7 +32,7 @@ class Controller extends BaseController
         foreach($product['ingredient'] as $id) {
             $data = array('ingredient_id' => $id);
             $ingredient = APIConnect::postRequestToAPI(Cookie::get('auth_token'), $data, 'ingredient/');
-            array_push($ingredients, $ingredient[0]['name']);
+            if($ingredient !== "FAIL") array_push($ingredients, $ingredient['name']);
         }
         return array_unique($ingredients);
     }

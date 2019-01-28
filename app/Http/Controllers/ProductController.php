@@ -58,7 +58,9 @@ class ProductController extends Controller
 
   public function getTappedProducts(Request $request) {
        if(!Cookie::get('auth_token')) return redirect("/");
-       $tappedProductsArr = APIConnect::postRequestToAPI(Cookie::get('auth_token'), [], 'product/')['TappedProducts'];
+       $tappedProductsArr = APIConnect::postRequestToAPI(Cookie::get('auth_token'), [], 'product/');
+       if(!isset($tappedProductsArr['TappedProducts']))  return view('main', ['products' => []]);
+       else $tappedProductsArr = $tappedProductsArr["TappedProducts"];
        $products = [];
         foreach($tappedProductsArr as $product) {
             $ingredients = [];
@@ -73,10 +75,10 @@ class ProductController extends Controller
 
    public function getProduct($id) {
        if(!Cookie::get('auth_token')) return redirect("/");
-       $data = array('nfc_id' => $id); 
+       $data = array('product_id' => $id);
        $productJSON = APIConnect::postRequestToAPI(Cookie::get('auth_token'), $data, 'product/');
        $ingredients = [];
-       foreach($productJSON['ingredient'] as $ing) {
+       foreach($productJSON['product']['ingredient'] as $ing) {
            $ingredient = Ingredient::createFromJSON($ing);
            array_push($ingredients, $ingredient);
         }

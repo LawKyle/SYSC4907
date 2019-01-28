@@ -18,7 +18,7 @@ class GroceryListController extends Controller
 
     public static function getAllLists() {
         $groceryLists = APIConnect::postRequestToAPI(Cookie::get('auth_token'), [], 'shoppingList/');
-
+        if($groceryLists == "FAIL") return [];
         $lists = [];
         foreach($groceryLists as $list) {
             $products = [];
