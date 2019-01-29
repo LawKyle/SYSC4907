@@ -2,24 +2,10 @@
 
 @section('content')
     <!-- Page Content -->
-    {{--<div class="container-fluid" style="margin-left:50px">--}}
-        {{--<h4> {{ $chosenList->getName() }}</h4>--}}
-        {{--<div class="row content">--}}
-            {{--<div class="col-md">--}}
-                {{--<div class="card" style="width: 18rem;">--}}
-                    {{--<ul class="list-group list-group-flush">--}}
-                        {{--@foreach ($chosenList->getProducts() as $product)--}}
-                            {{--<li class="list-group-item">{{ $product->getName() }}</li>--}}
-                        {{--@endforeach--}}
-                        {{--<button class="btn btn-primary btn-block">Add Product</button>--}}
-                    {{--</ul>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-    {{--</div>--}}
     <?php
         use App\Http\Controllers\Controller;
-        $products = json_encode(Controller::getJSONProducts());
+        //$products = json_encode(Controller::getJSONProducts());
+        $products = Controller::getAllProducts();
     ?>
 
     <div class="container-fluid">
@@ -30,11 +16,11 @@
         <?php $count = 0; ?>
         <div class="row">
         @foreach($lists as $list)
-            @if($count != 0 && $count % 3 == 0)
+            @if($count != 0 && $count % 2 == 0)
             </div>
             <div class="row">
             @endif
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="card">
                         <div style="background-color: #d1c4e9;padding-bottom:20px;" id="divList{{ $list->getID() }}" class="header">
                             <h4 id="title{{ $list->getID() }}" class="title">
@@ -46,10 +32,26 @@
                         <div class="content table-responsive table-full-width">
                             <table id="table{{$list->getID()}}" class="table table-striped">
                                 <thead>
-                                    <th>Products<button class="btn pull-right" onclick="addProduct({{ $list->getID() }}, {{ $products }});"><i class="ti-plus"></i></button></th>
-
+                                    <th>Products
+                                    </th>
                                 </thead>
                                 <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-md-9">
+                                                <select class="form-control js-example-basic-multiple mb-2" id="products{{ $list->getID() }}" name="products{{ $list->getID() }}[]" multiple="multiple">
+                                                    @foreach($products as $product)
+                                                        <option value="{{ $product->getID() }}">{{ $product->getName() }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <button onclick="addProduct({{ $list->getID() }})" class="btn mb-2"><i class="ti-check"></i></button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
                                 @foreach ($list->getProducts() as $product)
                                     <tr>
                                         <td><a href="/product/{{ $product->getID() }}">{{ $product->getName() }}</a></td>
@@ -63,4 +65,5 @@
                 <?php $count++; ?>
                 @endforeach
             </div>
+    </div>
  @endsection

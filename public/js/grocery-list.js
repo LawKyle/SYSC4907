@@ -37,9 +37,45 @@ function editNameAjax(listID) {
     });
 }
 
-function addProduct(listID, products) {
-    alert(products);
-    let inputText = " <input type=\"text\" class=\"form-control\" name=\"inputName\" + listID + \" id=\"inputName" + listID + "\">" +
-        "  <button type=\"button\" onclick='editNameAjax(" + listID + ")' class=\"btn btn-primary mb-2\">OK</button>\n";
-    $("#table" + listID + "> tbody:last-child").append('<tr><td>' + inputText + '</td></tr>');
+function addProduct(listID) {
+    let IDs = $("#products" + listID).val();
+    let values = $("#products" + listID + " :selected");
+
+    for(let i = 0; i < values.length; i++) {
+        let row = $('<tr>');
+        let data = $('<td>');
+        data.append("<a href=\"/product/" + IDs[i] + "\">" + values[i].innerHTML + "</a>");
+        row.append(data);
+        $("#table" + listID + "> tbody:last-child").append(row);
+     }
+
+    let dataArray = {};
+    dataArray['list_id'] = listID;
+    dataArray['product_id'] = JSON.stringify(IDs);
+    let dataString = "data=" + JSON.stringify(dataArray);
+
+    $.ajax({
+        method: 'POST',
+        url: '/myGroceryList/addProduct',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: dataString,
+        success: function(response){
+            console.log(response);
+        },
+        error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+            console.log(JSON.stringify(jqXHR));
+            console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+        }
+    });
+
 }
+
+$(document).ready(function() {
+    $('.js-example-basic-multiple').select2({
+        placeholder: 'Select one or more products',
+        allowClear: true
+    });
+});
+

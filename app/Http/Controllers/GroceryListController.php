@@ -55,8 +55,19 @@ class GroceryListController extends Controller
         return back();
     }
 
-    public function addProduct() {
+    public function addProduct(Request $request) {
+        $dataArray = json_decode($request->input('data'), true);
 
+        $id = $dataArray["list_id"];
+        $product = $dataArray['product_id'];
+        if(!Cookie::get('auth_token')) return redirect("/");
+
+        $product = json_decode($product);
+        foreach($product as $prod) {
+            $data = array('list_id' => $id, 'product' => $prod);
+            APIConnect::postRequestToAPI(Cookie::get('auth_token'), $data, 'shoppingList/');
+        }
+        return json_encode("pass");
     }
 
     public function rmProduct() {

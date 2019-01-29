@@ -45,13 +45,11 @@ class Controller extends BaseController
     protected static function getAllIngredients2($product) {
         $ingredients = [];
         foreach($product['ingredients'] as $id) {
-            $data = array('ingredient_id' => $id);
+            $data = array('ingredient_id' => $id['ingredient_id']);
             $ingredient = APIConnect::postRequestToAPI(Cookie::get('auth_token'), $data, 'ingredient/');
-            var_dump($ingredient);
-            var_dump($id);
-            //array_push($ingredients, Ingredient::createFromJSON($ingredient));
+            array_push($ingredients, Ingredient::createFromJSON($ingredient));
         }
-        return array_unique($ingredients);
+        return $ingredients;
     }
 
     public static function getAllIng() {

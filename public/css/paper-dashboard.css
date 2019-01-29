@@ -4291,8 +4291,8 @@ textarea.form-control {
     position: fixed;
 }
 
-.product-link:hover {
-    opacity: 0.5;
+.product-content:hover {
+    filter:grayscale(100%);
 }
 
 .product-content {

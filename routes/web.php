@@ -31,5 +31,6 @@ Route::post('editProduct', 'ProductController@editProduct');
 Route::get('/myGroceryList', 'GroceryListController@shoppingList')->name("myGroceryList");
 Route::get('/myGroceryList/newList', 'GroceryListController@addNewList');
 Route::post('/myGroceryList/editName', 'GroceryListController@editName');
+Route::post('/myGroceryList/addProduct', 'GroceryListController@addProduct');
 
 Route::get('/myProfile', 'ProfileController@profile')->name('profile');

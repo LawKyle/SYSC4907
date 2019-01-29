@@ -45,7 +45,7 @@ class ProductController extends Controller
 
     if(empty($searchProducts)) {
         $request->session()->flash('status', 'No products with ' . $query . ' found!');
-        return view('main', ['products' => $products]);
+        return view('main', ['products' => $products, 'title' => 'All Products']);
     }
     return view('main', ['products' => $searchProducts, 'title' => "Products"]);
   }
