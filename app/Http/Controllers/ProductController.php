@@ -74,7 +74,7 @@ class ProductController extends Controller
         return view('main', ['products' => $products, 'title' => 'Tapped Products']);
    }
 
-   public function getProduct($id) {
+   public function getProduct($id, Request $request) {
        if(!Cookie::get('auth_token')) return redirect("/");
        $data = array('product_id' => $id);
        $productJSON = APIConnect::postRequestToAPI(Cookie::get('auth_token'), $data, 'product/');
@@ -84,6 +84,9 @@ class ProductController extends Controller
            array_push($ingredients, $ingredient);
         }
        $product = Product::createFromJSON($productJSON['product'], $ingredients);
+       if(isset($productJSON['flag'])) {
+           $request->session()->flash('restriction', 'Warning: This product contains ' . $productJSON['flag'] . "!");
+       }
        return view('product-single', ['product' => $product]);
    }
 

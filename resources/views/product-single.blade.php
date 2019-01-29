@@ -8,6 +8,12 @@
 @section('content')
     <!-- Page Content -->
     <div class="container-fluid">
+        @if(session()->has('restriction'))
+            <div class="alert alert-danger }}">
+                {{ session('restriction') }}
+            </div>
+        @endif
+
         @if($product->getImage() == null)
             <img src="{{ asset('img/logo_groceR_small.jpg') }}" width=auto height="150" style="padding-bottom: 10px;">
         @else
