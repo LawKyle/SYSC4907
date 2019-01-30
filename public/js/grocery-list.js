@@ -1,7 +1,5 @@
 function editName(listID) {
-    alert(listID);
     let oldName = $("#title" + listID).html().trim();
-    alert(oldName);
     let inputText = " <input type=\"text\" class=\"form-control\" name=\"inputName\" + listID + \" id=\"inputName" + listID + "\" value='"+ oldName + "'>" +
         "  <button type=\"button\" onclick='editNameAjax(" + listID + ")' class=\"btn btn-primary mb-2\">OK</button>\n";
 
