@@ -4,7 +4,19 @@
           <!-- Page Content -->
     <div class="container-fluid">
         <h2>My Profile</h2>
-        <h4>My Restrictions</h4>
+        <div class="row">
+            <div class="col-md-3">
+                My Restrictions 
+            </div>
+            <div class="col-md-8">
+                <select class="form-control js-example-basic-multiple mb-2" multiple="multiple">
+                    <option value="">name</option>
+                </select>
+            </div>
+            <div class="col-md-1">
+                <button onclick="" class="btn mb-2"><i class="ti-check"></i></button>
+            </div>
+        </div>
         <div class="row">
             @foreach ($restrictions as $restrict)
                 <div class="col-md-6">
@@ -16,21 +28,16 @@
                                 </thead>
                                 <tbody>
                                 @if(!empty($restrict->getIngredients()))
-                                        @foreach ($restrict->getIngredients() as $ing)
-                                            <tr>
-                                            <td>
-                                                    {{ $ing->getName() }}
-                                                    <span class="pull-right">
-                                                        <button class="btn btn-primary-purple"><i class="ti-trash"></i></button>
-                                                    </span>
-                                            </td>
-                                            </tr>
-                                        @endforeach
+                                    @foreach ($restrict->getIngredients() as $ing)
                                         <tr>
-                                            <td>
-                                                <button class="btn btn-block">Add Ingredient</button>
-                                            </td>
+                                        <td>
+                                                {{ $ing->getName() }}
+                                                <span class="pull-right">
+                                                    <button class="btn btn-primary-purple"><i class="ti-trash"></i></button>
+                                                </span>
+                                        </td>
                                         </tr>
+                                    @endforeach
                                 @endif
                                 </tbody>
                             </table>
