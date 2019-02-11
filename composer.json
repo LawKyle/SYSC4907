@@ -64,8 +64,8 @@
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "warmup": {
+    "warmup": [
         "php artisan config:cache",
         "php artisan route:cache"
-    }
+    ]
 }
