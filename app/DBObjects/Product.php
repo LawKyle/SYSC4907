@@ -1,7 +1,10 @@
 <?php
 namespace App\DBObjects;
 use App\APIConnect;
-use Ingredient; 
+use Ingredient;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\UploadedFile;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class Product {
     private $id;
@@ -70,6 +73,20 @@ class Product {
     }
 
     public function getImage() {
-        return $this->image;
+        if($this->image != null && $this->image != 'http://kltestserver.com/images/Mushroom- Button.png' && strpos($this->image, 'png') == false) {
+            $img = null;
+            $filename = basename($this->image);
+            if(!file_exists(public_path('img/' . $filename))) {
+                $img = Image::make($this->image)->resize(null, 150, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $img->save(public_path('img/' . $filename));
+            }
+            return $filename;
+        }
+        else {
+            return null;
+        }
+
     }
 }

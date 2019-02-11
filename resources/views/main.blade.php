@@ -22,7 +22,7 @@
                                         @if($product->getImage() == null)
                                             <img src="{{ asset('img/logo_groceR_small.jpg') }}" width=auto height="150" style="padding-bottom: 10px;">
                                         @else
-                                            <img src="{{ $product->getImage() }}" width=auto height="150" style="padding-bottom: 10px;">
+                                            <img src="{{ asset('img/' . $product->getImage())}}" width=auto height="150" style="padding-bottom: 10px;">
                                         @endif
 
                                         <div class="footer">
