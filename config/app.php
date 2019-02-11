@@ -174,6 +174,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        Clockwork\Support\Laravel\ClockworkServiceProvider::class,
+
     ],
 
     /*
