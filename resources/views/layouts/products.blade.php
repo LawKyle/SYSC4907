@@ -135,5 +135,7 @@
 {{--Handle Grocery List Edits--}}
 <script src="{{ asset('js/grocery-list.js') }}"></script>
 
+<script src="{{ asset('js/lazysizes.min.js') }}" async=""></script>
+
 </html>
 

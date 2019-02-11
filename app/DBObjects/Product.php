@@ -80,7 +80,13 @@ class Product {
                 $img = Image::make($this->image)->resize(null, 150, function ($constraint) {
                     $constraint->aspectRatio();
                 });
-                $img->save(public_path('img/' . $filename));
+                $img->save(public_path('img/' . $filename), 60);
+            }
+            if(!file_exists(public_path('tinyImg/' . $filename))) {
+                $img = Image::make($this->image)->resize(null, 10, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $img->save(public_path('tinyImg/' . $filename), 60);
             }
             return $filename;
         }
