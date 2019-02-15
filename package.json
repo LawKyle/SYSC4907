@@ -11,6 +11,7 @@
         "postinstall": "npm run production"
     },
     "devDependencies": {
+        "apache-server-configs": "^3.1.0",
         "axios": "^0.18",
         "bootstrap": "^4.0.0",
         "cross-env": "^5.1",
