@@ -80,7 +80,7 @@ class Product {
                 $img = Image::make($this->image)->resize(null, 150, function ($constraint) {
                     $constraint->aspectRatio();
                 });
-                $img->save(public_path('img/' . $filename), 60);
+             $img->save(public_path('img/' . $filename), 60);
             }
             if(!file_exists(public_path('tinyImg/' . $filename))) {
                 $img = Image::make($this->image)->resize(null, 10, function ($constraint) {
@@ -91,8 +91,16 @@ class Product {
             return $filename;
         }
         else {
-            return null;
+            Image::make(public_path('img/logo_groceR_small.jpg'))->resize(null, 150, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            if(!file_exists(public_path('tinyImg/logo_groceR_small.jpg'))) {
+                $img = Image::make('img/logo_groceR_small.jpg')->resize(null, 10, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $img->save(public_path('tinyImg/logo_groceR_small.jpg'), 60);
+            }
+            return 'logo_groceR_small.jpg';
         }
-
     }
 }
