@@ -17,22 +17,22 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- Bootstrap core CSS     -->
-    <link href="{{ asset('css/bootstrap.min.css')}}" rel="stylesheet" />
+    {{--<!-- Bootstrap core CSS     -->--}}
+    {{--<link href="{{ asset('css/bootstrap.min.css')}}" rel="preload" as="style" onload="this.rel='stylesheet'" />--}}
 
-    <!-- Animation library for notifications   -->
-    <link href="{{ asset('css/animate.min.css')}}" rel="stylesheet"/>
+    {{--<!-- Animation library for notifications   -->--}}
+    {{--<link href="{{ asset('css/animate.min.css')}}" rel="preload" as="style" onload="this.rel='stylesheet'"/>--}}
 
-    <!--  Paper Dashboard core CSS    -->
-    <link href="{{ asset('css/paper-dashboard.css')}}" rel="stylesheet"/>
+    {{--<!--  Paper Dashboard core CSS    -->--}}
+    {{--<link href="{{ asset('css/paper-dashboard.css')}}" rel="preload" as="style" onload="this.rel='stylesheet'"/>--}}
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="preload" as="style" onload="this.rel='stylesheet'" />
+    <link href="{{ asset('css/all.css')}}" rel="stylesheet">
 
     <!--  Fonts and icons     -->
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="preload" as="style" onload="this.rel='stylesheet'">
     <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
-    <link href="{{ asset('css/themify-icons.css')}}" rel="stylesheet">
+    {{--<link href="{{ asset('css/themify-icons.css')}}" rel="preload" as="style" onload="this.rel='stylesheet'">--}}
 
 </head>
 <body>
@@ -71,7 +71,9 @@
                     </a>
                     <div class="collapse" id="collapseExample">
                         @foreach(Department::getDepartments() as $dept)
-                            <a class="departments" href="/department/{{$dept}}"><p><i class="ti-arrow-circle-right"></i> {{ $dept }}</p></a>
+                            @if($dept == Department::TAPPED) <a class="departments" href="/tappedProducts"><p><i class="ti-arrow-circle-right"></i>Tapped Products</p></a>
+                            @else <a class="departments" href="/department/{{$dept}}"><p><i class="ti-arrow-circle-right"></i>{{ $dept }}</p></a>
+                            @endif
                         @endforeach
                     </div>
                 </li>
@@ -119,23 +121,24 @@
 
 <!--   Core JS Files   -->
 <script src="{{ asset('js/jquery.min.js')}}" type="text/javascript"></script>
-<script src="{{ asset('js/bootstrap.min.js')}}" type="text/javascript"></script>
+{{--<script src="{{ asset('js/bootstrap.min.js')}}" type="text/javascript"></script>--}}
 
-<!--  Checkbox, Radio & Switch Plugins -->
-<script src="{{ asset('js/bootstrap-checkbox-radio.js')}}" async></script>
+{{--<!--  Checkbox, Radio & Switch Plugins -->--}}
+{{--<script src="{{ asset('js/bootstrap-checkbox-radio.js')}}" async></script>--}}
 
-<!--  Charts Plugin -->
-<script src="{{ asset('js/chartist.min.js')}}" async></script>
+{{--<!--  Charts Plugin -->--}}
+{{--<script src="{{ asset('js/chartist.min.js')}}" async></script>--}}
 
-<!--  Notifications Plugin    -->
-<script src="{{ asset('js/bootstrap-notify.js')}}" async></script>
+{{--<!--  Notifications Plugin    -->--}}
+{{--<script src="{{ asset('js/bootstrap-notify.js')}}" async></script>--}}
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js" async></script>
 
 {{--Handle Grocery List Edits--}}
-<script src="{{ asset('js/grocery-list.js') }}"></script>
+{{--<script src="{{ asset('js/grocery-list.js') }}" async></script>--}}
+<script src="{{ asset('js/all.js') }}" async></script>
 
-<script src="{{ asset('js/lazysizes.min.js') }}" async=""></script>
+{{--<script src="{{ asset('js/lazysizes.min.js') }}" async></script>--}}
 
 </html>
 

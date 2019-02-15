@@ -90,7 +90,7 @@ class GroceryListController extends Controller
         $lists = self::getAllLists();
         $listIDs = [];
         foreach($lists as $list) {
-            array_push($listIDs, $list['list_id']);
+            array_push($listIDs, $list->getID());
         }
         $newListID = rand();
         while(in_array($newListID, $listIDs)) {
