@@ -5,27 +5,21 @@ use App\APIConnect;
 class Ingredient {
     private $id;
     private $name;
-    private $productID;
 
-    public function __construct($id, $name, $productID) {
+    public function __construct($id, $name) {
         $this->id = $id;
-        $this->productID = $productID;
         $this->name = $name; 
     }
 
     public static function createFromJSON($ingredient) {
-        return new Ingredient($ingredient['ingredient_id'], $ingredient['name'], 0); 
+        return new Ingredient($ingredient['ingredient_id'], $ingredient['name']);
     }
 
     public function getID() {
         return $this->id; 
     }
 
-    public function getProductID() {
-        return $this->productID; 
-    }
-
     public function getName() {
-        return $this->name; 
+        return $this->name;
     }
 }

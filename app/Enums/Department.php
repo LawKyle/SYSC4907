@@ -11,10 +11,11 @@ class Department {
     const ORGANIC = "Organic";
     const DELI = "Deli";
     const SEAFOOD = "Seafood";
-    const GROCERY = "Grocery"; 
+    const GROCERY = "Grocery";
+    const TAPPED = "TappedProducts";
 
     public static function getDepartments() {
-        return [self::ALL, self::PRODUCE, self::MEAT, self::DAIRY, self::BAKERY, self::ORGANIC, self::DELI, self::SEAFOOD, self::GROCERY]; 
+        return [self::ALL, self::PRODUCE, self::MEAT, self::DAIRY, self::BAKERY, self::ORGANIC, self::DELI, self::SEAFOOD, self::GROCERY, self::TAPPED];
     }
 
     public static function getTags() {

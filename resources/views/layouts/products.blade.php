@@ -1,201 +1,144 @@
 <?php
-    use App\Enums\Department; 
-?>
+    use App\Enums\Department;
+    use App\Http\Controllers\GroceryListController;
 
+    $lists = GroceryListController::getAllLists();
+?>
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<head>
+    <meta charset="utf-8" />
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <!-- Custom fonts for this template-->
-    <link href="{{ asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
-    <!-- Bootstrap core CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <title>groceR</title>
 
-     <!-- Bootstrap core CSS-->
-    <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
 
-    <!-- Page level plugin CSS-->
-    <link href="{{ asset('vendor/datatables/dataTables.bootstrap4.css')}}" rel="stylesheet">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link href="{{ asset('css/main.css') }}" rel="stylesheet">
-    <link href="{{asset('css/sb-admin.css')}}" rel="stylesheet">
+    {{--<!-- Bootstrap core CSS     -->--}}
+    {{--<link href="{{ asset('css/bootstrap.min.css')}}" rel="preload" as="style" onload="this.rel='stylesheet'" />--}}
 
-    <title>Grocery Web App</title>
-  </head>
-  <body id="page-top">
-    <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
+    {{--<!-- Animation library for notifications   -->--}}
+    {{--<link href="{{ asset('css/animate.min.css')}}" rel="preload" as="style" onload="this.rel='stylesheet'"/>--}}
 
-      <a class="navbar-brand mr-1" href="/department/All"><img src="{{ asset('img/logo_groceR_dark_crop.jpg') }}" width=120 style="padding-bottom: 10px;;"></a>
+    {{--<!--  Paper Dashboard core CSS    -->--}}
+    {{--<link href="{{ asset('css/paper-dashboard.css')}}" rel="preload" as="style" onload="this.rel='stylesheet'"/>--}}
 
-      <!--<button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
-        <i class="fas fa-bars"></i>
-      </button>-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="preload" as="style" onload="this.rel='stylesheet'" />
+    <link href="{{ asset('css/all.css')}}" rel="stylesheet">
 
-      <!-- Navbar Search -->
-      <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" action="{{action('ProductController@searchBar')}}" method="GET">
-        @csrf
-        <div class="input-group">
-          <input name="query" type="text" class="form-control" placeholder="Search all products..." aria-label="Search" aria-describedby="basic-addon2">
-          <div class="input-group-append">
-            <button class="btn btn-primary-purple" type="button">
-              <i class="fas fa-search"></i>
-            </button>
-          </div>
-        </div>
-      </form>
+    <!--  Fonts and icons     -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="preload" as="style" onload="this.rel='stylesheet'">
+    <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
+    {{--<link href="{{ asset('css/themify-icons.css')}}" rel="preload" as="style" onload="this.rel='stylesheet'">--}}
 
-      <!-- Navbar -->
-      <ul class="navbar-nav ml-auto ml-md-0">
-        <!--<li class="nav-item dropdown no-arrow mx-1">
-          <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-bell fa-fw"></i>
-            <span class="badge badge-danger">9+</span>
-          </a>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </li>
-        <li class="nav-item dropdown no-arrow mx-1">
-          <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-envelope fa-fw"></i>
-            <span class="badge badge-danger">7</span>
-          </a>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </li>-->
-        <li class="nav-item dropdown no-arrow">
-          <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-user-circle fa-fw"></i>
-          </a>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-            <!--<a class="dropdown-item" href="#">Settings</a>-->
-            <!--<a class="dropdown-item" href="#">Activity Log</a>-->
-            <!--<div class="dropdown-divider"></div>-->
-            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
-          </div>
-        </li>
-      </ul>
+</head>
+<body>
 
-    </nav>
+<div class="wrapper">
+    <div class="sidebar" data-background-color="white" data-active-color="primary-purple">
 
-    <div id="wrapper">
-    
-      <!-- Sidebar -->
-      <ul class="sidebar navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="{{ action('ProfileController@profile') }}">
-            <i class="fas fa-user-circle"></i>
-            <span>My Profile</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{url("/") . '/department/All'}}">
-            <i class="fas fa-shopping-cart"></i>
-            <span>Products</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ action('GroceryListController@shoppingList') }}">
-            <i class="fas fa-clipboard-list"></i>
-            <span>My Grocery List</span>
-          </a>
-        </li>
-      </ul>
+        <!--
+            Tip 1: you can change the color of the sidebar's background using: data-background-color="white | black"
+            Tip 2: you can change the color of the active button using the data-active-color="primary | info | success | warning | danger"
+        -->
 
-      <!-- Sidebar Departments -->
-      <ul id="sidebar-dept" class="sidebar navbar-nav">
-          @foreach(Department::getDepartments() as $dept)
-            <li class="nav-item">
-              <a class="nav-link" href="/department/{{$dept}}">{{ $dept }}</a>
-            </li>
-            @endforeach
-            <li class="nav-item">
-              <a class="nav-link" href="{{action('ProductController@getTappedProducts')}}">Tapped Products</a>
-            </li>
-      </ul>
-
-      <div id="content-wrapper">
-
-        <div class="container-fluid">
-            @if (session('status'))
-                <div class="alert alert-danger">
-                    {{ session('status') }}
-                </div>
-            @endif
-
-          <!-- Breadcrumbs-->
-
-          <!-- Page Content -->
-          <main class="py-4">
-               @yield('content')
-          </main> 
-
-        </div>
-        <!-- /.container-fluid -->
-
-        <!-- Sticky Footer -->
-        <!--<footer class="sticky-footer">
-          <div class="container my-auto">
-            <div class="copyright text-center my-auto">
-              <span>Copyright © Your Website 2018</span>
+        <div class="sidebar-wrapper">
+            <div class="logo">
+                <a href="/department/All">
+                    <img style="padding-left: 12px;" src="{{ asset('img/logo_groceR_crop.jpg') }}" width=120>
+                </a>
             </div>
-          </div>
-        </footer>-->
 
-      </div>
-      <!-- /.content-wrapper -->
+            <ul class="nav">
+                <li class="{{ (\Request::route()->getName() == 'profile') ? 'active' : '' }}">
+                    <a href="{{ action('ProfileController@profile') }}">
+                        <i class="ti-user"></i>
+                        <p>My Profile</p>
+                    </a>
+                </li>
+                <li class="{{ (\Request::route()->getName() == 'department' || \Request::route()->getName() == 'tappedProducts') ? 'active' : '' }}">
+                    {{--<a href="{{url("/") . '/department/All'}}">--}}
+                        {{--<i class="ti-shopping-cart-full"></i>--}}
+                        {{--<p>Products</p>--}}
+                    {{--</a>--}}
 
-    </div>
-    <!-- /#wrapper -->
-
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-      <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-          <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="{{action('APILoginController@logout')}}">Logout</a>
-          </div>
+                    <a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        <i class="ti-shopping-cart-full"></i>
+                        <p>Products</p>
+                    </a>
+                    <div class="collapse" id="collapseExample">
+                        @foreach(Department::getDepartments() as $dept)
+                            @if($dept == Department::TAPPED) <a class="departments" href="/tappedProducts"><p><i class="ti-arrow-circle-right"></i>Tapped Products</p></a>
+                            @else <a class="departments" href="/department/{{$dept}}"><p><i class="ti-arrow-circle-right"></i>{{ $dept }}</p></a>
+                            @endif
+                        @endforeach
+                    </div>
+                </li>
+                <li class="{{ (\Request::route()->getName() == 'myGroceryList') ? 'active' : '' }}">
+                    <a href="{{ action('GroceryListController@shoppingList') }}">
+                        <i class="ti-view-list-alt"></i>
+                        <p>My Grocery Lists</p>
+                    </a>
+                </li>
+            </ul>
         </div>
-      </div>
     </div>
 
+    <div class="main-panel">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <form class="form-inline" action="{{action('ProductController@searchBar')}}" method="GET">
+                        @csrf
+                        <div class="form-group mx-sm-3 mb-2">
+                            <input name="query" type="text" class="form-control" placeholder="Search all products..." aria-label="Search" aria-describedby="basic-addon2">
+                        </div>
+                        <button class="btn btn-primary-purple" type="button">
+                            <i class="ti-search"></i>
+                        </button>
+                    </form>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="{{action('APILoginController@logout')}}">Logout</a></li>
+                  </ul>
+              </div>
+          </div>
+      </nav>
+
+        <main class="py-4">
+            @yield('content')
+        </main>
     </div>
 </div>
-   
 
-    <!-- Optional JavaScript -->
-    <!-- Bootstrap core JavaScript-->
-    <script src="{{ asset('vendor/jquery/jquery.min.js')}}"></script>
-    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+@yield('modal')
 
-    <!-- Core plugin JavaScript-->
-    <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
-    <!-- Custom scripts for all pages-->
-    <script type="text/javascript" src="{{ asset('js/sb-admin.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('js/sb-admin.min.js')}}"></script>
-  </body>
+</body>
+
+<!--   Core JS Files   -->
+<script src="{{ asset('js/jquery.min.js')}}" type="text/javascript"></script>
+{{--<script src="{{ asset('js/bootstrap.min.js')}}" type="text/javascript"></script>--}}
+
+{{--<!--  Checkbox, Radio & Switch Plugins -->--}}
+{{--<script src="{{ asset('js/bootstrap-checkbox-radio.js')}}" async></script>--}}
+
+{{--<!--  Charts Plugin -->--}}
+{{--<script src="{{ asset('js/chartist.min.js')}}" async></script>--}}
+
+{{--<!--  Notifications Plugin    -->--}}
+{{--<script src="{{ asset('js/bootstrap-notify.js')}}" async></script>--}}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js" async></script>
+
+{{--Handle Grocery List Edits--}}
+{{--<script src="{{ asset('js/grocery-list.js') }}" async></script>--}}
+<script src="{{ asset('js/all.js') }}" async></script>
+
+{{--<script src="{{ asset('js/lazysizes.min.js') }}" async></script>--}}
+
 </html>
+

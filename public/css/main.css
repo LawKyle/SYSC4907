@@ -66,9 +66,13 @@ body {
 }
 
 #sidebar-dept {
-    width: 160px !important;
+    width: 180px !important;
     background-color: #d1c4e9 !important;
     min-height: calc(100vh - 56px);
+}
+
+#sidebar-dept .nav-link {
+    color: black !important;
 }
 
 .btn-primary-purple {
