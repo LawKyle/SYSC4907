@@ -57,9 +57,6 @@
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
         ],
-        "post-install-cmd": [
-            "npm run production"
-        ]
     },
     "config": {
         "preferred-install": "dist",
