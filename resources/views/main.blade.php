@@ -19,7 +19,7 @@
                             <a href="/product/{{ $product->getID() }}" class="product-link">
                                 <div class="card">
                                     <div class="content product-content">
-                                        <img class="lazyload blur-up" src="{{ asset('tinyImg/' . $product->getImage())}}" data-sizes="auto" data-src="{{ asset('img/' . $product->getImage())}}" data-srcset="{{ asset('img/' . $product->getImage())}}" style="padding-bottom: 10px;" height="150" width="auto">
+                                        <img class="lazyload blur-up" src="{{ asset('tinyImg/' . $product->getImage())}}" data-sizes="auto" data-src="{{ asset('img/' . $product->getImage())}}" data-srcset="{{ asset('img/' . $product->getImage())}}" style="padding-bottom: 10px;">
                                         <div class="footer">
                                             <hr>
                                             {{ $product->getName() }}
