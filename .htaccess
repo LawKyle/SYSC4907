@@ -24,6 +24,17 @@
     </IfModule>
 </IfModule>
 
+<ifModule mod_gzip.c>
+    mod_gzip_on Yes
+    mod_gzip_dechunk Yes
+    mod_gzip_item_include file .(html?|txt|css|js|php|pl)$
+    mod_gzip_item_include handler ^cgi-script$
+    mod_gzip_item_include mime ^text/.*
+    mod_gzip_item_include mime ^application/x-javascript.*
+    mod_gzip_item_exclude mime ^image/.*
+    mod_gzip_item_exclude rspheader ^Content-Encoding:.*gzip.*
+</ifModule>
+
 # Compress all output labeled with one of the following MIME-types
 # (for Apache versions below 2.3.7, you don't need to enable `mod_filter`
 #  and can remove the `<IfModule mod_filter.c>` and `</IfModule>` lines
