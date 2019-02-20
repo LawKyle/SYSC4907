@@ -68,7 +68,7 @@ class ProductController extends Controller
                 $ingredient = $ing['name'];
                 array_push($ingredients, $ingredient);
             }
-            array_push($products, Product::createFromJSON($product, $ingredients));
+            array_push($products, Product::createFromJSON($product, $ingredients, null));
         }
         return view('main', ['products' => $products, 'title' => 'Tapped Products']);
    }
@@ -82,7 +82,7 @@ class ProductController extends Controller
            $ingredient = Ingredient::createFromJSON($ing);
            array_push($ingredients, $ingredient);
         }
-       $product = Product::createFromJSON($productJSON['product'], $ingredients);
+       $product = Product::createFromJSON($productJSON['product'], $ingredients, "null");
        if(isset($productJSON['flag'])) {
            $request->session()->flash('restriction', 'Warning: This product contains ' . $productJSON['flag'] . "!");
        }

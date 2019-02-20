@@ -70,6 +70,44 @@ function addProduct(listID) {
 
 }
 
+$(".custom-control-input").change(function() {
+    var id = this.id.toString();
+    var listID = id.replace('listID', '').split('p')[0];
+    var productID = id.split('productID')[1];
+
+    if(this.checked) {
+        $("#link" + id).css("text-decoration", "line-through");
+    }
+    else {
+        $("#link" + id).css("text-decoration", "none");
+    }
+    checkProduct(listID, productID, this.checked);
+});
+
+function checkProduct(listID, productID, check) {
+    let dataArray = {};
+    dataArray['list_id'] = listID;
+    dataArray['product_id'] = productID;
+    dataArray['check'] = check;
+    let dataString = "data=" + JSON.stringify(dataArray);
+
+    $.ajax({
+        method: 'POST',
+        url: '/myGroceryList/rmProduct',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: dataString,
+        success: function(response){
+            console.log(response);
+        },
+        error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+            console.log(JSON.stringify(jqXHR));
+            console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+        }
+    });
+}
+
 $(document).ready(function() {
     $('.js-example-basic-multiple').select2({
         placeholder: 'Select one or more products',

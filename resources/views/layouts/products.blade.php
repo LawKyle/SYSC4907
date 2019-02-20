@@ -121,6 +121,7 @@
 
 <!--   Core JS Files   -->
 <script src="{{ asset('js/jquery.min.js')}}" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
 {{--<script src="{{ asset('js/bootstrap.min.js')}}" type="text/javascript"></script>--}}
 
 {{--<!--  Checkbox, Radio & Switch Plugins -->--}}
@@ -132,10 +133,10 @@
 {{--<!--  Notifications Plugin    -->--}}
 {{--<script src="{{ asset('js/bootstrap-notify.js')}}" async></script>--}}
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js" async></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
 {{--Handle Grocery List Edits--}}
-{{--<script src="{{ asset('js/grocery-list.js') }}" async></script>--}}
+<script src="{{ asset('js/grocery-list.js') }}" async></script>
 <script src="{{ asset('js/all.js') }}" async></script>
 
 {{--<script src="{{ asset('js/lazysizes.min.js') }}" async></script>--}}

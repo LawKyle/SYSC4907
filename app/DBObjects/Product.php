@@ -9,16 +9,16 @@ use Intervention\Image\ImageManagerStatic as Image;
 class Product {
     private $id;
     private $nfcID;
-    private $description;
+    private $checked;
     private $name; 
     private $tag;
     private $ingredients;
     private $image;
 
-    public function __construct($id, $nfcID, $description, $name, $tag, $ingredients, $image) {
+    public function __construct($id, $nfcID, $checked, $name, $tag, $ingredients, $image) {
         $this->id = $id;
         $this->nfcID = $nfcID;
-        $this->description = $description;
+        $this->checked = $checked;
         $this->name = $name; 
         $this->tag = $tag; 
         $this->ingredients = $ingredients;
@@ -27,17 +27,14 @@ class Product {
 
     public static function createFromDB($product) {
         $ingredients = APIConnect::selectProductIngredients($product->product_id);
-        return new Product($product->product_id, $product->nfc_id, $product->description, $product->name, $product->tag, $ingredients, null);
+        return new Product($product->product_id, $product->nfc_id, null, $product->name, $product->tag, $ingredients, null);
     }
 
-    public static function createFromJSON($product, $ingredients) {
+    public static function createFromJSON($product, $ingredients, $checked) {
         $name = $product['name'];
         $nfcID = null;
         if(isset($product['nfc_id'])) $nfcID = $product['nfc_id'];
         $productID = $product['product_id'];
-
-        $desc = null;
-        if(isset($product['description'])) $desc = $product['description'];
 
         $tag = null;
         if(isset($product['tags'])) $tag = $product['tags'];
@@ -45,7 +42,7 @@ class Product {
         $image = null;
         if(isset($product['picture'])) $image = $product['picture'];
 
-        return new Product($productID, $nfcID, $desc, $name, $tag, $ingredients, $image);
+        return new Product($productID, $nfcID, $checked, $name, $tag, $ingredients, $image);
     }
 
     public function getID() {
@@ -56,8 +53,8 @@ class Product {
         return $this->nfcID; 
     }
 
-    public function getDescription() {
-        return $this->description; 
+    public function getChecked() {
+        return $this->checked;
     }
 
     public function getName() {

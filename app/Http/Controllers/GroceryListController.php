@@ -22,9 +22,13 @@ class GroceryListController extends Controller
         $lists = [];
         foreach($groceryLists as $list) {
             $products = [];
+            $index = 0;
+            $data = array('list_id' => $list['list_id']);
+            $checked = APIConnect::postRequestToAPI(Cookie::get('auth_token'), $data, 'shoppingList/');
             foreach($list['product'] as $product) {
                 $ingredients = self::getAllIngredients($product);
-                array_push($products, Product::createFromJSON($product, $ingredients));
+                array_push($products, Product::createFromJSON($product, $ingredients, $checked[$index]['checked']));
+                $index++;
             }
             $list = GroceryList::createFromJSON($list, $products);
             array_push($lists, $list);
@@ -32,26 +36,19 @@ class GroceryListController extends Controller
         return $lists;
     }
 
-
-//    public function getList($id) {
-//        if(!Cookie::get('auth_token')) return redirect("/");
-//        $data = array('list_id' => $id);
-//        $groceryList = APIConnect::postRequestToAPI(Cookie::get('auth_token'), $data, 'shoppingList/');
-//        $products = [];
-//        foreach($groceryList['product'] as $product) {
-//            $ingredients = self::getAllIngredients($product);
-//            array_push($products, Product::createFromJSON($product, $ingredients));
-//        }
-//        $lists = self::getAllLists();
-//        return view('groceryLists', ['lists' => $lists]);
-//    }
-
     public function addNewList() {
         if(!Cookie::get('auth_token')) return redirect("/");
         $newListID = self::generateNewListID();
         $data = array('list_id' => $newListID, 'new_name' => "Grocery List");
         var_dump(APIConnect::postRequestToAPI(Cookie::get('auth_token'), $data, 'shoppingList/'));
 
+        return back();
+    }
+
+    public function deleteList($list_id) {
+        if(!Cookie::get('auth_token')) return redirect("/");
+        $data = array('list_id' => $list_id, 'flag' => 'DELETE');
+        var_dump(APIConnect::postRequestToAPI(Cookie::get('auth_token'), $data, 'shoppingList/'));
         return back();
     }
 
@@ -70,8 +67,19 @@ class GroceryListController extends Controller
         return json_encode("pass");
     }
 
-    public function rmProduct() {
+    public function rmProduct(Request $request) {
+        $dataArray = json_decode($request->input('data'), true);
 
+        $id = $dataArray["list_id"];
+        $product = $dataArray['product_id'];
+        $check = "";
+        if($dataArray['check']) $check = "check";
+        else $check = "uncheck";
+        $data = array('list_id' => $id, 'product' => $product, 'flag'=>$check);
+
+        if(!Cookie::get('auth_token')) return redirect("/");
+        APIConnect::postRequestToAPI(Cookie::get('auth_token'), $data, 'shoppingList/');
+        return json_encode("pass");
     }
 
     public function editName(Request $request) {

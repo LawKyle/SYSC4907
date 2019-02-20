@@ -26,7 +26,7 @@
                             <h4 id="title{{ $list->getID() }}" class="title">
                                 {{ $list->getName() }}
                             </h4>
-                            <button class="btn pull-right" onclick="deleteList({{$list->getID()}});"><i class="ti-trash"></i></button>
+                            <a class="btn pull-right" a href="{{ url('/myGroceryList/deleteList/'. $list->getID())}}"><i class="ti-trash"></i></a>
                             <button class="btn pull-right" onclick="editName({{$list->getID()}});"><i class="ti-pencil-alt"></i></button>
                         </div>
                         <div class="content table-responsive table-full-width">
@@ -54,7 +54,21 @@
                                 </tr>
                                 @foreach ($list->getProducts() as $product)
                                     <tr>
-                                        <td><a href="/product/{{ $product->getID() }}">{{ $product->getName() }}</a></td>
+                                        <td>
+                                            <div class="custom-control custom-checkbox">
+                                                @if($product->getChecked() == 'True')
+                                                    <input type="checkbox" class="custom-control-input" id="listID{{ $list->getID() }}productID{{$product->getID()}}" value="{{ $product->getName() }}" checked>
+                                                    <label class="custom-control-label" for="listID{{ $list->getID() }}productID{{$product->getID()}}">
+                                                        <a id="linklistID{{ $list->getID() }}productID{{$product->getID()}}" href="/product/{{ $product->getID() }}" style="text-decoration: line-through;">{{ $product->getName() }}</a>
+                                                    </label>
+                                                @else
+                                                    <input type="checkbox" class="custom-control-input" id="listID{{ $list->getID() }}productID{{$product->getID()}}" value="{{ $product->getName() }}">
+                                                    <label class="custom-control-label" for="listID{{ $list->getID() }}productID{{$product->getID()}}">
+                                                        <a id="linklistID{{ $list->getID() }}productID{{$product->getID()}}" href="/product/{{ $product->getID() }}">{{ $product->getName() }}</a>
+                                                    </label>
+                                                @endif
+                                            </div>
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
