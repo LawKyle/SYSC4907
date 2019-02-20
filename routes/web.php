@@ -36,3 +36,8 @@ Route::post('/myGroceryList/addProduct', 'GroceryListController@addProduct');
 Route::post('/myGroceryList/rmProduct', 'GroceryListController@rmProduct');
 
 Route::get('/myProfile', 'ProfileController@profile')->name('profile');
+Route::post('/myProfile/addRestriction', 'ProfileController@addRestriction');
+Route::post('/myProfile/rmRestriction', 'ProfileController@rmRestriction');
+Route::post('/myProfile/addRestrictions', 'ProfileController@addRestrictions');
+Route::get('/myProfile/rmRestrictions/{ingredient}', 'ProfileController@rmRestrictions');
+
