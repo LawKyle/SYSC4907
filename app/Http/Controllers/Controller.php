@@ -18,22 +18,22 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     public static function getAllProducts() {
-//        $productsJSON = APIConnect::postRequestToAPI(Cookie::get(API::AUTH_TOKEN), [], API::PROD_LIST);
-//        $products = [];
-//        foreach($productsJSON as $product) {
-//            $ingredients = self::getAllIngredients($product);
-//            $data = array("product_id" => $product['product_id']);
-//            $prod = APIConnect::postRequestToAPI(Cookie::get(API::AUTH_TOKEN), $data, 'product/');
-//            array_push($products, Product::createFromJSON($prod['product'], $ingredients));
-//        }
-//        return $products;
+        $productsJSON = APIConnect::postRequestToAPI(Cookie::get(API::AUTH_TOKEN), [], API::PROD_LIST);
         $products = [];
-        $productRows = DB::table('api_product')->get();
-        foreach($productRows as $row) {
-              $product = new Product($row->product_id, $row->id, null, $row->name, $row->tags, [], $row->picture);
-              array_push($products, $product);
+        foreach($productsJSON as $product) {
+            $ingredients = self::getAllIngredients($product);
+            $data = array("product_id" => $product['product_id']);
+            $prod = APIConnect::postRequestToAPI(Cookie::get(API::AUTH_TOKEN), $data, 'product/');
+            array_push($products, Product::createFromJSON($prod['product'], $ingredients, null));
         }
         return $products;
+//        $products = [];
+//        $productRows = DB::table('api_product')->get();
+//        foreach($productRows as $row) {
+//              $product = new Product($row->product_id, $row->id, null, $row->name, $row->tags, [], $row->picture);
+//              array_push($products, $product);
+//        }
+//        return $products;
     }
 
     public static function getJSONProducts() {
