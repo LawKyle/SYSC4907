@@ -11,18 +11,19 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
+use App\Enums\API; 
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     public static function getAllProducts() {
-//        $productsJSON = APIConnect::postRequestToAPI(Cookie::get('auth_token'), [], 'productList/');
+//        $productsJSON = APIConnect::postRequestToAPI(Cookie::get(API::AUTH_TOKEN), [], API::PROD_LIST);
 //        $products = [];
 //        foreach($productsJSON as $product) {
 //            $ingredients = self::getAllIngredients($product);
 //            $data = array("product_id" => $product['product_id']);
-//            $prod = APIConnect::postRequestToAPI(Cookie::get('auth_token'), $data, 'product/');
+//            $prod = APIConnect::postRequestToAPI(Cookie::get(API::AUTH_TOKEN), $data, 'product/');
 //            array_push($products, Product::createFromJSON($prod['product'], $ingredients));
 //        }
 //        return $products;
@@ -36,15 +37,15 @@ class Controller extends BaseController
     }
 
     public static function getJSONProducts() {
-        return APIConnect::postRequestToAPI(Cookie::get('auth_token'), [], 'productList/');
+        return APIConnect::postRequestToAPI(Cookie::get(API::AUTH_TOKEN), [], API::PROD_LIST);
     }
 
 
     protected static function getAllIngredients($product) {
         $ingredients = [];
         foreach($product['ingredient'] as $id) {
-            $data = array('ingredient_id' => $id);
-            $ingredient = APIConnect::postRequestToAPI(Cookie::get('auth_token'), $data, 'ingredient/');
+            $data = array(API::ING_ID => $id);
+            $ingredient = APIConnect::postRequestToAPI(Cookie::get(API::AUTH_TOKEN), $data, API::ING);
             if($ingredient !== "FAIL") array_push($ingredients, $ingredient['name']);
         }
         return array_unique($ingredients);
@@ -53,15 +54,15 @@ class Controller extends BaseController
     protected static function getAllIngredients2($product) {
         $ingredients = [];
         foreach($product['ingredients'] as $id) {
-            $data = array('ingredient_id' => $id['ingredient_id']);
-            $ingredient = APIConnect::postRequestToAPI(Cookie::get('auth_token'), $data, 'ingredient/');
+            $data = array(API::ING_ID => $id[API::ING_ID]);
+            $ingredient = APIConnect::postRequestToAPI(Cookie::get(API::AUTH_TOKEN), $data, API::ING);
             array_push($ingredients, Ingredient::createFromJSON($ingredient));
         }
         return $ingredients;
     }
 
     public static function getAllIng() {
-        $ingredientsJSON = APIConnect::postRequestToAPI(Cookie::get('auth_token'), [], 'ingredientList/');
+        $ingredientsJSON = APIConnect::postRequestToAPI(Cookie::get(API::AUTH_TOKEN), [], API::ING_LIST);
         $ingredients = [];
         foreach($ingredientsJSON as $ing) {
             array_push($ingredients, Ingredient::createFromJSON($ing));

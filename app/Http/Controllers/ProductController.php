@@ -6,14 +6,14 @@ use Illuminate\Http\Request;
 use App\APIConnect;
 use App\DBObjects\Product;
 use App\DBObjects\Ingredient;
-use App\DBObjects\Restriction;
 use App\Enums\Department;
+use App\Enums\API; 
 use Illuminate\Support\Facades\Cookie; 
 
 class ProductController extends Controller
 {
   public function searchDepartment($dept){
-    if(!Cookie::get('auth_token')) return redirect("/");
+    if(!Cookie::get(API::AUTH_TOKEN)) return redirect(API::HOME);
     $products = self::getAllProducts(); 
 
     if($dept == Department::ALL) return view('main', ['products' => $products, 'title' => $dept . " Products"]);
@@ -32,7 +32,7 @@ class ProductController extends Controller
 
     $searchProducts = [];
     foreach($products as $product) {
-        if(((stripos($product->getDescription(), $query)) !== false || (stripos($product->getName(), $query)) !== false) ) {
+        if(stripos($product->getName(), $query) !== false) {
             array_push($searchProducts, $product);
         }
         foreach((array)$product->getIngredients() as $ing) { 
@@ -57,8 +57,8 @@ class ProductController extends Controller
   }
 
   public static function getTappedProducts() {
-       if(!Cookie::get('auth_token')) return redirect("/");
-       $tappedProductsArr = APIConnect::postRequestToAPI(Cookie::get('auth_token'), [], 'product/');
+       if(!Cookie::get(API::AUTH_TOKEN)) return redirect(API::HOME);
+       $tappedProductsArr = APIConnect::postRequestToAPI(Cookie::get(API::AUTH_TOKEN), [], API::PROD);
        if(!isset($tappedProductsArr['TappedProducts']))  return view('main', ['products' => [], 'title' => 'Tapped Products']);
        else $tappedProductsArr = $tappedProductsArr["TappedProducts"];
        $products = [];
@@ -74,35 +74,35 @@ class ProductController extends Controller
    }
 
    public function getProduct($id, Request $request) {
-       if(!Cookie::get('auth_token')) return redirect("/");
+       if(!Cookie::get(API::AUTH_TOKEN)) return redirect(API::HOME);
        $data = array('product_id' => $id);
-       $productJSON = APIConnect::postRequestToAPI(Cookie::get('auth_token'), $data, 'product/');
+       $productJSON = APIConnect::postRequestToAPI(Cookie::get(API::AUTH_TOKEN), $data, API::PROD);
        $ingredients = [];
        foreach($productJSON['product']['ingredient'] as $ing) {
            $ingredient = Ingredient::createFromJSON($ing);
            array_push($ingredients, $ingredient);
         }
        $product = Product::createFromJSON($productJSON['product'], $ingredients, "null");
-       if(isset($productJSON['flag'])) {
-           $request->session()->flash('restriction', 'Warning: This product contains ' . $productJSON['flag'] . "!");
+       if(isset($productJSON[API::FLAG])) {
+           $request->session()->flash('restriction', 'Warning: This product contains ' . $productJSON[API::FLAG] . "!");
        }
        return view('product-single', ['product' => $product]);
    }
 
    public function editProduct(Request $request) {
-        //if(!Cookie::get('auth_token')) return redirect("/");
+        //if(!Cookie::get(API::AUTH_TOKEN)) return redirect(API::HOME);
         $data = [];
-        $data['new_name'] = $request->input('new_name');
-        $data['nfc_id'] = $request->input('nfc_id');
-        $data['new_nfc_id'] = $request->input('new_nfc_id');
-        $data['new_product_id'] = $request->input('new_product_id');
-        $data['new_tags'] = strToLower($request->input('new_tags'));
+        $data[API::NEW_NAME] = $request->input(API::NEW_NAME);
+        $data[API::NFC_ID] = $request->input(API::NFC_ID);
+        $data[API::NEW_NFC_ID] = $request->input(API::NEW_NFC_ID);
+        $data[API::NEW_PROD_ID] = $request->input(API::NEW_PROD_ID);
+        $data[API::NEW_TAGS] = strToLower($request->input(API::NEW_TAGS));
 
-        $data['new_ingredientId'] = implode(",", $request->input('new_ingredientId')); 
-        APIConnect::postRequestToAPI(Cookie::get('auth_token'), $data, 'newProduct/');
+        $data[API::NEW_ING_ID] = implode(",", $request->input(API::NEW_ING_ID)); 
+        APIConnect::postRequestToAPI(Cookie::get(API::AUTH_TOKEN), $data, API::NEW_PROD);
 
         var_dump($data);
-        var_dump(implode(",", $request->input('new_ingredientId'))); 
-        return redirect(url('/') . "/product/" . $request->input('new_nfc_id')); 
+        var_dump(implode(",", $request->input(API::NEW_ING_ID))); 
+        return redirect(url('/') . "/product/" . $request->input(API::NEW_NFC_ID)); 
    }
 }

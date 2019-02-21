@@ -1,5 +1,5 @@
 <?php
-namespace App/DBObjects;
+namespace App\DBObjects;
 
 class ShoppingList {
     private $id;
