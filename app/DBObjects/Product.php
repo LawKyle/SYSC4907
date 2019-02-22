@@ -1,92 +1,83 @@
 <?php
 namespace App\DBObjects;
 use App\APIConnect;
+use App\Enums\API;
 use App\DBObjects\Ingredient;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\UploadedFile;
 use Intervention\Image\ImageManagerStatic as Image;
 
 class Product {
-    private $id;
-    private $nfcID;
-    private $checked;
-    private $name; 
-    private $tag;
+    private $name;
+    private $product_id;
+    private $tags;
     private $ingredients;
-    private $image;
+    private $info;
+    private $picture;
+    private $checked;
 
-    public function __construct($id, $nfcID, $checked, $name, $tag, $ingredients, $image) {
-        $this->id = $id;
-        $this->nfcID = $nfcID;
-        $this->checked = $checked;
-        $this->name = $name; 
-        $this->tag = $tag; 
+    public function __construct($name, $product_id, $tags, $ingredients, $info, $picture, $checked) {
+        $this->name = $name;
+        $this->product_id = $product_id;
+        $this->tags = $tags;
         $this->ingredients = $ingredients;
-        $this->image = $image;
+        $this->info = $info;
+        $this->picture = $picture;
+        $this->checked = $checked;
     }
 
-    public static function createFromDB($product) {
-        $ingredients = APIConnect::selectProductIngredients($product->product_id);
-        return new Product($product->product_id, $product->nfc_id, null, $product->name, $product->tag, $ingredients, null);
-    }
+    public static function createFromJSON($product, $checked) {
+        $name = $product[API::NAME];
+        $product_id = $product[API::PROD_ID];
+        $tags = $product[API::TAGS];
 
-    public static function createFromJSON($product, $ingredients, $checked) {
-        $name = $product['name'];
-        $nfcID = null;
-//        if(isset($product['nfc_id'])) $nfcID = $product['nfc_id'];
-        $productID = $product['product_id'];
+        $info = null;
+        if(isset($product[API::INFO])) $info = $product[API::INFO];
 
-        $tag = null;
-        if(isset($product['tags'])) $tag = $product['tags'];
+        $picture = null;
+        if(isset($product[API::PICTURE])) $picture = $product[API::PICTURE];
 
-        $image = null;
-        if(isset($product['picture'])) $image = $product['picture'];
-
-        $ingredientsJSON = $product['ingredient'];
+        $ingredientsJSON = $product[API::INGREDIENT];
         $ingredients = [];
         foreach($ingredientsJSON as $ing) {
             array_push($ingredients, Ingredient::createFromJSON($ing));
         }
 
-        return new Product($productID, $nfcID, $checked, $name, $tag, $ingredients, $image);
-    }
-
-    public function getID() {
-        return $this->id; 
-    }
-
-    public function getNFCID() {
-        return $this->nfcID; 
-    }
-
-    public function getChecked() {
-        return $this->checked;
+        return new Product($name, $product_id, $tags, $ingredients, $info, $picture, $checked);
     }
 
     public function getName() {
-        return $this->name; 
+        return $this->name;
     }
 
-    public function getTag() {
-        return $this->tag; 
+    public function getProductID() {
+        return $this->product_id;
+    }
+
+    public function getTags() {
+        return $this->tags;
     }
 
     public function getIngredients() {
         return $this->ingredients; 
     }
 
-    public function getImage() {
-        if($this->image != null && $this->image != 'http://kltestserver.com/images/Mushroom- Button.png' && strpos($this->image, 'png') == false) {
+    public function getInfo() {
+        return $this->info;
+    }
+
+    public function getPicture() {
+        if($this->picture != null && $this->picture != 'http://kltestserver.com/images/Mushroom- Button.png' && strpos($this->picture, 'png') == false) {
             $img = null;
-            $filename = basename($this->image);
+            $filename = basename($this->picture);
             if(!file_exists(public_path('img/' . $filename))) {
-                $img = Image::make($this->image)->resize(null, 150, function ($constraint) {
+                $img = Image::make($this->picture)->resize(null, 150, function ($constraint) {
                     $constraint->aspectRatio();
                 });
              $img->save(public_path('img/' . $filename), 60);
             }
             if(!file_exists(public_path('tinyImg/' . $filename))) {
-                $img = Image::make($this->image)->resize(null, 10, function ($constraint) {
+                $img = Image::make($this->picture)->resize(null, 10, function ($constraint) {
                     $constraint->aspectRatio();
                 });
                 $img->save(public_path('tinyImg/' . $filename), 60);
@@ -105,5 +96,9 @@ class Product {
             }
             return 'logo_groceR_small.jpg';
         }
+    }
+
+    public function getChecked() {
+        return $this->checked;
     }
 }

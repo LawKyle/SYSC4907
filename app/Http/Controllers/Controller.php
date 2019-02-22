@@ -21,7 +21,7 @@ class Controller extends BaseController
         $productsJSON = APIConnect::postRequestToAPI(Cookie::get(API::AUTH_TOKEN), [], API::PROD_LIST);
         $products = [];
         foreach($productsJSON as $product) {
-            array_push($products, Product::createFromJSON($product, [],null));
+            array_push($products, Product::createFromJSON($product, null));
         }
         return $products;
     }

@@ -42,7 +42,7 @@
                                             <div class="col-md-9">
                                                 <select class="form-control js-example-basic-multiple mb-2" id="products{{ $list->getID() }}" name="products{{ $list->getID() }}[]" multiple="multiple">
                                                     @foreach($products as $product)
-                                                        <option value="{{ $product->getID() }}">{{ $product->getName() }}</option>
+                                                        <option value="{{ $product->getProductID() }}">{{ $product->getName() }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -57,14 +57,14 @@
                                         <td>
                                             <div class="custom-control custom-checkbox">
                                                 @if($product->getChecked() == 'True')
-                                                    <input type="checkbox" class="custom-control-input" id="listID{{ $list->getID() }}productID{{$product->getID()}}" value="{{ $product->getName() }}" checked>
-                                                    <label class="custom-control-label" for="listID{{ $list->getID() }}productID{{$product->getID()}}">
-                                                        <a id="linklistID{{ $list->getID() }}productID{{$product->getID()}}" href="/product/{{ $product->getID() }}" style="text-decoration: line-through;">{{ $product->getName() }}</a>
+                                                    <input type="checkbox" class="custom-control-input" id="listID{{ $list->getID() }}productID{{$product->getProductID()}}" value="{{ $product->getName() }}" checked>
+                                                    <label class="custom-control-label" for="listID{{ $list->getID() }}productID{{$product->getProductID()}}">
+                                                        <a id="linklistID{{ $list->getID() }}productID{{$product->getProductID()}}" href="/product/{{ $product->getProductID() }}" style="text-decoration: line-through;">{{ $product->getName() }}</a>
                                                     </label>
                                                 @else
-                                                    <input type="checkbox" class="custom-control-input" id="listID{{ $list->getID() }}productID{{$product->getID()}}" value="{{ $product->getName() }}">
-                                                    <label class="custom-control-label" for="listID{{ $list->getID() }}productID{{$product->getID()}}">
-                                                        <a id="linklistID{{ $list->getID() }}productID{{$product->getID()}}" href="/product/{{ $product->getID() }}">{{ $product->getName() }}</a>
+                                                    <input type="checkbox" class="custom-control-input" id="listID{{ $list->getID() }}productID{{$product->getProductID()}}" value="{{ $product->getName() }}">
+                                                    <label class="custom-control-label" for="listID{{ $list->getID() }}productID{{$product->getProductID()}}">
+                                                        <a id="linklistID{{ $list->getID() }}productID{{$product->getProductID()}}" href="/product/{{ $product->getProductID() }}">{{ $product->getName() }}</a>
                                                     </label>
                                                 @endif
                                             </div>

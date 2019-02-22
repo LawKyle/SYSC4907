@@ -15,9 +15,10 @@
             </div>
         @endif
 
-            <img class="lazyload blur-up" src="{{ asset('tinyImg/' . $product->getImage())}}" data-sizes="auto" data-src="{{ asset('img/' . $product->getImage())}}" data-srcset="{{ asset('img/' . $product->getImage())}}" style="padding-bottom: 10px;" height="150" width="auto">
+            <img class="lazyload blur-up" src="{{ asset('tinyImg/' . $product->getPicture())}}" data-sizes="auto" data-src="{{ asset('img/' . $product->getPicture())}}" data-srcset="{{ asset('img/' . $product->getPicture())}}" style="padding-bottom: 10px;" height="150" width="auto">
         <h3>{{ $product->getName() }} </h3>
-        <p>Tag(s): {{ $product->getTag() }}</p>
+        <p>Tag(s): {{ $product->getTags() }}</p>
+        <p>Info: {{ $product->getInfo()}}</p>
         <h4>Ingredients</h4>
         @foreach ($product->getIngredients() as $ing)
             <p>{{ $ing->getName() }}</p>
@@ -45,7 +46,7 @@
                 <div class="modal-body">
                     <form method="post" action="{{ action('ProductController@editProduct') }}">
                         @csrf
-                        <input type="hidden" class="form-control" name="nfc_id" value="{{ $product->getNFCID() }}">
+                        <input type="hidden" class="form-control" name="nfc_id" value="{{ $product->getProductID() }}">
                         <div class="form-group row">
                             <label for="name" class="col-sm-3 col-form-label">Name</label>
                             <div class="col-sm-9">
@@ -53,15 +54,9 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="nfc_id" class="col-sm-3 col-form-label">NFC ID</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" name="new_nfc_id" value="{{ $product->getNFCID() }}">
-                            </div>
-                        </div>
-                        <div class="form-group row">
                             <label for="product_id" class="col-sm-3 col-form-label">Product ID</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" name="new_product_id" value="{{ $product->getID() }}">
+                                <input type="text" class="form-control" name="new_product_id" value="{{ $product->getProductID() }}">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -69,7 +64,7 @@
                             <div class="col-sm-9">
                                 <select class="custom-select" name="new_tags">
                                     @foreach(Department::getTags() as $dept)
-                                        @if(strToUpper($dept) == strToUpper($product->getTag()))
+                                        @if(strToUpper($dept) == strToUpper($product->getTags()))
                                             <option selected value="{{$dept}}">{{ $dept }}</option>
                                         @else
                                             <option value="{{$dept}}">{{ $dept }}</option>

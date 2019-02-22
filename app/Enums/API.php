@@ -66,4 +66,7 @@ class API
     const REMOVE = "remove";
     const REPORT = "report";
     const NEW = "new";
+
+    const PICTURE = "picture";
+    const INGREDIENT = "ingredient";
 }
