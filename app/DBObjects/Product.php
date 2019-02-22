@@ -1,7 +1,7 @@
 <?php
 namespace App\DBObjects;
 use App\APIConnect;
-use Ingredient;
+use App\DBObjects\Ingredient;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\UploadedFile;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -33,7 +33,7 @@ class Product {
     public static function createFromJSON($product, $ingredients, $checked) {
         $name = $product['name'];
         $nfcID = null;
-        if(isset($product['nfc_id'])) $nfcID = $product['nfc_id'];
+//        if(isset($product['nfc_id'])) $nfcID = $product['nfc_id'];
         $productID = $product['product_id'];
 
         $tag = null;
@@ -41,6 +41,12 @@ class Product {
 
         $image = null;
         if(isset($product['picture'])) $image = $product['picture'];
+
+        $ingredientsJSON = $product['ingredient'];
+        $ingredients = [];
+        foreach($ingredientsJSON as $ing) {
+            array_push($ingredients, Ingredient::createFromJSON($ing));
+        }
 
         return new Product($productID, $nfcID, $checked, $name, $tag, $ingredients, $image);
     }
