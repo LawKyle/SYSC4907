@@ -14,13 +14,8 @@
             </div>
         @endif
 
-        @if($product->getImage() == null)
-            <img src="{{ asset('img/logo_groceR_small.jpg') }}" width=auto height="150" style="padding-bottom: 10px;">
-        @else
-            <img src="{{ $product->getImage() }}" width=auto height="150" style="padding-bottom: 10px;">
-        @endif
+            <img class="lazyload blur-up" src="{{ asset('tinyImg/' . $product->getImage())}}" data-sizes="auto" data-src="{{ asset('img/' . $product->getImage())}}" data-srcset="{{ asset('img/' . $product->getImage())}}" style="padding-bottom: 10px;" height="150" width="auto">
         <h3>{{ $product->getName() }} </h3>
-        <p>{{ $product->getDescription() }}</p>
         <p>Tag(s): {{ $product->getTag() }}</p>
         <h4>Ingredients</h4>
         @foreach ($product->getIngredients() as $ing)

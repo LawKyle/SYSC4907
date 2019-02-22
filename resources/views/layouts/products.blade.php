@@ -1,8 +1,6 @@
 <?php
     use App\Enums\Department;
     use App\Http\Controllers\GroceryListController;
-
-    $lists = GroceryListController::getAllLists();
 ?>
 <!doctype html>
 <html lang="en">
