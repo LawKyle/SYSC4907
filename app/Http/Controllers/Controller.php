@@ -21,20 +21,9 @@ class Controller extends BaseController
         $productsJSON = APIConnect::postRequestToAPI(Cookie::get(API::AUTH_TOKEN), [], API::PROD_LIST);
         $products = [];
         foreach($productsJSON as $product) {
-            //$ingredients = self::getAllIngredients($product);
-            //$data = array("product_id" => $product['product_id']);
-            //$prod = APIConnect::postRequestToAPI(Cookie::get(API::AUTH_TOKEN), $data, 'product/');
-            //var_dump($product);
             array_push($products, Product::createFromJSON($product, [],null));
         }
         return $products;
-//        $products = [];
-//        $productRows = DB::table('api_product')->get();
-//        foreach($productRows as $row) {
-//              $product = new Product($row->product_id, $row->id, null, $row->name, $row->tags, [], $row->picture);
-//              array_push($products, $product);
-//        }
-//        return $products;
     }
 
     public static function getJSONProducts() {
@@ -69,6 +58,17 @@ class Controller extends BaseController
             array_push($ingredients, Ingredient::createFromJSON($ing));
         }
         return $ingredients;
+    }
+
+    public static function getPermissions() {
+        $permission = APIConnect::postRequestToAPI(Cookie::get(API::AUTH_TOKEN), [], API::MANAGE_USER);
+        if(empty($permission)) return "customer";
+        elseif($permission[0]['user'][API::USERNAME] == "admin"){
+            return "admin";
+        }
+        else {
+            return "organization";
+        }
     }
 
 }

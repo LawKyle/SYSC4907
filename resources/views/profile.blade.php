@@ -20,13 +20,12 @@
                     </div>
                 @endforeach
             </div>
-            @foreach ($customRestrictions as $restrict)
                 <div class="col-md-6">
                     <div class="card">
                         <div class="content table-responsive table-full-width">
                             <table id="tableCustom" class="table table-striped">
                                 <thead style="background-color: #d1c4e9;">
-                                    <th><i class="ti-na"></i> {{ $restrict->getName() }}</th>
+                                    <th><i class="ti-na"></i> Custom Restrictions</th>
                                 </thead>
                                 <tbody>
                                 <tr>
@@ -45,28 +44,29 @@
                                         </div>
                                     </td>
                                 </tr>
-                                @if(!empty($restrict->getIngredients()))
-                                    @foreach ($restrict->getIngredients() as $ing)
-                                        <tr>
-                                            <td>
-                                                <div class="row">
-                                                    <div class="col-md-9">
-                                                        {{ $ing->getName() }}
+                                @foreach ($customRestrictions as $restrict)
+                                    @if(!empty($restrict->getIngredients()))
+                                        @foreach ($restrict->getIngredients() as $ing)
+                                            <tr>
+                                                <td>
+                                                    <div class="row">
+                                                        <div class="col-md-9">
+                                                            {{ $ing->getName() }}
+                                                        </div>
+                                                        <div class="col-md-1">
+                                                            <a href="/myProfile/rmRestrictions/{{ $ing->getID() }}" class='btn'><i class='ti-trash'></i></a>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-md-1">
-                                                        <a href="/myProfile/rmRestrictions/{{ $ing->getID() }}" class='btn'><i class='ti-trash'></i></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-            @endforeach
         </div>
     </div>
 @endsection

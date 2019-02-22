@@ -27,8 +27,7 @@ class GroceryListController extends Controller
             $data = array(API::LIST_ID => $list[API::LIST_ID]);
             $checked = APIConnect::postRequestToAPI(Cookie::get(API::AUTH_TOKEN), $data, API::SHOP_LIST);
             foreach($list['product'] as $product) {
-                $ingredients = self::getAllIngredients($product);
-                array_push($products, Product::createFromJSON($product, $ingredients, $checked[$index]['checked']));
+                array_push($products, Product::createFromJSON($product, [], $checked[$index]['checked']));
                 $index++;
             }
             $list = GroceryList::createFromJSON($list, $products);

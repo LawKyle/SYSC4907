@@ -4,6 +4,7 @@
     use App\Http\Controllers\ProductController;
     use App\DBObjects\Ingredient;
     $ingredients = ProductController::getAllIng();
+    $permission = App\Http\Controllers\Controller::getPermissions();
 ?>
 @section('content')
     <!-- Page Content -->
@@ -21,10 +22,12 @@
         @foreach ($product->getIngredients() as $ing)
             <p>{{ $ing->getName() }}</p>
         @endforeach
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary-purple" data-toggle="modal" data-target="#exampleModalCenter">
-          Edit Product <i class="ti-pencil-alt"></i>
-        </button>
+        @if($permission != "customer")
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary-purple" data-toggle="modal" data-target="#exampleModalCenter">
+              Edit Product <i class="ti-pencil-alt"></i>
+            </button>
+        @endif
     </div>
 @endsection
 

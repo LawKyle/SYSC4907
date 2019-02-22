@@ -1,6 +1,7 @@
 <?php
     use App\Enums\Department;
     use App\Http\Controllers\GroceryListController;
+    $permission = App\Http\Controllers\Controller::getPermissions();
 ?>
 <!doctype html>
 <html lang="en">
@@ -15,22 +16,12 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    {{--<!-- Bootstrap core CSS     -->--}}
-    {{--<link href="{{ asset('css/bootstrap.min.css')}}" rel="preload" as="style" onload="this.rel='stylesheet'" />--}}
-
-    {{--<!-- Animation library for notifications   -->--}}
-    {{--<link href="{{ asset('css/animate.min.css')}}" rel="preload" as="style" onload="this.rel='stylesheet'"/>--}}
-
-    {{--<!--  Paper Dashboard core CSS    -->--}}
-    {{--<link href="{{ asset('css/paper-dashboard.css')}}" rel="preload" as="style" onload="this.rel='stylesheet'"/>--}}
-
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="preload" as="style" onload="this.rel='stylesheet'" />
     <link href="{{ asset('css/all.css')}}" rel="stylesheet">
 
     <!--  Fonts and icons     -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="preload" as="style" onload="this.rel='stylesheet'">
     <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
-    {{--<link href="{{ asset('css/themify-icons.css')}}" rel="preload" as="style" onload="this.rel='stylesheet'">--}}
 
 </head>
 <body>
@@ -58,11 +49,6 @@
                     </a>
                 </li>
                 <li class="{{ (\Request::route()->getName() == 'department' || \Request::route()->getName() == 'tappedProducts') ? 'active' : '' }}">
-                    {{--<a href="{{url("/") . '/department/All'}}">--}}
-                        {{--<i class="ti-shopping-cart-full"></i>--}}
-                        {{--<p>Products</p>--}}
-                    {{--</a>--}}
-
                     <a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                         <i class="ti-shopping-cart-full"></i>
                         <p>Products</p>
@@ -75,12 +61,14 @@
                         @endforeach
                     </div>
                 </li>
-                <li class="{{ (\Request::route()->getName() == 'myGroceryList') ? 'active' : '' }}">
-                    <a href="{{ action('GroceryListController@shoppingList') }}">
-                        <i class="ti-view-list-alt"></i>
-                        <p>My Grocery Lists</p>
-                    </a>
-                </li>
+                @if($permission != "organization")
+                    <li class="{{ (\Request::route()->getName() == 'myGroceryList') ? 'active' : '' }}">
+                        <a href="{{ action('GroceryListController@shoppingList') }}">
+                            <i class="ti-view-list-alt"></i>
+                            <p>My Grocery Lists</p>
+                        </a>
+                    </li>
+                @endif
             </ul>
         </div>
     </div>
