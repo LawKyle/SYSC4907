@@ -12,16 +12,19 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    @if (session('register'))
-                        <div class="alert alert-success">
-                            {{ session('register') }}
-                        </div>
-                    @endif
                 </div>
 
                 <div class="card-body">
-                    <form method="post" action="{{ action('APILoginController@login') }}">
+                    <form method="post" action="{{ action('APILoginController@register') }}">
                         @csrf
+
+                        <div class="form-group row">
+                            <label for="email" class="col-sm-4 col-form-label text-md-right">E-mail</label>
+
+                            <div class="col-md-6">
+                                <input id="email" type="text" class="form-control" name="email" required autofocus>
+                            </div>
+                        </div>
 
                         <div class="form-group row">
                             <label for="username" class="col-sm-4 col-form-label text-md-right">{{ __('Username') }}</label>
@@ -53,7 +56,7 @@
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
+                                    Register
                                 </button>
                             </div>
                         </div>

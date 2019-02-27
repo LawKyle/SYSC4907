@@ -27,4 +27,16 @@ class APILoginController extends Controller
         setcookie(API::AUTH_TOKEN, '', time() - 60);
         return redirect(API::HOME);
     }
+
+    public function registerPage() {
+        return view('register');
+    }
+
+    public function register(Request $request) {
+        $data = array(API::EMAIL=>$request->email, API::USERNAME => $request->username, API::PASSWORD => $request->password);
+        APIConnect::postRequestToAPI(null, $data, API::NEW_USER);
+        $request->session()->flash('register', 'Thanks for registering - now Login!');
+        return redirect("/");
+    }
+
 }

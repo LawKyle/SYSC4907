@@ -146,7 +146,6 @@ function addRestriction(add, ingredient) {
 
 function addRestrictions() {
     let ings = $("#restrictions").val();
-    alert(ings);
     let values = $("#restrictions :selected");
 
     for(let i = 0; i < values.length; i++) {

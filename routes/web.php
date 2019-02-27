@@ -17,6 +17,8 @@ Route::get('/', function () {
 
 Route::post('loginTest', 'APILoginController@login')->middleware('APIAuth');
 Route::get('/logout', 'APILoginController@logout');
+Route::get('/newUser', 'APILoginController@registerPage');
+Route::post('/addNewUser', 'APILoginController@register');
 
 Auth::routes();
 
