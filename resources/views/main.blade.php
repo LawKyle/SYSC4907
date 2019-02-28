@@ -6,6 +6,11 @@
 @section('content')
     <!-- Page Content -->
     <div class="container-fluid">
+        @if(session()->has('status'))
+            <div class="alert alert-warning }}">
+                {{ session('status') }}
+            </div>
+        @endif
         <h2>{{ $title }}</h2>
         <?php $count = 0; ?>
             <div class="row content">

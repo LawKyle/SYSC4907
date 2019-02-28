@@ -35,25 +35,19 @@ class ProductController extends Controller
         if(stripos($product->getName(), $query) !== false) {
             array_push($searchProducts, $product);
         }
-        foreach((array)$product->getIngredients() as $ing) { 
-            if((stripos($ing, $query)) !== false && !$this->containsProduct($searchProducts, $product)) {
+        foreach((array)$product->getIngredients() as $ing) {
+            if((stripos($ing->getName(), $query)) !== false) {
                 array_push($searchProducts, $product);
             }
         }
     }
 
     if(empty($searchProducts)) {
-        $request->session()->flash('status', 'No products with ' . $query . ' found!');
+        $request->session()->flash('status', "No products with '" . $query . "' found!");
         return view('main', ['products' => $products, 'title' => 'All Products']);
     }
-    return view('main', ['products' => $searchProducts, 'title' => "Products"]);
-  }
-
-  private function containsProduct($listProducts, $product) {
-    foreach($listProducts as $prod) {
-        if($prod->getDescription() == $product->getDescription()) return true;  
-    }
-    return false; 
+  $request->session()->forget('status');
+    return view('main', ['products' => $searchProducts, 'title' => "Search for '" . $query . "'"]);
   }
 
   public static function getTappedProducts() {
@@ -84,7 +78,9 @@ class ProductController extends Controller
         }
        $product = Product::createFromJSON($productJSON['product'], "null");
        if(isset($productJSON[API::FLAG])) {
-           $request->session()->flash('restriction', 'Warning: This product contains ' . $productJSON[API::FLAG] . "!");
+           $restrictions = explode(", ", $productJSON[API::FLAG]);
+           $restrictions = implode(", ", array_unique($restrictions));
+           $request->session()->flash('restriction', 'Warning: This product contains ' . $restrictions . "!");
        }
        return view('product-single', ['product' => $product]);
    }
