@@ -20,7 +20,7 @@ class ProductController extends Controller
 
     $deptProducts = []; 
     foreach($products as $prod) {
-        if($prod->getTag() == strToUpper($dept)) array_push($deptProducts, $prod);
+        if($prod->getTags() == strToUpper($dept)) array_push($deptProducts, $prod);
     }
 
     return view('main', ['products' => $deptProducts, 'title' => $dept . " Products"]);
