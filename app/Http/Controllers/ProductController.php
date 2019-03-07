@@ -82,6 +82,7 @@ class ProductController extends Controller
            $restrictions = implode(", ", array_unique($restrictions));
            $request->session()->flash('restriction', 'Warning: This product contains ' . $restrictions . "!");
        }
+       $request->session()->forget('restriction');
        return view('product-single', ['product' => $product]);
    }
 
