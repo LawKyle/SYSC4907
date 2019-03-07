@@ -86,19 +86,32 @@ class ProductController extends Controller
    }
 
    public function editProduct(Request $request) {
-        //if(!Cookie::get(API::AUTH_TOKEN)) return redirect(API::HOME);
+        if(!Cookie::get(API::AUTH_TOKEN)) return redirect(API::HOME);
         $data = [];
         $data[API::NEW_NAME] = $request->input(API::NEW_NAME);
-        $data[API::NFC_ID] = $request->input(API::NFC_ID);
-        $data[API::NEW_NFC_ID] = $request->input(API::NEW_NFC_ID);
+        $data[API::PROD_ID] = $request->input(API::PROD_ID);
         $data[API::NEW_PROD_ID] = $request->input(API::NEW_PROD_ID);
         $data[API::NEW_TAGS] = strToLower($request->input(API::NEW_TAGS));
 
-        $data[API::NEW_ING_ID] = implode(",", $request->input(API::NEW_ING_ID)); 
+        $data[API::NEW_ING] = implode(", ", $request->input(API::NEW_ING_ID));
         APIConnect::postRequestToAPI(Cookie::get(API::AUTH_TOKEN), $data, API::NEW_PROD);
 
         var_dump($data);
-        var_dump(implode(",", $request->input(API::NEW_ING_ID))); 
-        return redirect(url('/') . "/product/" . $request->input(API::NEW_NFC_ID)); 
+        return redirect(url('/') . "/product/" . $request->input(API::NEW_PROD_ID));
    }
+
+   public static function flagged($product_id) {
+       $data = array('product_id' => $product_id);
+       $productJSON = APIConnect::postRequestToAPI(Cookie::get(API::AUTH_TOKEN), $data, API::PROD);
+       if(array_key_exists(API::FLAG, $productJSON)) return true;
+       else return false;
+    }
+
+    public function checkFlagged(Request $request) {
+        $dataArray = json_decode($request->input('data'), true);
+        $product_id = $dataArray[API::PROD_ID];
+        if(self::flagged($product_id)) return json_encode('red');
+        else return json_encode('');
+
+    }
 }

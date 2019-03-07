@@ -81,6 +81,18 @@ class GroceryListController extends Controller
         return json_encode("pass");
     }
 
+    public function deleteProduct(Request $request) {
+        $dataArray = json_decode($request->input('data'), true);
+
+        $id = $dataArray[API::LIST_ID];
+        $product = $dataArray[API::PROD_ID];
+        $data = array(API::LIST_ID => $id, 'product' => $product, API::FLAG=>API::REMOVE);
+
+        if(!Cookie::get(API::AUTH_TOKEN)) return redirect(API::HOME);
+        APIConnect::postRequestToAPI(Cookie::get(API::AUTH_TOKEN), $data, API::SHOP_LIST);
+        return json_encode("pass");
+    }
+
     public function editName(Request $request) {
         $dataArray = json_decode($request->input('data'), true);
 

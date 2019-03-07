@@ -29,6 +29,7 @@ Route::get('department/{dept}', 'ProductController@searchDepartment')->name('dep
 Route::get('tappedProducts', 'ProductController@getTappedProducts')->name('tappedProducts');
 Route::get('product/{id}', 'ProductController@getProduct');
 Route::post('editProduct', 'ProductController@editProduct');
+Route::post('/checkFlagged', 'ProductController@checkFlagged');
 
 Route::get('/myGroceryList', 'GroceryListController@shoppingList')->name("myGroceryList");
 Route::get('/myGroceryList/newList', 'GroceryListController@addNewList');
@@ -36,6 +37,7 @@ Route::get('/myGroceryList/deleteList/{list_id}', 'GroceryListController@deleteL
 Route::post('/myGroceryList/editName', 'GroceryListController@editName');
 Route::post('/myGroceryList/addProduct', 'GroceryListController@addProduct');
 Route::post('/myGroceryList/rmProduct', 'GroceryListController@rmProduct');
+Route::post('/myGroceryList/deleteProduct', 'GroceryListController@deleteProduct');
 
 Route::get('/myProfile', 'ProfileController@profile')->name('profile');
 Route::post('/myProfile/addRestriction', 'ProfileController@addRestriction');

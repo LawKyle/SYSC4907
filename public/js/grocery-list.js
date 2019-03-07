@@ -42,7 +42,18 @@ function addProduct(listID) {
     for(let i = 0; i < values.length; i++) {
         let row = $('<tr>');
         let data = $('<td>');
-        data.append("<a href=\"/product/" + IDs[i] + "\">" + values[i].innerHTML + "</a>");
+
+        var color = checkFlagged(IDs[i]);
+
+        var value = "<div class='custom-control custom-checkbox'>"
+            + "<input type=\"checkbox\" class=\"custom-control-input\" id='listID" + listID + "productID" + IDs[i] + "' value='" + values[i].innerHTML + "' onclick='checkProduct(this);'>"
+            + "<label class=\"custom-control-label\" for='listID" + listID + "productID" + IDs[i] + "'>"
+            + "<a id='linklistID" + listID + "productID" +  IDs[i] + "' href='/product/" + IDs[i] + "' style='color:color;'> " + values[i].innerHTML + "</a>"
+            + "</label>"
+            + "</div>"
+            + "<button class=\"btn btn-primary pull-right\" onclick=\"deleteProduct(this, 'listID" + listID + "productID" + IDs[i] + "')\"><i class=\"ti-close\"></i></button>";
+
+        data.append(value);
         row.append(data);
         $("#table" + listID + "> tbody:last-child").append(row);
      }
@@ -67,24 +78,79 @@ function addProduct(listID) {
             console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
         }
     });
+}
 
+function checkFlagged(id) {
+    var color = "";
+    let dataArray = {};
+    dataArray['product_id'] = id;
+    let dataString = "data=" + JSON.stringify(dataArray);
+
+    $.ajax({
+        method: 'POST',
+        url: '/checkFlagged',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: dataString,
+        cache: false,
+        success: function(data){
+            color = JSON.parse(data);
+        },
+        error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+            console.log(JSON.stringify(jqXHR));
+            console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+        }
+    });
+    return color;
+}
+
+function deleteProduct(obj, id) {
+    var listID = id.replace('listID', '').split('p')[0];
+    var productID = id.split('productID')[1];
+    $(obj).parents("tr").remove();
+
+    let dataArray = {};
+    dataArray['list_id'] = listID;
+    dataArray['product_id'] = productID;
+    let dataString = "data=" + JSON.stringify(dataArray);
+
+    $.ajax({
+        method: 'POST',
+        url: '/myGroceryList/deleteProduct',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: dataString,
+        success: function(response){
+            console.log(response);
+        },
+        error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+            console.log(JSON.stringify(jqXHR));
+            console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+        }
+    });
 }
 
 $(".custom-control-input").change(function() {
-    var id = this.id.toString();
+    checkProduct(this);
+});
+
+function checkProduct(obj) {
+    var id = obj.id.toString();
     var listID = id.replace('listID', '').split('p')[0];
     var productID = id.split('productID')[1];
 
-    if(this.checked) {
+    if(obj.checked) {
         $("#link" + id).css("text-decoration", "line-through");
     }
     else {
         $("#link" + id).css("text-decoration", "none");
     }
-    checkProduct(listID, productID, this.checked);
-});
+    checkProductAJAX(listID, productID, obj.checked);
+}
 
-function checkProduct(listID, productID, check) {
+function checkProductAJAX(listID, productID, check) {
     let dataArray = {};
     dataArray['list_id'] = listID;
     dataArray['product_id'] = productID;

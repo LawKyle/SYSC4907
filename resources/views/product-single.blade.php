@@ -21,7 +21,8 @@
         <p>Info: {{ $product->getInfo()}}</p>
         <h4>Ingredients</h4>
         @foreach ($product->getIngredients() as $ing)
-            <p>{{ $ing->getName() }}</p>
+            <p>{{ $ing->getName() }}  {{$ing->getID()}}</p>
+
         @endforeach
         @if($permission != "customer")
             <!-- Button trigger modal -->
@@ -46,7 +47,7 @@
                 <div class="modal-body">
                     <form method="post" action="{{ action('ProductController@editProduct') }}">
                         @csrf
-                        <input type="hidden" class="form-control" name="nfc_id" value="{{ $product->getProductID() }}">
+                        <input type="hidden" class="form-control" name="product_id" value="{{ $product->getProductID() }}">
                         <div class="form-group row">
                             <label for="name" class="col-sm-3 col-form-label">Name</label>
                             <div class="col-sm-9">
@@ -62,7 +63,7 @@
                         <div class="form-group row">
                             <label for="new_tags" class="col-sm-3 col-form-label">Tag</label>
                             <div class="col-sm-9">
-                                <select class="custom-select" name="new_tags">
+                                <select class="form-control js-example-basic-multiple" style="width:100%;" name="new_tags">
                                     @foreach(Department::getTags() as $dept)
                                         @if(strToUpper($dept) == strToUpper($product->getTags()))
                                             <option selected value="{{$dept}}">{{ $dept }}</option>
@@ -76,9 +77,9 @@
                         <div class="form-group row">
                             <label for="new_ingredientId" class="col-sm-3 col-form-label">Ingredient</label>
                             <div class="col-sm-9">
-                                <select class="custom-select" name="new_ingredientId[]" multiple>
+                                <select class="form-control js-example-basic-multiple" style="width:100%;" name="new_ingredientId[]" multiple>
                                     @foreach($ingredients as $ing)
-                                        @if(in_array($ing->getName(), $product->getIngredients()))
+                                        @if(in_array($ing, $product->getIngredients()))
                                             <option selected value="{{ $ing->getID() }}">{{ $ing->getName() }}</option>
                                         @else
                                             <option value="{{ $ing->getID() }}">{{ $ing->getName() }}</option>

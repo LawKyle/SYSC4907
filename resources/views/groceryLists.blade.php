@@ -59,15 +59,24 @@
                                                 @if($product->getChecked() == 'True')
                                                     <input type="checkbox" class="custom-control-input" id="listID{{ $list->getID() }}productID{{$product->getProductID()}}" value="{{ $product->getName() }}" checked>
                                                     <label class="custom-control-label" for="listID{{ $list->getID() }}productID{{$product->getProductID()}}">
-                                                        <a id="linklistID{{ $list->getID() }}productID{{$product->getProductID()}}" href="/product/{{ $product->getProductID() }}" style="text-decoration: line-through;">{{ $product->getName() }}</a>
+                                                        @if(App\Http\Controllers\ProductController::flagged($product->getProductID()))
+                                                            <a id="linklistID{{ $list->getID() }}productID{{$product->getProductID()}}" href="/product/{{ $product->getProductID() }}" style="text-decoration: line-through; color:red;">{{ $product->getName() }}</a>
+                                                        @else
+                                                            <a id="linklistID{{ $list->getID() }}productID{{$product->getProductID()}}" href="/product/{{ $product->getProductID() }}" style="text-decoration: line-through;">{{ $product->getName() }}</a>
+                                                        @endif
                                                     </label>
                                                 @else
                                                     <input type="checkbox" class="custom-control-input" id="listID{{ $list->getID() }}productID{{$product->getProductID()}}" value="{{ $product->getName() }}">
                                                     <label class="custom-control-label" for="listID{{ $list->getID() }}productID{{$product->getProductID()}}">
-                                                        <a id="linklistID{{ $list->getID() }}productID{{$product->getProductID()}}" href="/product/{{ $product->getProductID() }}">{{ $product->getName() }}</a>
+                                                        @if(App\Http\Controllers\ProductController::flagged($product->getProductID()))
+                                                            <a id="linklistID{{ $list->getID() }}productID{{$product->getProductID()}}" href="/product/{{ $product->getProductID() }}" style="color:red;">{{ $product->getName() }}</a>
+                                                        @else
+                                                            <a id="linklistID{{ $list->getID() }}productID{{$product->getProductID()}}" href="/product/{{ $product->getProductID() }}">{{ $product->getName() }}</a>
+                                                        @endif
                                                     </label>
                                                 @endif
                                             </div>
+                                            <button class="btn btn-primary pull-right" onclick="deleteProduct(this, 'listID{{ $list->getID() }}productID{{$product->getProductID()}}')"><i class="ti-close"></i></button>
                                         </td>
                                     </tr>
                                 @endforeach
