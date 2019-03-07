@@ -81,6 +81,7 @@ class ProductController extends Controller
            $restrictions = explode(", ", $productJSON[API::FLAG]);
            $restrictions = implode(", ", array_unique($restrictions));
            $request->session()->flash('restriction', 'Warning: This product contains ' . $restrictions . "!");
+           return view('product-single', ['product' => $product]);
        }
        $request->session()->forget('restriction');
        return view('product-single', ['product' => $product]);
