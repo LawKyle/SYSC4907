@@ -78,6 +78,8 @@ function addProduct(listID) {
             console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
         }
     });
+
+    $("#products" + listID).val(null).trigger('change');
 }
 
 function checkFlagged(id) {
@@ -218,7 +220,7 @@ function addRestrictions() {
         let row = $('<tr>');
         let data = $('<td>');
         var insideTD = "<div class='row'><div class='col-md-9'>" + values[i].innerHTML + "</div>"
-            + "<div class='col-md-1'><a href='/myProfile/rmRestrictions" + ings[i] +  "' class='btn'><i class='ti-trash'></i></a></div></div>";
+            + "<div class='col-md-1'><a href='/myProfile/rmRestrictions/" + ings[i] +  "' class='btn'><i class='ti-trash'></i></a></div></div>";
         data.append(insideTD);
         row.append(data);
         $("#tableCustom> tbody:last-child").append(row);
@@ -243,6 +245,8 @@ function addRestrictions() {
             console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
         }
     });
+
+    $("#restrictions").val(null).trigger('change');
 
 }
 
