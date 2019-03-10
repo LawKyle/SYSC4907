@@ -6,6 +6,11 @@
 @section('content')
     <!-- Page Content -->
     <div class="container-fluid">
+        @if(session()->has('register'))
+            <div class="alert alert-success }}">
+                <span>{{ session('register') }}</span>
+            </div>
+        @endif
         @if(session()->has('status'))
             <div class="alert alert-warning }}">
                 {{ session('status') }}
