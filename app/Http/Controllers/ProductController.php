@@ -92,7 +92,9 @@ class ProductController extends Controller
         $data = [];
         $data[API::NEW_NAME] = $request->input(API::NEW_NAME);
         $data[API::PROD_ID] = $request->input(API::PROD_ID);
-        $data[API::NEW_PROD_ID] = $request->input(API::NEW_PROD_ID);
+        if( $data[API::PROD_ID] != $request->input(API::NEW_PROD_ID)) {
+            $data[API::NEW_PROD_ID] = $request->input(API::NEW_PROD_ID);
+        }
         $data[API::NEW_TAGS] = strToLower($request->input(API::NEW_TAGS));
 
         $data[API::NEW_ING] = implode(", ", $request->input(API::NEW_ING_ID));

@@ -48,7 +48,7 @@ function addProduct(listID) {
         var value = "<div class='custom-control custom-checkbox'>"
             + "<input type=\"checkbox\" class=\"custom-control-input\" id='listID" + listID + "productID" + IDs[i] + "' value='" + values[i].innerHTML + "' onclick='checkProduct(this);'>"
             + "<label class=\"custom-control-label\" for='listID" + listID + "productID" + IDs[i] + "'>"
-            + "<a id='linklistID" + listID + "productID" +  IDs[i] + "' href='/product/" + IDs[i] + "' style='color:color;'> " + values[i].innerHTML + "</a>"
+            + "<a id='linklistID" + listID + "productID" +  IDs[i] + "' href='/product/" + IDs[i] + "' style='color:" + color + "';'> " + values[i].innerHTML + "</a>"
             + "</label>"
             + "</div>"
             + "<button class=\"btn btn-primary pull-right\" onclick=\"deleteProduct(this, 'listID" + listID + "productID" + IDs[i] + "')\"><i class=\"ti-close\"></i></button>";
@@ -96,6 +96,7 @@ function checkFlagged(id) {
         },
         data: dataString,
         cache: false,
+        async: false,
         success: function(data){
             color = JSON.parse(data);
         },
