@@ -20,8 +20,10 @@ class Controller extends BaseController
     public static function getAllProducts() {
         $productsJSON = APIConnect::postRequestToAPI(Cookie::get(API::AUTH_TOKEN), [], API::PROD_LIST);
         $products = [];
-        foreach($productsJSON as $product) {
-            array_push($products, Product::createFromJSON($product, null));
+        if($productsJSON != 'FAIL') {
+            foreach($productsJSON as $product) {
+                array_push($products, Product::createFromJSON($product, null));
+            }
         }
         return $products;
     }
