@@ -18,10 +18,10 @@
             <img class="lazyload blur-up" src="{{ asset('tinyImg/' . $product->getPicture())}}" data-sizes="auto" data-src="{{ asset('img/' . $product->getPicture())}}" data-srcset="{{ asset('img/' . $product->getPicture())}}" style="padding-bottom: 10px;" height="150" width="auto">
         <h3>{{ $product->getName() }} </h3>
         <p>Tag(s): {{ $product->getTags() }}</p>
-        <p>Info: {{ $product->getInfo()}}</p>
+        {{--<p>Info: {{ $product->getInfo()}}</p>--}}
         <h4>Ingredients</h4>
         @foreach ($product->getIngredients() as $ing)
-            <p>{{ $ing->getName() }}  {{$ing->getID()}}</p>
+            <p>{{ $ing->getName() }} </p>
 
         @endforeach
         @if($permission != "customer")
