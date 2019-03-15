@@ -47,7 +47,10 @@
                 <div class="modal-body">
                     <form method="post" action="{{ action('ProductController@editProduct') }}">
                         @csrf
+                        <input type="hidden" class="form-control" name="name" value="{{ $product->getName() }}">
                         <input type="hidden" class="form-control" name="product_id" value="{{ $product->getProductID() }}">
+                        <input type="hidden" class="form-control" name="new_picture" value="{{ $product->getPicture() }}">
+
                         <div class="form-group row">
                             <label for="name" class="col-sm-3 col-form-label">Name</label>
                             <div class="col-sm-9">

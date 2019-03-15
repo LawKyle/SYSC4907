@@ -90,14 +90,25 @@ class ProductController extends Controller
    public function editProduct(Request $request) {
         if(!Cookie::get(API::AUTH_TOKEN)) return redirect(API::HOME);
         $data = [];
-        $data[API::NEW_NAME] = $request->input(API::NEW_NAME);
-        $data[API::PROD_ID] = $request->input(API::PROD_ID);
-        if( $data[API::PROD_ID] != $request->input(API::NEW_PROD_ID)) {
-            $data[API::NEW_PROD_ID] = $request->input(API::NEW_PROD_ID);
-        }
-        $data[API::NEW_TAGS] = strToLower($request->input(API::NEW_TAGS));
 
+        if($request->input(API::NEW_NAME) != $request->input(API::NAME)) {
+            $data[API::NEW_NAME] = $request->input(API::NEW_NAME);
+        }
+        else {
+            $data[API::NAME] = $request->input(API::NEW_NAME);
+        }
+
+       if($request->input(API::NEW_PROD_ID) != $request->input(API::PROD_ID)) {
+           $data[API::NEW_PROD_ID] = $request->input(API::NEW_PROD_ID);
+       }
+       else {
+           $data[API::PROD_ID] = $request->input(API::PROD_ID);
+       }
+
+        $data[API::NEW_TAGS] = strToUpper($request->input(API::NEW_TAGS));
         $data[API::NEW_ING] = implode(", ", $request->input(API::NEW_ING_ID));
+       $data[API::NEW_PIC] = $request->input(API::NEW_PIC);
+
         APIConnect::postRequestToAPI(Cookie::get(API::AUTH_TOKEN), $data, API::NEW_PROD);
 
         var_dump($data);
